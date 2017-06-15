@@ -1,13 +1,21 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "arrays.h"
+//#include "tools.h"
 
 /// Inizializza l'array di dimensioni n
-array arrInit(array *arr, int n)
+array arrInit(array *arr, int n, bool allocated)
 {
-	arr->d = malloc( n * sizeof(int));
-	arr->n = n;
-
+	if ( allocated == true && n == arr->n){
+		return *arr;
+	} else if ( allocated == true ){
+		arr->d = realloc(arr->d, n * sizeof(int));
+		arr->n = n;
+	}
+	if ( allocated == false ) {
+		arr->d = malloc( n * sizeof(int) );
+		arr->n = n;
+	}
 	return *arr;
 }
 

@@ -12,19 +12,24 @@ int main()
 {
 	int menu, err; // menu -> input dell'utente - err -> variabile per la gestione degli errori
 	int turn;
-	int i;
 	players players;
 	array played;
 	deck deck;
+	bool allocated;
+
+	/* Settaggi iniziali  */
+	allocated = false;
+	menu = 0;
+	err = 0;
+	err = initConsole();
 
 	/* Setta le impostazioni a parametri di default */
 	players.n_players = 2;
+	players = create_players(&players, allocated);
 	players.player[1].ai = true;
-	players = create_players(&players);
 	players = name_players(&players);
 
-	err = 0;
-	err = initConsole();
+
 
 	while ( err == 0){
 
@@ -35,24 +40,15 @@ int main()
 		if (menu == '1'){
 
 			system("cls");
+
 			err = newGame(&players, &played, &deck, &turn);
 			err = play(&players, &played, &deck, turn);
+
 			listDelete(deck.card_list);
-			i = 0;
-			while ( i < players.n_players){
-				free(&players.player[i].bet_cards.d);
-				free(&players.player[i].run_cards.d);
-
-				players.player[i].bet_cards.d = NULL;
-				players.player[i].run_cards.d = NULL;
-
-				i++;
-			}
-			free(players.player);
+			players = create_players(&players, allocated);
+			players.player[1].ai = true;
+			players = name_players(&players);
 			free(played.d);
-			players.player = NULL;
-			played.d = NULL;
-
 		}
 		if (menu == '2'){
 

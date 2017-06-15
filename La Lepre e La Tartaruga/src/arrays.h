@@ -1,5 +1,6 @@
 #ifndef ARRAYS_H_
 #define ARRAYS_H_
+#include "tools.h"
 
 typedef struct array{
 	int *d;
@@ -8,7 +9,7 @@ typedef struct array{
 
 
 
-array arrInit(array *, int );
+array arrInit(array *, int, bool );
 array arrLoad(array *, int );
 int arrSearch(array *, int );
 void arrPrint(array *);

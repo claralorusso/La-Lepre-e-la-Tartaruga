@@ -18,11 +18,11 @@ int newGame(players *players, array *played, deck *deck, int *turn)
 
 	*turn = 0;
 
-	arrInit(played, MAX_PLAYED_CARDS);
+	arrInit(played, MAX_PLAYED_CARDS, false);
 	arrLoad(played, 0);
 
 	deck->card_list = listInit();
-	deck->totals = arrInit(&deck->totals, 6);
+	deck->totals = arrInit(&deck->totals, 6, false);
 
 	shuffle_deck(deck);
 
@@ -75,7 +75,7 @@ deck shuffle_deck( deck *deck )
 {
 	int number;
 	srand(time(NULL));
-	deck->totals = arrInit(&deck->totals, 6);
+	deck->totals = arrInit(&deck->totals, 6, false);
 	deck->totals = arrLoad(&deck->totals, 0);
 
 
@@ -111,18 +111,25 @@ deck shuffle_deck( deck *deck )
 	return *deck;
 }
 
-players create_players(players *players)
+players create_players(players *players, bool allocated)
 {
 	int i;
 
-	players->player = malloc( players->n_players * sizeof(player) );
+	if ( allocated == true){
+		players->player = realloc(players->player, players->n_players * sizeof(player) );
+	} else if ( allocated == false){
+
+		players->player = malloc( players->n_players * sizeof(player) );
+	}
 	i = 0;
 	while ( i < players->n_players ){
+		// crea giocatori di default
 		players->player[i].ai = false;
-		players->player[i].bet_cards = arrInit( &players->player[i].bet_cards, MAX_BETS);
+
+		players->player[i].bet_cards = arrInit( &players->player[i].bet_cards, MAX_BETS, allocated);
 		players->player[i].bet_cards = arrLoad( &players->player[i].bet_cards, 0);
 
-		players->player[i].run_cards= arrInit( &players->player[i].run_cards, MAX_CARDS);
+		players->player[i].run_cards= arrInit( &players->player[i].run_cards, MAX_CARDS, allocated);
 		players->player[i].run_cards= arrLoad( &players->player[i].run_cards, 0);
 
 		i++;
@@ -177,7 +184,7 @@ players firstBetCard(players *players_d)
 	int i, n;
 	array betcards;
 
-	betcards = arrInit(&betcards,5);
+	betcards = arrInit(&betcards,5, false);
 	betcards.d[0] = WOLF;
 	betcards.d[1] = HARE;
 	betcards.d[2] = TORTOISE;
@@ -206,7 +213,7 @@ int secondBetCard(player player, deck *deck, array *played)
 	bool flag;
 
 	pos = - 1;
-	arrInit(&temp, 7);
+	arrInit(&temp, 7, false);
 	arrLoad(&temp, 0);
 
 	// carica il vettore temporaneo per la settima carta scommessa
@@ -368,7 +375,7 @@ int play(players *players, array *played, deck *deck, int turn )
 	char input;
 	int converted;
 	array pos;
-	pos = arrInit(&pos, 4);
+	pos = arrInit(&pos, 4, false);
 	pos = arrLoad(&pos, -1);
 	int i, check;
 
