@@ -381,7 +381,7 @@ int play(players *players, array *played, deck *deck, int turn )
 		if ( check == 1){
 			// esci
 			free(pos.d);
-			return 2;
+			return 0;
 
 		} else if ( check == 2){
 			//salva
