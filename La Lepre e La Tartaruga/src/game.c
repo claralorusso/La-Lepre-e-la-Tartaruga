@@ -17,7 +17,7 @@ int newGame(players *players, array *played, deck *deck, int *turn)
 	int i, j;
 
 	*turn = 0;
-
+	//test
 	arrInit(played, MAX_PLAYED_CARDS, false);
 	arrLoad(played, 0);
 
