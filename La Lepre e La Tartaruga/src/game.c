@@ -78,32 +78,31 @@ deck shuffle_deck( deck *deck )
 	deck->totals = arrInit(&deck->totals, 6, false);
 	deck->totals = arrLoad(&deck->totals, 0);
 
-
 	while ( deck->totals.d[0] < 81 ){
 		number = rand()% 5 + 1;
 		if (number == WOLF && deck->totals.d[1] < 16){
 			deck->card_list = listAdd(deck->card_list, WOLF);
-			deck->totals.d[1]++;
+			deck->totals.d[WOLF]++;
 			deck->totals.d[0]++;
 		}
 		if (number == HARE && deck->totals.d[2] < 18){
 			deck->card_list = listAdd(deck->card_list, HARE);
-			deck->totals.d[2]++;
+			deck->totals.d[HARE]++;
 			deck->totals.d[0]++;
 		}
 		if (number == TORTOISE && deck->totals.d[3] < 17){
 			deck->card_list = listAdd(deck->card_list, TORTOISE);
-			deck->totals.d[3]++;
+			deck->totals.d[TORTOISE]++;
 			deck->totals.d[0]++;
 		}
 		if (number == LAMB && deck->totals.d[4] < 15){
 			deck->card_list = listAdd(deck->card_list, LAMB);
-			deck->totals.d[4]++;
+			deck->totals.d[LAMB]++;
 			deck->totals.d[0]++;
 		}
 		if (number == FOX && deck->totals.d[5] < 15){
 			deck->card_list = listAdd(deck->card_list, FOX);
-			deck->totals.d[5]++;
+			deck->totals.d[FOX]++;
 			deck->totals.d[0]++;
 		}
 
@@ -180,8 +179,9 @@ players name_players(players *players_d)
 int GetCard(deck *deck_d)
 {
 	int card;
-	card = 0;
 	node * temp;
+
+	card = 0;
 	temp = deck_d->card_list;
 
 	//card = listgetlast(temp);
@@ -308,7 +308,7 @@ int secondBetCard(player player, deck *deck, array *played)
 	return 0;
 }
 
-array player_turn(player *player, array *played, int input, array *pos)
+array playerGetCard(player *player, array *played, int input, array *pos)
 {
 
 	bool flag;
@@ -389,8 +389,10 @@ int check_played_card(array *arr)
 
 int play(players *players, array *played, deck *deck, int turn )
 {
-	char input;
-	int converted;
+	//char input;
+	//int converted;
+	positions positions;
+	positions = malloc( 11 * sizeof(coord) );
 	array pos;
 	pos = arrInit(&pos, 4, false);
 	pos = arrLoad(&pos, -1);
@@ -423,7 +425,12 @@ int play(players *players, array *played, deck *deck, int turn )
 	printf("     ");
 
 	// resta nel ciclo finchè non si attiva la fase di corsa
-	while( arrCountNotX( played, 0 )  < 8 ){
+	if( arrCountNotX( played, 0 )  < 8
+		|| arrCountX(played, WOLF)
+		|| arrCountX(played, HARE)
+		|| arrCountX(played, TORTOISE)
+		|| arrCountX(played, LAMB)
+		|| arrCountX(played, FOX) ){
 		turn = 0;
 		// i giocatori giocano i loro turni
 		while ( turn < players->n_players ){
@@ -435,70 +442,7 @@ int play(players *players, array *played, deck *deck, int turn )
 
 			// caso in cui il giocatore sia umano
 			while ( players->player[turn].ai == false){
-				input = getch();
-				converted = input -'0';
-
-				if ( input == 's' || input == 'S' ){
-					//salva
-					free(pos.d);
-					return 0;
-				}
-				if ( input == 27 ){
-					//Torna al menu
-					free(pos.d);
-					return 0;
-				}
-				if ( (converted >= 1 && converted <= 6) || input == ' '){
-
-					if ( input == ' ' && arrCountNotX(&pos, -1) > 0){
-						// fine turno
-						i = 0;
-						while ( i < MAX_TURN){
-							if ( pos.d[i] != -1){
-								pos.d[i]--;
-							}
-							i++;
-						}
-
-						i = 0;
-						while ( i < MAX_TURN){
-							if ( pos.d[i] != -1){
-								arrFillavb(played, players->player[turn].run_cards.d[ pos.d[i] ] , 0);
-								players->player[turn].run_cards.d[ pos.d[i] ] = 0;
-							}
-							i++;
-						}
-						i = 0;
-						while( i < MAX_CARDS ){
-							if( players->player[turn].run_cards.d[i] == 0){
-								players->player[turn].run_cards.d[i] = GetCard(deck);
-							}
-							i++;
-						}
-						// resetta le posizioni
-						pos = arrLoad(&pos, -1);
-
-						// stampa le carte
-						printPlayed(played);
-						printTurn(players->player[turn].name);
-						printBet(&players->player[turn].bet_cards);
-						printHand(&players->player[turn].run_cards);
-
-						// rimuove gli indicatori
-						GotoXY(0,22);
-						printf("                                                                             ");
-						turn++;
-
-					} else if (input != ' ' ) {
-						player_turn( &players->player[turn], played, converted, &pos);
-
-						printPlayed(played);
-						printTurn(players->player[turn].name);
-						printBet(&players->player[turn].bet_cards);
-						printHand(&players->player[turn].run_cards);
-
-					}
-				}
+				turn = playerTurn(players, played, deck, &pos, turn);
 			}
 			// caso in cui il giocatore sia ia
 			if (players->player[turn].ai == true){
@@ -532,6 +476,94 @@ int play(players *players, array *played, deck *deck, int turn )
 	} // ciclo principale
 
 	free(pos.d);
+	return 0;
+}
+
+int playerTurn(players *players, array *played,deck *deck, array * pos, int turn)
+{
+	char input;
+	int converted;
+	int i;
+
+	input = getch();
+	converted = input -'0';
+
+	if ( input == 's' || input == 'S' ){
+		//salva
+		free(pos->d);
+		return 0;
+	}
+	if ( input == 27 ){
+		//Torna al menu
+		free(pos->d);
+		return 0;
+	}
+	if ( (converted >= 1 && converted <= 6) || input == ' '){
+
+		if ( input == ' ' && arrCountNotX(pos, -1) > 0){
+			// fine turno
+			i = 0;
+			while ( i < MAX_TURN){
+				if ( pos->d[i] != -1){
+					pos->d[i]--;
+				}
+				i++;
+			}
+
+			i = 0;
+			while ( i < MAX_TURN){
+				if ( pos->d[i] != -1){
+					arrFillavb(played, players->player[turn].run_cards.d[ pos->d[i] ] , 0);
+					players->player[turn].run_cards.d[ pos->d[i] ] = 0;
+				}
+				i++;
+			}
+			i = 0;
+			while( i < MAX_CARDS ){
+				if( players->player[turn].run_cards.d[i] == 0){
+					players->player[turn].run_cards.d[i] = GetCard(deck);
+				}
+				i++;
+			}
+			// resetta le posizioni
+			arrLoad(pos, -1);
+
+			// stampa le carte
+			printPlayed(played);
+			printTurn(players->player[turn].name);
+			printBet(&players->player[turn].bet_cards);
+			printHand(&players->player[turn].run_cards);
+
+			turn++;
+			// rimuove gli indicatori
+			GotoXY(0,22);
+			printf("                                                                             ");
+
+
+		} else if (input != ' ' ) {
+			playerGetCard( &players->player[turn], played, converted, pos);
+
+			printPlayed(played);
+			printTurn(players->player[turn].name);
+			printBet(&players->player[turn].bet_cards);
+			printHand(&players->player[turn].run_cards);
+		}
+	}
+
+	return turn;
+
+}
+
+int runPhase(players *players, array *played, positions *positions)
+{
+
+	return 0;
+}
+
+int setPositions()
+{
+
+
 	return 0;
 }
 

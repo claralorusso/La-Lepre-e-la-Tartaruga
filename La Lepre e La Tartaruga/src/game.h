@@ -35,9 +35,10 @@ players name_players(players *);
 int GetCard(deck *);
 players firstBetCard(players *);
 int secondBetCard(player , deck *, array *);
-array player_turn(player *, array *, int , array *);
+array playerGetCard(player *, array *, int , array *);
 int check_played_card(array *);
 int play(players *p, array *, deck *, int  );
+int playerTurn(players *players, array *played,deck *deck, array * pos, int turn);
 
 /// Funzioni di gestione
 void errorHandle(int error);
