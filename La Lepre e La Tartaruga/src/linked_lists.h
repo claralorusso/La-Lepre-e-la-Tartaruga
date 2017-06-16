@@ -14,29 +14,32 @@
 /** \struct node
  *  Struttura di una lista di interi
  */
-typedef struct node {
+typedef struct node{
 	/// Il dato contenente nel nodo
 	int data;
 	/// Indirizzo del nodo succesivo
 	struct node *next;
-} node;
+}node;
 
 /** \typedef node * list;
  *  Crea un tipo di dato lista
  */
 typedef node *list;
 
+
 list listInit(void);
-bool listEmpty(list);
-list listPush(list, int);
-list listAdd(list, int);
-list listDel(list, int);
-int listPrint(list);
-int listLenght(list);
-int listGetLast(list);
-list listDelLast(list);
-int listGetRand(list);
-void listDelete(list);
+bool listEmpty(list );
+list listPush(list , int );
+list listAdd(list , int );
+list listDel(list , int );
+int listPrint(list );
+int listLenght(list );
+int listGetLast(list );
+list listDelLast(list );
+int listGetRand(list );
+void listDelete(list );
 
 #endif /* LINKED_LISTS_H_ */
+
+
 

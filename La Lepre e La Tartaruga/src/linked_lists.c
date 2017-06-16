@@ -3,6 +3,7 @@
 #include <time.h>
 #include "linked_lists.h"
 
+
 /** \fn list init()
  *  Funzione di inizializzazione lista
  *  \return NULL
@@ -10,7 +11,8 @@
  *  Funzione di inizializzazione lista
  *  \return NULL
  */
-list listInit() {
+list listInit()
+{
 	return NULL;
 }
 
@@ -19,9 +21,8 @@ list listInit() {
  *  \param l lista da controllare
  *  \return 1 se vuota 0 se piena
  */
-bool listEmpty(list l) {
-	return l == NULL;
-}
+bool listEmpty(list l)
+{	return l == NULL; }
 
 /** \fn list listpush(list l, int el)
  *  Inserisce un elemento in testa alla lista
@@ -29,13 +30,15 @@ bool listEmpty(list l) {
  *  \param el elemento da inserire
  *  \return lista modificata
  */
-list listPush(list l, int el) {
+list listPush(list l, int el)
+{
 	node * temp;
-	temp = malloc(sizeof(node));
+	temp = malloc( sizeof(node) );
 	temp->data = el;
 	temp->next = l;
 	return temp;
 }
+
 
 /** \fn list listadd(list l, int el)
  *  Aggiunge un elemento alla fine della lista
@@ -43,11 +46,13 @@ list listPush(list l, int el) {
  *  \param el elemento da inserire
  *  \return lista modificata
  */
-list listAdd(list l, int el) {
+list listAdd(list l, int el)
+{
 	node * temp;
-	if (listEmpty(l) == true) {
+	if ( listEmpty( l ) == true ){
 
-		temp = malloc(sizeof(node));
+
+		temp = malloc( sizeof(node) );
 		temp->data = el;
 		temp->next = NULL;
 
@@ -59,75 +64,75 @@ list listAdd(list l, int el) {
 	return temp;
 }
 
-list listDel(list l, int el) {
-	node * temp, *current, *previous;
+list listDel( list l, int el)
+{
+	node * temp, * current, * previous;
 
-	if (listEmpty(l))
-		return l;
+	if ( listEmpty( l ) ) return l;
 
-	if (l->data == el) {
+	if ( l->data == el) {
 		temp = l;
 		l = l->next;
-		free(temp);
+		free( temp );
 	} else {
 		previous = NULL;
 		current = l;
-		while (current != NULL && current->data != el) {
+		while ( current != NULL && current->data != el) {
 			previous = current;
 			current = current->next;
 		}
-		if (current != NULL && current->data == el) {
+		if ( current != NULL && current->data == el ) {
 			temp = current;
 			previous->next = current->next;
-			free(temp);
+			free( temp );
 		}
 	}
 	return l;
 }
 
-int listGetLast(list l) {
+int listGetLast(list l)
+{
 	node * temp;
 	int last;
 
-	if (listEmpty(l))
-		return -1;
+	if ( listEmpty( l ) ) return -1;
 
-	if (l->next == NULL) {
+	if ( l->next == NULL) {
 		last = l->data;
 	} else {
 		temp = l;
-		while (temp->next != NULL) {
+		while ( temp->next != NULL){
 
 			temp = temp->next;
 
 		}
-		if (temp->next == NULL) {
+		if ( temp->next == NULL ){
 			last = temp->data;
 		}
 	}
 	return last;
 }
 
-list listDLast(list l) {
-	node * temp, *current, *previous;
+list listDLast( list l)
+{
+	node * temp, * current, * previous;
 
-	if (listEmpty(l))
-		return l;
+	if ( listEmpty( l ) ) return l;
 
-	if (l->next == NULL) {
+	if ( l->next == NULL) {
 		temp = l;
 		l = NULL;
-		free(temp);
+		free( temp );
 	} else {
 		previous = NULL;
 		current = l;
-		while (current->next != NULL) {
+		while ( current->next != NULL){
 			previous = current;
 			previous->next = current->next;
 			current = current->next;
 
 		}
-		if (current->next == NULL) {
+		if ( current->next == NULL ){
 			previous->next = NULL;
 			free(current);
 		}
@@ -140,12 +145,13 @@ list listDLast(list l) {
  *  \param l lista da stampare
  *  \return 0 se la funzione ha avuto buon fine, 1 in ogni altro caso
  */
-int listPrint(list l) {
+int listPrint(list l)
+{
 	int error;
 	error = 1;
-	while (l != NULL) {
+	while(l != NULL){
 
-		if (printf("%d ", l->data) != 0) {
+		if ( printf("%d ",l->data) != 0 ){
 			error = 0;
 		}
 		l = l->next;
@@ -153,34 +159,34 @@ int listPrint(list l) {
 	return error;
 }
 
-int listLenght(list l) {
+int listLenght(list l)
+{
 	int lenght;
 	lenght = 0;
-	while (l != NULL) {
+	while(l != NULL){
 		lenght++;
 		l = l->next;
 	}
 	return lenght;
 }
 
-int listGetRand(list l) {
+int listGetRand(list l)
+{
 	int el;
 	int count;
 	int n;
 	node * temp;
 
-	if (listEmpty(l)) {
-		return -1;
-	}
+	if (listEmpty(l) ){ return -1;}
 
 	n = 0;
 	srand(time(NULL));
 
 	count = rand() % listLenght(l);
 	temp = l;
-	while (temp->next != NULL) {
+	while ( temp->next != NULL ){
 		n++;
-		if (n == count) {
+		if ( n == count){
 			el = temp->data;
 		}
 		temp = temp->next;
@@ -189,13 +195,14 @@ int listGetRand(list l) {
 	return el;
 }
 
-void listDelete(list l) {
+void listDelete(list l){
 
 	node * current = l;
 	node * next;
 
 	// Cancella tutti gli elementi della lista
-	while (current != NULL) {
+	while (current != NULL)
+	{
 		next = current->next;
 		free(current);
 		current = next;

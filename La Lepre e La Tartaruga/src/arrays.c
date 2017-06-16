@@ -4,70 +4,76 @@
 //#include "tools.h"
 
 /// Inizializza l'array di dimensioni n
-array arrInit(array *arr, int n, bool allocated) {
-	if (allocated == true && n == arr->n) {
+array arrInit(array *arr, int n, bool allocated)
+{
+	if ( allocated == true && n == arr->n){
 		return *arr;
-	} else if (allocated == true) {
+	} else if ( allocated == true ){
 		arr->d = realloc(arr->d, n * sizeof(int));
 		arr->n = n;
 	}
-	if (allocated == false) {
-		arr->d = malloc(n * sizeof(int));
+	if ( allocated == false ) {
+		arr->d = malloc( n * sizeof(int) );
 		arr->n = n;
 	}
 	return *arr;
 }
 
 /// Inserisce il valore x in tutti gli elementi dell'array
-array arrLoad(array *arr, int x) {
+array arrLoad(array *arr, int x)
+{
 	int i = 0;
-	while (i < arr->n) {
-		arr->d[i] = x;
-		i++;
+	while (  i < arr->n ){
+			arr->d[i] = x;
+			i++;
 	}
 	return *arr;
 
 }
 /// Cerca l'elemento el nell'array
 ///Si presuppone un array già inizializzato
-int arrSearch(array *arr, int el) {
+int arrSearch(array *arr, int el)
+{
 	int i = 0;
-	while (i < arr->n) {
+	while (  i < arr->n ){
 
-		if (arr->d[i] == el) {
+		if( arr->d[i] == el){
 			return i;
 		}
 		i++;
-	}
+		}
 
 	return -1;
 }
 
 /// Stampa l'array
 /// Si presuppone un array già inizializzato
-void arrPrint(array *arr) {
+void arrPrint(array *arr)
+{
 	int i = 0;
-	while (i < arr->n) {
+	while (  i < arr->n ){
 
 		printf("%d ", arr->d[i]);
 		i++;
 	}
-	printf("\n");
+	printf("\n" );
 
-	return;
+	return ;
 }
 
 /// Riempie l' array al primo posto disponibile (indicato x) con el
-array arrFillavb(array *arr, int el, int x) {
+array arrFillavb(array  *arr, int el, int x)
+{
 	int i;
 
 	i = 0;
 
-	while (i < arr->n) {
-		if (arr->d[i] == x) {
+	while(i < arr->n)
+	{
+		if(arr->d[i] == x){
 			arr->d[i] = el;
 			i = arr->n;
-		} else {
+		}else {
 			i++;
 		}
 	}
@@ -75,13 +81,15 @@ array arrFillavb(array *arr, int el, int x) {
 }
 
 /// Conta tutti gli elementi diversi da x
-int arrCountNotX(array *arr, int x) {
+int arrCountNotX(array  *arr, int x)
+{
 	int i, sum;
 	sum = 0;
-	i = 0;
+	i=0;
 
-	while (i < arr->n) {
-		if (arr->d[i] != x) {
+	while(i < arr->n)
+	{
+		if(arr->d[i] != x){
 			sum++;
 		}
 		i++;
@@ -90,13 +98,14 @@ int arrCountNotX(array *arr, int x) {
 }
 
 /// Conta tutti le carte uguali a x
-int arrCountX(array *arr, int x) {
+int arrCountX(array *arr, int x )
+{
 	int sum, i;
 
 	sum = 0;
 	i = 0;
-	while (i < arr->n) {
-		if (arr->d[i] == x) {
+	while ( i < arr->n ){
+		if ( arr->d[i] == x ){
 			sum++;
 		}
 		i++;
