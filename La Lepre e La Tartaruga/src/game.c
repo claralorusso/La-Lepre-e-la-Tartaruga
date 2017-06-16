@@ -12,8 +12,7 @@
 #include "ia.h"
 #include "tools.h"
 
-int newGame(players *players, array *played, deck *deck, int *turn)
-{
+int newGame(players *players, array *played, deck *deck, int *turn) {
 	int i, j;
 
 	*turn = 0;
@@ -29,9 +28,9 @@ int newGame(players *players, array *played, deck *deck, int *turn)
 	firstBetCard(players);
 
 	j = 0;
-	while( j < players->n_players ){
+	while (j < players->n_players) {
 		i = 0;
-		while(i < MAX_CARDS){
+		while (i < MAX_CARDS) {
 
 			players->player[j].run_cards.d[i] = GetCard(deck);
 			i++;
@@ -49,59 +48,54 @@ int newGame(players *players, array *played, deck *deck, int *turn)
 	return 0;
 }
 
-int loadGame(void)
-{
+int loadGame(void) {
 
 	system("pause > nul");
 
 	return 0;
 }
 
-int settings(void)
-{
+int settings(void) {
 
 	system("pause > nul");
 	return 0;
 }
 
-int rules(void)
-{
+int rules(void) {
 	system("pause > nul");
 	return 0;
 
 }
 
-deck shuffle_deck( deck *deck )
-{
+deck shuffle_deck(deck *deck) {
 	int number;
 	srand(time(NULL));
 	deck->totals = arrInit(&deck->totals, 6, false);
 	deck->totals = arrLoad(&deck->totals, 0);
 
-
-	while ( deck->totals.d[0] < 81 ){
-		number = rand()% 5 + 1;
-		if (number == WOLF && deck->totals.d[1] < 16){
+	while (deck->totals.d[0] < 81) {
+		number = rand() % 5 + 1;
+		if (number == WOLF && deck->totals.d[1] < 16) {
 			deck->card_list = listAdd(deck->card_list, WOLF);
 			deck->totals.d[1]++;
 			deck->totals.d[0]++;
 		}
-		if (number == HARE && deck->totals.d[2] < 18){
+		if (number == HARE && deck->totals.d[2] < 18) {
 			deck->card_list = listAdd(deck->card_list, HARE);
 			deck->totals.d[2]++;
 			deck->totals.d[0]++;
 		}
-		if (number == TORTOISE && deck->totals.d[3] < 17){
+		if (number == TORTOISE && deck->totals.d[3] < 17) {
 			deck->card_list = listAdd(deck->card_list, TORTOISE);
 			deck->totals.d[3]++;
 			deck->totals.d[0]++;
 		}
-		if (number == LAMB && deck->totals.d[4] < 15){
+		if (number == LAMB && deck->totals.d[4] < 15) {
 			deck->card_list = listAdd(deck->card_list, LAMB);
 			deck->totals.d[4]++;
 			deck->totals.d[0]++;
 		}
-		if (number == FOX && deck->totals.d[5] < 15){
+		if (number == FOX && deck->totals.d[5] < 15) {
 			deck->card_list = listAdd(deck->card_list, FOX);
 			deck->totals.d[5]++;
 			deck->totals.d[0]++;
@@ -111,63 +105,68 @@ deck shuffle_deck( deck *deck )
 	return *deck;
 }
 
-players create_players(players *players, bool allocated)
-{
+players create_players(players *players, bool allocated) {
 	int i;
 
-	if ( allocated == false){
+	if (allocated == false) {
 
-		players->player = malloc( players->n_players * sizeof(player) );
+		players->player = malloc(players->n_players * sizeof(player));
 		i = 0;
-		while ( i < players->n_players ){
+		while (i < players->n_players) {
 
 			// crea giocatori di default
 			players->player[i].ai = false;
 
-			players->player[i].bet_cards = arrInit( &players->player[i].bet_cards, MAX_BETS, allocated);
-			players->player[i].bet_cards = arrLoad( &players->player[i].bet_cards, 0);
+			players->player[i].bet_cards = arrInit(
+					&players->player[i].bet_cards, MAX_BETS, allocated);
+			players->player[i].bet_cards = arrLoad(
+					&players->player[i].bet_cards, 0);
 
-			players->player[i].run_cards= arrInit( &players->player[i].run_cards, MAX_CARDS, allocated);
-			players->player[i].run_cards= arrLoad( &players->player[i].run_cards, 0);
+			players->player[i].run_cards = arrInit(
+					&players->player[i].run_cards, MAX_CARDS, allocated);
+			players->player[i].run_cards = arrLoad(
+					&players->player[i].run_cards, 0);
 
 			i++;
 		}
 	}
 
-	if ( allocated == true){
-		players->player = realloc(players->player, players->n_players * sizeof(player) );
+	if (allocated == true) {
+		players->player = realloc(players->player,
+				players->n_players * sizeof(player));
 		i = 0;
-		while ( i < players->n_players ){
+		while (i < players->n_players) {
 
 			// resetta gli array dei giocatori
-			players->player[i].bet_cards = arrInit( &players->player[i].bet_cards, MAX_BETS, allocated);
-			players->player[i].bet_cards = arrLoad( &players->player[i].bet_cards, 0);
+			players->player[i].bet_cards = arrInit(
+					&players->player[i].bet_cards, MAX_BETS, allocated);
+			players->player[i].bet_cards = arrLoad(
+					&players->player[i].bet_cards, 0);
 
-			players->player[i].run_cards= arrInit( &players->player[i].run_cards, MAX_CARDS, allocated);
-			players->player[i].run_cards= arrLoad( &players->player[i].run_cards, 0);
+			players->player[i].run_cards = arrInit(
+					&players->player[i].run_cards, MAX_CARDS, allocated);
+			players->player[i].run_cards = arrLoad(
+					&players->player[i].run_cards, 0);
 
 			i++;
 		}
 	}
-
 
 	return *players;
 }
 
-players name_players(players *players_d)
-{
+players name_players(players *players_d) {
 	int i;
 
-
 	i = 0;
-	while ( i < players_d->n_players ){
+	while (i < players_d->n_players) {
 
-		if (players_d->player[i].ai == false){
+		if (players_d->player[i].ai == false) {
 			strcpy(players_d->player[i].name, "Giocatore");
 			players_d->player[i].name[9] = 49 + i;
 			players_d->player[i].name[10] = '\0';
 
-		} else if (players_d->player[i].ai == true){
+		} else if (players_d->player[i].ai == true) {
 			strcpy(players_d->player[i].name, "I.A.       ");
 		}
 
@@ -177,8 +176,7 @@ players name_players(players *players_d)
 	return *players_d;
 }
 
-int GetCard(deck *deck_d)
-{
+int GetCard(deck *deck_d) {
 	int card;
 	card = 0;
 	node * temp;
@@ -188,7 +186,7 @@ int GetCard(deck *deck_d)
 	//deck_d->card_list = listdlast(temp);
 
 	card = listGetRand(temp);
-	deck_d->card_list = listDel( temp, card);
+	deck_d->card_list = listDel(temp, card);
 
 	deck_d->totals.d[card]--;
 	deck_d->totals.d[0]--;
@@ -196,12 +194,11 @@ int GetCard(deck *deck_d)
 	return card;
 }
 
-players firstBetCard(players *players_d)
-{
+players firstBetCard(players *players_d) {
 	int i, n;
 	array betcards;
 
-	betcards = arrInit(&betcards,5, false);
+	betcards = arrInit(&betcards, 5, false);
 	betcards.d[0] = WOLF;
 	betcards.d[1] = HARE;
 	betcards.d[2] = TORTOISE;
@@ -209,84 +206,83 @@ players firstBetCard(players *players_d)
 	betcards.d[4] = FOX;
 	i = 0;
 
-	while ( i < players_d->n_players ){
+	while (i < players_d->n_players) {
 		n = rand() % 5;
-		if ( betcards.d[n] != 0){
+		if (betcards.d[n] != 0) {
 			players_d->player[i].bet_cards.d[0] = betcards.d[n];
 			betcards.d[n] = 0;
 			i++;
 		}
 	}
 
-
 	return *players_d;
 }
 
-int secondBetCard(player player, deck *deck, array *played)
-{
+int secondBetCard(player player, deck *deck, array *played) {
 	int i, j, pos, input_value, previous;
 	char input;
 	array temp;
 	bool flag;
 
-	pos = - 1;
+	pos = -1;
 	arrInit(&temp, 7, false);
 	arrLoad(&temp, 0);
 
 	// carica il vettore temporaneo per la settima carta scommessa
 	i = 0;
-	while ( i < MAX_CARDS){
+	while (i < MAX_CARDS) {
 		temp.d[i] = player.run_cards.d[i];
 		i++;
 	}
 	temp.d[6] = GetCard(deck);
 	flag = true;
-	while( flag == true){
+	while (flag == true) {
 
-			printPlayed(played);
-			printTurn(player.name);
-			printBet(&player.bet_cards);
-			printHand(&temp);
+		printPlayed(played);
+		printTurn(player.name);
+		printBet(&player.bet_cards);
+		printHand(&temp);
 		/*
-		if (player.ai == true){
-			// ia2betcard
-		} else */if ( player.ai == false || player.ai == true ) {
+		 if (player.ai == true){
+		 // ia2betcard
+		 } else */if (player.ai == false || player.ai == true) {
 
 			input = getch();
-			input_value = input -'0';
+			input_value = input - '0';
 
-			if ( input == 's' || input == 'S' ){ // in caso venga premuto il tasto per salvare
-				//salva
+			if (input == 's' || input == 'S') { // in caso venga premuto il tasto per salvare
+			//salva
 				return 2;
 			}
-			if ( input == 27 ){ // in caso venga premuto il tasto esci
+			if (input == 27) { // in caso venga premuto il tasto esci
 				//Torna al menu
 				return 1;
 			}
-			if ( (input_value >= 1 && input_value <= 7)){
+			if ((input_value >= 1 && input_value <= 7)) {
 
 				pos = input_value - 1;
 
-				if( player.bet_cards.d[1] == 0 ){
+				if (player.bet_cards.d[1] == 0) {
 					// Seleziona la carta
 					player.bet_cards.d[1] = temp.d[pos];
 					printPointer(pos, false);
 
-				}else if ( previous == pos ){
+				} else if (previous == pos) {
 					// Rimuove il puntatore e la carta
 					printPointer(pos, true);
 					player.bet_cards.d[1] = 0;
 
-				}else if ( player.bet_cards.d[1] != 0 ){
+				} else if (player.bet_cards.d[1] != 0) {
 					// Sposta l'indicatore
 					printPointer(previous, true);
 					player.bet_cards.d[1] = temp.d[pos];
 					printPointer(pos, false);
 				}
 			}
-			if ( player.bet_cards.d[1] != 0 && input == ' ' ){
-				GotoXY(0,22);
-				printf("                                                                             ");
+			if (player.bet_cards.d[1] != 0 && input == ' ') {
+				GotoXY(0, 22);
+				printf(
+						"                                                                             ");
 				temp.d[pos] = 0;
 				flag = false;
 			}
@@ -297,8 +293,8 @@ int secondBetCard(player player, deck *deck, array *played)
 	// Riporta i valori nel vettore del giocatore
 	i = 0;
 	j = 0;
-	while ( i < 7){
-		if ( temp.d[i] != 0){
+	while (i < 7) {
+		if (temp.d[i] != 0) {
 			player.run_cards.d[j] = temp.d[i];
 			j++;
 		}
@@ -308,8 +304,7 @@ int secondBetCard(player player, deck *deck, array *played)
 	return 0;
 }
 
-array player_turn(player *player, array *played, int input, array *pos)
-{
+array player_turn(player *player, array *played, int input, array *pos) {
 
 	bool flag;
 	int i, count;
@@ -321,20 +316,19 @@ array player_turn(player *player, array *played, int input, array *pos)
 	flag = false;
 
 	//Impedisce di giocare carte di animali diversi
-	if(count >= 1)
-	{
+	if (count >= 1) {
 		check = check_played_card(pos);
-		played_card = player->run_cards.d[check-1];
+		played_card = player->run_cards.d[check - 1];
 	} else {
-		played_card = player->run_cards.d[input-1];
+		played_card = player->run_cards.d[input - 1];
 	}
 
 	i = 0;
-	while ( i < MAX_TURN){
+	while (i < MAX_TURN) {
 
-		if (pos->d[i] == input){
+		if (pos->d[i] == input) {
 			flag = true;
-			printPointer(input-1, flag);
+			printPointer(input - 1, flag);
 			pos->d[i] = -1;
 			count--;
 			i = MAX_TURN;
@@ -344,19 +338,22 @@ array player_turn(player *player, array *played, int input, array *pos)
 		}
 	}
 
-	if ( (arrCountX(played, played_card) + count) < MAX_TURN && flag == false  && played_card == player->run_cards.d[input-1] && (arrCountNotX(played, 0)+ count) != 8 )
-	{
+	if ((arrCountX(played, played_card) + count) < MAX_TURN && flag == false
+			&& played_card == player->run_cards.d[input - 1]
+			&& (arrCountNotX(played, 0) + count) != 8) {
 		count++;
 		arrFillavb(pos, input, -1);
 		count = arrCountNotX(pos, -1);
-		printPointer(input-1, flag);
-	} else if ((arrCountX(played, played_card) + count) < MAX_TURN && flag == false  && count == 0 && (arrCountNotX(played, 0)+ count) != 8){
+		printPointer(input - 1, flag);
+	} else if ((arrCountX(played, played_card) + count) < MAX_TURN
+			&& flag == false && count == 0
+			&& (arrCountNotX(played, 0) + count) != 8) {
 		count++;
 		arrFillavb(pos, input, -1);
 		count = arrCountNotX(pos, -1);
-		printPointer(input-1, flag);
+		printPointer(input - 1, flag);
 
-	}else if(flag == false){
+	} else if (flag == false) {
 		//GotoXY(40,11);
 		//printf("Non puoi giocare questa carta!");
 		playerErrors();
@@ -364,20 +361,16 @@ array player_turn(player *player, array *played, int input, array *pos)
 
 	flag = false;
 
-
 	return *pos;
 }
 
 //Carta selezionata, su cui si deve basare la selezione delle successive carte
-int check_played_card(array *arr)
-{
+int check_played_card(array *arr) {
 	int px;
 	int i = 0;
 
-	while(i < 4)
-	{
-		if(arr->d[i] != -1)
-		{
+	while (i < 4) {
+		if (arr->d[i] != -1) {
 			px = arr->d[i];
 			i = 4;
 		}
@@ -387,8 +380,7 @@ int check_played_card(array *arr)
 
 }
 
-int play(players *players, array *played, deck *deck, int turn )
-{
+int play(players *players, array *played, deck *deck, int turn) {
 	char input;
 	int converted;
 	array pos;
@@ -398,16 +390,16 @@ int play(players *players, array *played, deck *deck, int turn )
 
 	// Scelta delle seconde carte scommessa
 	i = 0;
-	while( i < players->n_players ){
+	while (i < players->n_players) {
 
 		check = secondBetCard(players->player[i], deck, played);
 
-		if ( check == 1){
+		if (check == 1) {
 			// esci
 			free(pos.d);
 			return 0;
 
-		} else if ( check == 2){
+		} else if (check == 2) {
 			//salva
 			free(pos.d);
 			return 0;
@@ -423,10 +415,10 @@ int play(players *players, array *played, deck *deck, int turn )
 	printf("     ");
 
 	// resta nel ciclo finchè non si attiva la fase di corsa
-	while( arrCountNotX( played, 0 )  < 8 ){
+	while (arrCountNotX(played, 0) < 8) {
 		turn = 0;
 		// i giocatori giocano i loro turni
-		while ( turn < players->n_players ){
+		while (turn < players->n_players) {
 			// stampa le carte
 			printPlayed(played);
 			printTurn(players->player[turn].name);
@@ -434,44 +426,47 @@ int play(players *players, array *played, deck *deck, int turn )
 			printHand(&players->player[turn].run_cards);
 
 			// caso in cui il giocatore sia umano
-			while ( players->player[turn].ai == false){
+			while (players->player[turn].ai == false) {
 				input = getch();
-				converted = input -'0';
+				converted = input - '0';
 
-				if ( input == 's' || input == 'S' ){
+				if (input == 's' || input == 'S') {
 					//salva
 					free(pos.d);
 					return 0;
 				}
-				if ( input == 27 ){
+				if (input == 27) {
 					//Torna al menu
 					free(pos.d);
 					return 0;
 				}
-				if ( (converted >= 1 && converted <= 6) || input == ' '){
+				if ((converted >= 1 && converted <= 6) || input == ' ') {
 
-					if ( input == ' ' && arrCountNotX(&pos, -1) > 0){
+					if (input == ' ' && arrCountNotX(&pos, -1) > 0) {
 						// fine turno
 						i = 0;
-						while ( i < MAX_TURN){
-							if ( pos.d[i] != -1){
+						while (i < MAX_TURN) {
+							if (pos.d[i] != -1) {
 								pos.d[i]--;
 							}
 							i++;
 						}
 
 						i = 0;
-						while ( i < MAX_TURN){
-							if ( pos.d[i] != -1){
-								arrFillavb(played, players->player[turn].run_cards.d[ pos.d[i] ] , 0);
-								players->player[turn].run_cards.d[ pos.d[i] ] = 0;
+						while (i < MAX_TURN) {
+							if (pos.d[i] != -1) {
+								arrFillavb(played,
+										players->player[turn].run_cards.d[pos.d[i]],
+										0);
+								players->player[turn].run_cards.d[pos.d[i]] = 0;
 							}
 							i++;
 						}
 						i = 0;
-						while( i < MAX_CARDS ){
-							if( players->player[turn].run_cards.d[i] == 0){
-								players->player[turn].run_cards.d[i] = GetCard(deck);
+						while (i < MAX_CARDS) {
+							if (players->player[turn].run_cards.d[i] == 0) {
+								players->player[turn].run_cards.d[i] = GetCard(
+										deck);
 							}
 							i++;
 						}
@@ -485,12 +480,14 @@ int play(players *players, array *played, deck *deck, int turn )
 						printHand(&players->player[turn].run_cards);
 
 						// rimuove gli indicatori
-						GotoXY(0,22);
-						printf("                                                                             ");
+						GotoXY(0, 22);
+						printf(
+								"                                                                             ");
 						turn++;
 
-					} else if (input != ' ' ) {
-						player_turn( &players->player[turn], played, converted, &pos);
+					} else if (input != ' ') {
+						player_turn(&players->player[turn], played, converted,
+								&pos);
 
 						printPlayed(played);
 						printTurn(players->player[turn].name);
@@ -501,10 +498,12 @@ int play(players *players, array *played, deck *deck, int turn )
 				}
 			}
 			// caso in cui il giocatore sia ia
-			if (players->player[turn].ai == true){
+			if (players->player[turn].ai == true) {
 				// turno dell'ia
 				Sleep(1000);
-				iamain( &players->player[turn].run_cards, played, players->player[turn].bet_cards.d[0], players->player[turn].bet_cards.d[1] );
+				iamain(&players->player[turn].run_cards, played,
+						players->player[turn].bet_cards.d[0],
+						players->player[turn].bet_cards.d[1]);
 
 				// stampa le carte
 				printPlayed(played);
@@ -512,8 +511,8 @@ int play(players *players, array *played, deck *deck, int turn )
 				printBet(&players->player[turn].bet_cards);
 
 				i = 0;
-				while( i < MAX_CARDS ){
-					if( players->player[turn].run_cards.d[i] == 0){
+				while (i < MAX_CARDS) {
+					if (players->player[turn].run_cards.d[i] == 0) {
 						players->player[turn].run_cards.d[i] = GetCard(deck);
 						printHand(&players->player[turn].run_cards);
 					}
@@ -535,9 +534,8 @@ int play(players *players, array *played, deck *deck, int turn )
 	return 0;
 }
 
-void errorHandle(int error)
-{
-	if ( error == 1){
+void errorHandle(int error) {
+	if (error == 1) {
 		printErrorGeneric();
 
 	} else {
@@ -545,11 +543,10 @@ void errorHandle(int error)
 
 	}
 	system("pause >nul");
-	return ;
+	return;
 }
 
-int initConsole(void)
-{
+int initConsole(void) {
 	system("mode 80,25");
 
 	hidecursor();

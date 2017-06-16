@@ -20,9 +20,9 @@ void printRef();
 
 void printStatics();
 
-void printTurn(char []);
+void printTurn(char[]);
 
-void printPointer(int , bool );
+void printPointer(int, bool);
 
 void playerErrors();
 

@@ -8,8 +8,7 @@
 #include "src/gui.h"
 #include "src/tools.h"
 
-int main()
-{
+int main() {
 	int menu, err; // menu -> input dell'utente - err -> variabile per la gestione degli errori
 	int turn;
 	players players;
@@ -29,13 +28,13 @@ int main()
 	players.player[1].ai = true;
 	name_players(&players);
 	allocated = true;
-	while ( err == 0){
+	while (err == 0) {
 
 		printTitle();
 		printMenu();
 
 		menu = getch();
-		if (menu == '1'){
+		if (menu == '1') {
 
 			system("cls");
 
@@ -48,22 +47,22 @@ int main()
 			name_players(&players);
 
 		}
-		if (menu == '2'){
+		if (menu == '2') {
 
 			system("cls");
 			err = loadGame();
 		}
-		if (menu == '3'){
+		if (menu == '3') {
 
 			system("cls");
 			err = settings();
 		}
-		if (menu == '4'){
+		if (menu == '4') {
 
 			system("cls");
 			err = rules();
 		}
-		if (menu == 27 ){ // esci
+		if (menu == 27) { // esci
 			return 0;
 
 		} else {
@@ -75,7 +74,7 @@ int main()
 
 	/* Elimina tutti gli array in memoria*/
 	listDelete(deck.card_list);
-	for (int i = 0; i < players.n_players;i++){
+	for (int i = 0; i < players.n_players; i++) {
 		free(players.player[i].bet_cards.d);
 		free(players.player[i].run_cards.d);
 		free(players.player[i].name);
@@ -85,6 +84,4 @@ int main()
 
 	return 0;
 }
-
-
 
