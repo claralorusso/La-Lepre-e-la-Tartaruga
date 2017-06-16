@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <windows.h>
+#include <conio.h>
 #include "gui.h"
 #include "globals.h"
 #include "tools.h"
@@ -51,13 +52,13 @@ static char reference5[] = "F - Volpe";
 /// Percorso
 static char field[] =
 "           :______::______::______::______::____:\n"
-"      START|      ||      ||      ||  ||  ||    |\n"
-"           :______::______::______::__||__:|    |\n"
+"      START|      ||      ||      ||   |  ||    |\n"
+"           :______::______::______::___|__:|    |\n"
 "                                           :____:\n"
 "                                           :____:\n"
 " E :______::______::______::______::______:|    |\n"
-" N |      ||      ||      ||  ||  ||      ||    |\n"
-" D :______::______::______::__||__::______::____:\n";
+" N |      ||      ||      ||   |  ||      ||    |\n"
+" D :______::______::______::___|__::______::____:\n";
 
 /// Comandi
 static char commands[] = "      (1 - 6) Selezione Carta (Spazio) Fine Turno (S) Salva          (ESC) Esci";
@@ -251,7 +252,7 @@ void printRoute(void)
 
 void printPointer(int pos, bool flag)
 {
-	positions pointers;
+	coord * pointers;
 
 	pointers = malloc(7 * sizeof(coord));
 
@@ -283,6 +284,268 @@ void printPointer(int pos, bool flag)
 
 
 
+}
+int printAnimal(int animal, int pos)
+{
+	movepos get;
+
+	setPositions(&get);
+
+	if (pos == 0){
+		GotoXY(get.animals[0].xy[pos].x, get.animals[0].xy[pos].y);
+		putch('W');
+		GotoXY(get.animals[1].xy[pos].x, get.animals[1].xy[pos].y);
+		putch('H');
+		GotoXY(get.animals[2].xy[pos].x, get.animals[2].xy[pos].y);
+		putch('T');
+		GotoXY(get.animals[3].xy[pos].x, get.animals[3].xy[pos].y);
+		putch('L');
+		GotoXY(get.animals[4].xy[pos].x, get.animals[4].xy[pos].y);
+		putch('F');
+	} else {
+		if (animal == WOLF){
+			GotoXY(get.animals[WOLF-1].xy[pos].x, get.animals[WOLF-1].xy[pos].y);
+			putch('W');
+			GotoXY(get.animals[WOLF-1].xy[pos - 1].x, get.animals[WOLF-1].xy[pos - 1].y);
+			putch(' ');
+		}
+		if (animal == HARE){
+			GotoXY(get.animals[HARE-1].xy[pos].x, get.animals[HARE-1].xy[pos].y);
+			putch('H');
+			GotoXY(get.animals[HARE-1].xy[pos - 1].x, get.animals[HARE-1].xy[pos - 1].y);
+			putch(' ');
+		}
+		if (animal == TORTOISE){
+			GotoXY(get.animals[TORTOISE-1].xy[pos].x, get.animals[TORTOISE-1].xy[pos].y);
+			putch('T');
+			GotoXY(get.animals[TORTOISE-1].xy[pos - 1].x, get.animals[TORTOISE-1].xy[pos - 1].y);
+			putch(' ');
+		}
+		if (animal == LAMB){
+			GotoXY(get.animals[LAMB-1].xy[pos].x, get.animals[LAMB-1].xy[pos].y);
+			putch('L');
+			GotoXY(get.animals[LAMB-1].xy[pos -1].x, get.animals[LAMB-1].xy[pos - 1].y);
+			putch(' ');
+		}
+		if (animal == FOX){
+			GotoXY(get.animals[FOX-1].xy[pos].x, get.animals[FOX-1].xy[pos].y);
+			putch('F');
+			GotoXY(get.animals[FOX-1].xy[pos -1].x, get.animals[FOX-1].xy[pos - 1].y);
+			putch(' ');
+		}
+	}
+
+return 0;
+}
+void allocPositions(movepos *set)
+{
+	int i;
+
+	set->animals = malloc( 5 * sizeof(positions) );
+	i = 0;
+	while(i < 5){
+		set->animals[i].xy = malloc( 12 * sizeof(coord) );
+		i++;
+	}
+}
+void setPositions(movepos *set)
+{
+	if ( sizeof(set->animals) < ( 12 * sizeof(coord) ) ){
+		allocPositions(set);
+	}
+
+	/* Posizioni Lupo*/
+	//start
+	set->animals[WOLF - 1].xy[0].x = 3;
+	set->animals[WOLF - 1].xy[0].y = 0;
+	// Posizione 1
+	set->animals[WOLF - 1].xy[1].x = 12;
+	set->animals[WOLF - 1].xy[1].y = 2;
+	// Posizione 2
+	set->animals[WOLF - 1].xy[2].x = 20;
+	set->animals[WOLF - 1].xy[2].y = 2;
+	// Posizione 3
+	set->animals[WOLF - 1].xy[3].x = 28;
+	set->animals[WOLF - 1].xy[3].y = 2;
+	// Posizione 4
+	set->animals[WOLF - 1].xy[4].x = 36;
+	set->animals[WOLF - 1].xy[4].y = 2;
+	// Posizione 5
+	set->animals[WOLF - 1].xy[5].x = 44;
+	set->animals[WOLF - 1].xy[5].y = 2;
+	// Posizione 6
+	set->animals[WOLF - 1].xy[6].x = 44;
+	set->animals[WOLF - 1].xy[6].y = 6;
+	// Posizione 7
+	set->animals[WOLF - 1].xy[7].x = 36;
+	set->animals[WOLF - 1].xy[7].y = 7;
+	// Posizione 8
+	set->animals[WOLF - 1].xy[8].x = 28;
+	set->animals[WOLF - 1].xy[8].y = 7;
+	// Posizione 9
+	set->animals[WOLF - 1].xy[9].x = 20;
+	set->animals[WOLF - 1].xy[9].y = 7;
+	// Posizione 10
+	set->animals[WOLF - 1].xy[10].x = 12;
+	set->animals[WOLF - 1].xy[10].y = 7;
+	// Posizione 11
+	set->animals[WOLF - 1].xy[11].x = 4;
+	set->animals[WOLF - 1].xy[11].y = 7;
+
+	/* Posizioni Lepre*/
+	//start
+	set->animals[HARE - 1].xy[0].x = 3;
+	set->animals[HARE - 1].xy[0].y = 1;
+	// Posizione 1
+	set->animals[HARE - 1].xy[1].x = 13;
+	set->animals[HARE - 1].xy[1].y = 2;
+	// Posizione 2
+	set->animals[HARE - 1].xy[2].x = 21;
+	set->animals[HARE - 1].xy[2].y = 2;
+	// Posizione 3
+	set->animals[HARE - 1].xy[3].x = 29;
+	set->animals[HARE - 1].xy[3].y = 2;
+	// Posizione 4
+	set->animals[HARE - 1].xy[4].x = 37;
+	set->animals[HARE - 1].xy[4].y = 2;
+	// Posizione 5
+	set->animals[HARE - 1].xy[5].x = 45;
+	set->animals[HARE - 1].xy[5].y = 2;
+	// Posizione 6
+	set->animals[HARE - 1].xy[6].x = 45;
+	set->animals[HARE - 1].xy[6].y = 6;
+	// Posizione 7
+	set->animals[HARE - 1].xy[7].x = 37;
+	set->animals[HARE - 1].xy[7].y = 7;
+	// Posizione 8
+	set->animals[HARE - 1].xy[8].x = 29;
+	set->animals[HARE - 1].xy[8].y = 7;
+	// Posizione 9
+	set->animals[HARE - 1].xy[9].x = 21;
+	set->animals[HARE - 1].xy[9].y = 7;
+	// Posizione 10
+	set->animals[HARE - 1].xy[10].x = 13;
+	set->animals[HARE - 1].xy[10].y = 7;
+	// Posizione 11
+	set->animals[HARE - 1].xy[11].x = 5;
+	set->animals[HARE - 1].xy[11].y = 7;
+
+	/* Posizioni Tartaruga*/
+	//start
+	set->animals[TORTOISE - 1].xy[0].x = 3;
+	set->animals[TORTOISE - 1].xy[0].y = 2;
+	// Posizione 1
+	set->animals[TORTOISE - 1].xy[1].x = 14;
+	set->animals[TORTOISE - 1].xy[1].y = 2;
+	// Posizione 2
+	set->animals[TORTOISE - 1].xy[2].x = 22;
+	set->animals[TORTOISE - 1].xy[2].y = 2;
+	// Posizione 3
+	set->animals[TORTOISE - 1].xy[3].x = 30;
+	set->animals[TORTOISE - 1].xy[3].y = 2;
+	// Posizione 4
+	set->animals[TORTOISE - 1].xy[4].x = 38;
+	set->animals[TORTOISE - 1].xy[4].y = 2;
+	// Posizione 5
+	set->animals[TORTOISE - 1].xy[5].x = 46;
+	set->animals[TORTOISE - 1].xy[5].y = 2;
+	// Posizione 6
+	set->animals[TORTOISE - 1].xy[6].x = 46;
+	set->animals[TORTOISE - 1].xy[6].y = 6;
+	// Posizione 7
+	set->animals[TORTOISE - 1].xy[7].x = 38;
+	set->animals[TORTOISE - 1].xy[7].y = 7;
+	// Posizione 8
+	set->animals[TORTOISE - 1].xy[8].x = 30;
+	set->animals[TORTOISE - 1].xy[8].y = 7;
+	// Posizione 9
+	set->animals[TORTOISE - 1].xy[9].x = 22;
+	set->animals[TORTOISE - 1].xy[9].y = 7;
+	// Posizione 10
+	set->animals[TORTOISE - 1].xy[10].x = 14;
+	set->animals[TORTOISE - 1].xy[10].y = 7;
+	// Posizione 11
+	set->animals[TORTOISE - 1].xy[11].x = 6;
+	set->animals[TORTOISE - 1].xy[11].y = 7;
+
+	/* Posizioni Lepre*/
+	//start
+	set->animals[LAMB - 1].xy[0].x = 3;
+	set->animals[LAMB - 1].xy[0].y = 3;
+	// Posizione 1
+	set->animals[LAMB - 1].xy[1].x = 15;
+	set->animals[LAMB - 1].xy[1].y = 2;
+	// Posizione 2
+	set->animals[LAMB - 1].xy[2].x = 23;
+	set->animals[LAMB - 1].xy[2].y = 2;
+	// Posizione 3
+	set->animals[LAMB - 1].xy[3].x = 31;
+	set->animals[LAMB - 1].xy[3].y = 2;
+	// Posizione 4
+	set->animals[LAMB - 1].xy[4].x = 40;
+	set->animals[LAMB - 1].xy[4].y = 2;
+	// Posizione 5
+	set->animals[LAMB - 1].xy[5].x = 47;
+	set->animals[LAMB - 1].xy[5].y = 2;
+	// Posizione 6
+	set->animals[LAMB - 1].xy[6].x = 47;
+	set->animals[LAMB - 1].xy[6].y = 6;
+	// Posizione 7
+	set->animals[LAMB - 1].xy[7].x = 39;
+	set->animals[LAMB - 1].xy[7].y = 7;
+	// Posizione 8
+	set->animals[LAMB - 1].xy[8].x = 32;
+	set->animals[LAMB - 1].xy[8].y = 7;
+	// Posizione 9
+	set->animals[LAMB - 1].xy[9].x = 23;
+	set->animals[LAMB - 1].xy[9].y = 7;
+	// Posizione 10
+	set->animals[LAMB - 1].xy[10].x = 15;
+	set->animals[LAMB - 1].xy[10].y = 7;
+	// Posizione 11
+	set->animals[LAMB - 1].xy[11].x = 7;
+	set->animals[LAMB - 1].xy[11].y = 7;
+
+
+	/* Posizioni Volpe*/
+	//start
+	set->animals[FOX - 1].xy[0].x = 3;
+	set->animals[FOX - 1].xy[0].y = 4;
+	// Posizione 1
+	set->animals[FOX - 1].xy[1].x = 16;
+	set->animals[FOX - 1].xy[1].y = 2;
+	// Posizione 2
+	set->animals[FOX - 1].xy[2].x = 24;
+	set->animals[FOX - 1].xy[2].y = 2;
+	// Posizione 3
+	set->animals[FOX - 1].xy[3].x = 32;
+	set->animals[FOX - 1].xy[3].y = 2;
+	// Posizione 4
+	set->animals[FOX - 1].xy[4].x = 41;
+	set->animals[FOX - 1].xy[4].y = 2;
+	// Posizione 5
+	set->animals[FOX - 1].xy[5].x = 46;
+	set->animals[FOX - 1].xy[5].y = 3;
+	// Posizione 6
+	set->animals[FOX - 1].xy[6].x = 46;
+	set->animals[FOX - 1].xy[6].y = 7;
+	// Posizione 7
+	set->animals[FOX - 1].xy[7].x = 40;
+	set->animals[FOX - 1].xy[7].y = 7;
+	// Posizione 8
+	set->animals[FOX - 1].xy[8].x = 33;
+	set->animals[FOX - 1].xy[8].y = 7;
+	// Posizione 9
+	set->animals[FOX - 1].xy[9].x = 24;
+	set->animals[FOX - 1].xy[9].y = 7;
+	// Posizione 10
+	set->animals[FOX - 1].xy[10].x = 16;
+	set->animals[FOX - 1].xy[10].y = 7;
+	// Posizione 11
+	set->animals[FOX - 1].xy[11].x = 8;
+	set->animals[FOX - 1].xy[11].y = 7;
+
+	return ;
 }
 
 void playerErrors()

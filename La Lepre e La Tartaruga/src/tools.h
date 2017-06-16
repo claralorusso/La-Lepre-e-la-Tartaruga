@@ -8,7 +8,10 @@ typedef struct coord{
 	int y;
 }coord;
 
-typedef coord *positions;
+typedef struct positions{
+	coord *xy;
+	int npos;
+}positions;
 
 
 

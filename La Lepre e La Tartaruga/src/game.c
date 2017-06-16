@@ -40,6 +40,8 @@ int newGame(players *players, array *played, deck *deck, int *turn)
 	}
 	printRoute();
 
+	printAnimal(0, 0);
+
 	printStatics();
 
 	printRef();
@@ -51,6 +53,18 @@ int newGame(players *players, array *played, deck *deck, int *turn)
 
 int loadGame(void)
 {
+
+
+	printRoute();
+
+	printAnimal(0, 0);
+	for(int j = 0; j < 5;j++){
+		for(int i = 0; i < 12;i++){
+			printAnimal(j+1, i);
+			system("pause > nul");
+		}
+	}
+
 
 	system("pause > nul");
 
@@ -391,8 +405,7 @@ int play(players *players, array *played, deck *deck, int turn )
 {
 	//char input;
 	//int converted;
-	positions positions;
-	positions = malloc( 11 * sizeof(coord) );
+
 	array pos;
 	pos = arrInit(&pos, 4, false);
 	pos = arrLoad(&pos, -1);
@@ -424,13 +437,9 @@ int play(players *players, array *played, deck *deck, int turn )
 	GotoXY(44, 21);
 	printf("     ");
 
-	// resta nel ciclo finchè non si attiva la fase di corsa
-	if( arrCountNotX( played, 0 )  < 8
-		|| arrCountX(played, WOLF)
-		|| arrCountX(played, HARE)
-		|| arrCountX(played, TORTOISE)
-		|| arrCountX(played, LAMB)
-		|| arrCountX(played, FOX) ){
+	// resta nel ciclo finchè non finisce la partita
+	while(1){
+
 		turn = 0;
 		// i giocatori giocano i loro turni
 		while ( turn < players->n_players ){
@@ -471,9 +480,19 @@ int play(players *players, array *played, deck *deck, int turn )
 				turn++;
 			}
 
-		} // ciclo secondario
+		} // ciclo Giocatori
+		if( arrCountNotX(played, 0) == 8
+		||arrCountX(played, WOLF) == 4
+		||arrCountX(played, HARE) == 4
+		||arrCountX(played, TORTOISE) == 4
+		||arrCountX(played, LAMB) == 4
+		||arrCountX(played, FOX) == 4 ) {
 
-	} // ciclo principale
+			runPhase(players, played);
+		}
+
+
+	} // fine partita
 
 	free(pos.d);
 	return 0;
@@ -554,18 +573,68 @@ int playerTurn(players *players, array *played,deck *deck, array * pos, int turn
 
 }
 
-int runPhase(players *players, array *played, positions *positions)
+int runPhase(players *players, array *played)
 {
+	array path;
+	array run;
+	int move;
+	arrInit( &path, 11, true);
+	arrLoad( &path,0);
+	arrInit( &run, 6, true);
+	arrLoad( &run,0);
+	path.d[3] = 1;
+	path.d[7] = 1;
+
+	move = 0;
+	//spostamento lupo
+	if ( arrCountX(played, WOLF) == 1 || arrCountX(played, WOLF) == 2 ){
+		move = 1;
+		printAnimal(WOLF, move + run.d[WOLF] );
+		run.d[WOLF] += move;
+
+	} else {
+		move = arrCountX(played, WOLF) - 1;
+		printAnimal(WOLF, move + run.d[WOLF] );
+		run.d[WOLF] += move;
+	}
+
+	//spostamento lepre
+	if ( arrCountX(played, HARE) > 0  ) {
+		move = 2;
+		printAnimal(HARE, move + run.d[HARE] );
+		run.d[HARE] += move;
+	}
+
+	//spostamento tartaruga
+	if ( arrCountX(played, TORTOISE) >= 0  &&  arrCountX(played, TORTOISE) <= 3 ) {
+		move = 1;
+		printAnimal(TORTOISE, move + run.d[TORTOISE] );
+		run.d[TORTOISE] += move;
+	} else {
+		move = 2;
+		printAnimal(TORTOISE, move + run.d[TORTOISE] );
+		run.d[TORTOISE] += move;
+	}
+
+	//spostamento agnello
+	if ( arrCountX(played, LAMB) > 0 ) {
+		move = arrCountX(played, LAMB) + 1;
+		printAnimal(LAMB, move + run.d[LAMB] );
+		run.d[LAMB] += move;
+	}
+	//spostamento volpe
+	if ( arrCountX(played, FOX) > 0 ) {
+		move = arrCountX(played, FOX);
+		printAnimal(FOX, move + run.d[FOX] );
+		run.d[FOX] += move;
+	}
+
+	arrLoad( played,0);
+
 
 	return 0;
 }
 
-int setPositions()
-{
-
-
-	return 0;
-}
 
 void errorHandle(int error)
 {

@@ -6,6 +6,7 @@
 /// Inizializza l'array di dimensioni n
 array arrInit(array *arr, int n, bool allocated)
 {
+
 	if ( allocated == true && n == arr->n){
 		return *arr;
 	} else if ( allocated == true ){
@@ -16,6 +17,16 @@ array arrInit(array *arr, int n, bool allocated)
 		arr->d = malloc( n * sizeof(int) );
 		arr->n = n;
 	}
+
+	 /*
+	if ( sizeof(arr->d) < (sizeof(int) * n) ){
+		arr->d = malloc( n * sizeof(int) );
+		arr->n = n;
+	} else {
+		arr->d = realloc(arr->d, n * sizeof(int));
+		arr->n = n;
+	}
+ */
 	return *arr;
 }
 

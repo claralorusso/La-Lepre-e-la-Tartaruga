@@ -4,6 +4,10 @@
 #include "arrays.h"
 #include "tools.h"
 
+typedef struct movepos{
+	positions *animals;
+}movepos;
+
 void printHand(array *);
 
 void printBet(array *);
@@ -23,6 +27,12 @@ void printStatics();
 void printTurn(char []);
 
 void printPointer(int , bool );
+
+void allocPositions(movepos *set);
+
+void setPositions(movepos *set);
+
+int printAnimal(int animal, int pos);
 
 void playerErrors();
 
