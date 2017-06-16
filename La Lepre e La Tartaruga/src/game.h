@@ -6,7 +6,7 @@
 #include "globals.h"
 
 typedef struct player{
-	char name[11];
+	char name[20];
 	bool ai;
 	array bet_cards;
 	array run_cards;

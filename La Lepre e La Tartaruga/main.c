@@ -25,12 +25,10 @@ int main()
 
 	/* Setta le impostazioni a parametri di default */
 	players.n_players = 2;
-	players = create_players(&players, allocated);
+	create_players(&players, allocated);
 	players.player[1].ai = true;
-	players = name_players(&players);
-
-
-
+	name_players(&players);
+	allocated = true;
 	while ( err == 0){
 
 		printTitle();
@@ -45,10 +43,10 @@ int main()
 			err = play(&players, &played, &deck, turn);
 
 			listDelete(deck.card_list);
-			players = create_players(&players, allocated);
-			players.player[1].ai = true;
-			players = name_players(&players);
-			free(played.d);
+
+			create_players(&players, allocated);
+			name_players(&players);
+
 		}
 		if (menu == '2'){
 
@@ -65,7 +63,7 @@ int main()
 			system("cls");
 			err = rules();
 		}
-		if (menu == 27 ){
+		if (menu == 27 ){ // esci
 			return 0;
 
 		} else {
@@ -74,6 +72,16 @@ int main()
 
 	}
 	errorHandle(err);
+
+	/* Elimina tutti gli array in memoria*/
+	listDelete(deck.card_list);
+	for (int i = 0; i < players.n_players;i++){
+		free(players.player[i].bet_cards.d);
+		free(players.player[i].run_cards.d);
+		free(players.player[i].name);
+	}
+	free(players.player);
+	free(played.d);
 
 	return 0;
 }

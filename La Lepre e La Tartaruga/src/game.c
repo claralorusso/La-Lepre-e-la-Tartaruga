@@ -115,25 +115,42 @@ players create_players(players *players, bool allocated)
 {
 	int i;
 
-	if ( allocated == true){
-		players->player = realloc(players->player, players->n_players * sizeof(player) );
-	} else if ( allocated == false){
+	if ( allocated == false){
 
 		players->player = malloc( players->n_players * sizeof(player) );
+		i = 0;
+		while ( i < players->n_players ){
+
+			// crea giocatori di default
+			players->player[i].ai = false;
+
+			players->player[i].bet_cards = arrInit( &players->player[i].bet_cards, MAX_BETS, allocated);
+			players->player[i].bet_cards = arrLoad( &players->player[i].bet_cards, 0);
+
+			players->player[i].run_cards= arrInit( &players->player[i].run_cards, MAX_CARDS, allocated);
+			players->player[i].run_cards= arrLoad( &players->player[i].run_cards, 0);
+
+			i++;
+		}
 	}
-	i = 0;
-	while ( i < players->n_players ){
-		// crea giocatori di default
-		players->player[i].ai = false;
 
-		players->player[i].bet_cards = arrInit( &players->player[i].bet_cards, MAX_BETS, allocated);
-		players->player[i].bet_cards = arrLoad( &players->player[i].bet_cards, 0);
+	if ( allocated == true){
+		players->player = realloc(players->player, players->n_players * sizeof(player) );
+		i = 0;
+		while ( i < players->n_players ){
 
-		players->player[i].run_cards= arrInit( &players->player[i].run_cards, MAX_CARDS, allocated);
-		players->player[i].run_cards= arrLoad( &players->player[i].run_cards, 0);
+			// resetta gli array dei giocatori
+			players->player[i].bet_cards = arrInit( &players->player[i].bet_cards, MAX_BETS, allocated);
+			players->player[i].bet_cards = arrLoad( &players->player[i].bet_cards, 0);
 
-		i++;
+			players->player[i].run_cards= arrInit( &players->player[i].run_cards, MAX_CARDS, allocated);
+			players->player[i].run_cards= arrLoad( &players->player[i].run_cards, 0);
+
+			i++;
+		}
 	}
+
+
 	return *players;
 }
 
@@ -406,7 +423,7 @@ int play(players *players, array *played, deck *deck, int turn )
 	printf("     ");
 
 	// resta nel ciclo finchè non si attiva la fase di corsa
-	while( arrCountNotX( played, 0 )  != 9 ){
+	while( arrCountNotX( played, 0 )  < 8 ){
 		turn = 0;
 		// i giocatori giocano i loro turni
 		while ( turn < players->n_players ){
@@ -417,7 +434,7 @@ int play(players *players, array *played, deck *deck, int turn )
 			printHand(&players->player[turn].run_cards);
 
 			// caso in cui il giocatore sia umano
-			if ( players->player[turn].ai == false){
+			while ( players->player[turn].ai == false){
 				input = getch();
 				converted = input -'0';
 
