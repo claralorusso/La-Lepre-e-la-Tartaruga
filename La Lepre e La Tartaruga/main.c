@@ -12,12 +12,13 @@ int main()
 {
 	// menu -> input dell'utente - err -> variabile per la gestione degli errori
 	int menu, err;
-	int turn;
 	players players;
 	array played;
 	deck deck;
 
 	/* Settaggi iniziali  */
+	arrInit(&deck.totals, 6);
+	arrInit(&played, MAX_PLAYED_CARDS);
 	menu = 0;
 	err = 0;
 	err = initConsole();
@@ -38,8 +39,8 @@ int main()
 
 			system("cls");
 
-			err = newGame(&players, &played, &deck, &turn);
-			err = play(&players, &played, &deck, turn);
+			err = newGame(&players, &played, &deck);
+			err = play(&players, &played, &deck);
 
 			listDelete(deck.card_list);
 			name_players(&players);

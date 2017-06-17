@@ -12,22 +12,26 @@
 #include "ia.h"
 #include "tools.h"
 
-int newGame(players *players, array *played, deck *deck, int *turn)
+int newGame(players *players, array *played, deck *deck)
 {
 	int i, j;
 
-	*turn = 0;
-
-	arrInit(played, MAX_PLAYED_CARDS);
+	/* Resetta le Carte Giocate */
 	arrLoad(played, 0);
 
+	/* Prepara il mazzo*/
 	deck->card_list = listInit();
-	deck->totals = arrInit(&deck->totals, 6);
-
 	shuffle_deck(deck);
 
-	firstBetCard(players);
+	/* Resetta le Carte Scommessa*/
+	i = 0;
+	while( i < players->n_players ){
+		arrLoad(&players->player[i].bet_cards, 0);
+		i++;
+	}
 
+	/* Assegna ai giocatori le prime Carte Scommessa e le Carte Corsa */
+	firstBetCard(players);
 	j = 0;
 	while( j < players->n_players ){
 		i = 0;
@@ -38,23 +42,18 @@ int newGame(players *players, array *played, deck *deck, int *turn)
 		}
 		j++;
 	}
+
+	/* Stamp l'intefaccia di base*/
 	printRoute();
-
 	printAnimal(0, 0);
-
 	printStatics();
-
 	printRef();
-
-	//system("pause > nul");
 
 	return 0;
 }
 
 int loadGame(void)
 {
-
-
 	printRoute();
 
 	printAnimal(0, 0);
@@ -89,10 +88,10 @@ deck shuffle_deck( deck *deck )
 {
 	int number;
 	srand(time(NULL));
-	deck->totals = arrInit(&deck->totals, 6);
 	deck->totals = arrLoad(&deck->totals, 0);
 
 	while ( deck->totals.d[0] < 81 ){
+		//Sleep(100);
 		number = rand()% 5 + 1;
 		if (number == WOLF && deck->totals.d[1] < 16){
 			deck->card_list = listAdd(deck->card_list, WOLF);
@@ -193,7 +192,7 @@ players firstBetCard(players *players_d)
 {
 	int i, n;
 	array betcards;
-
+	srand(time(NULL));
 	betcards = arrInit(&betcards,5);
 	betcards.d[0] = WOLF;
 	betcards.d[1] = HARE;
@@ -210,7 +209,7 @@ players firstBetCard(players *players_d)
 			i++;
 		}
 	}
-
+	free(betcards.d);
 
 	return *players_d;
 }
@@ -308,9 +307,8 @@ array playerGetCard(player *player, array *played, int input, array *pos)
 	int i, count;
 	int played_card;
 	int check = 0;
-
+	/* Conta quante carte mancanti ha il giocatore */
 	count = arrCountNotX(pos, -1);
-
 	flag = false;
 
 	//Impedisce di giocare carte di animali diversi
@@ -337,26 +335,25 @@ array playerGetCard(player *player, array *played, int input, array *pos)
 		}
 	}
 
-	if ( (arrCountX(played, played_card) + count) < MAX_TURN && flag == false  && played_card == player->run_cards.d[input-1] && (arrCountNotX(played, 0)+ count) != 8 )
-	{
+	if ( (arrCountX(played, played_card) + count) < MAX_TURN && flag == false  && played_card == player->run_cards.d[input-1] && (arrCountNotX(played, 0)+ count) != 8 ){
+
 		count++;
 		arrFillavb(pos, input, -1);
 		count = arrCountNotX(pos, -1);
 		printPointer(input-1, flag);
 	} else if ((arrCountX(played, played_card) + count) < MAX_TURN && flag == false  && count == 0 && (arrCountNotX(played, 0)+ count) != 8){
+
 		count++;
 		arrFillavb(pos, input, -1);
 		count = arrCountNotX(pos, -1);
 		printPointer(input-1, flag);
 
 	}else if(flag == false){
-		//GotoXY(40,11);
-		//printf("Non puoi giocare questa carta!");
+
+		/* Mostra il messaggio di errore al giocatore*/
 		playerErrors();
 	}
-
 	flag = false;
-
 
 	return *pos;
 }
@@ -381,11 +378,10 @@ int check_played_card(array *arr)
 
 }
 
-int play(players *players, array *played, deck *deck, int turn )
+int play(players *players, array *played, deck *deck)
 {
-	//char input;
-	//int converted;
-
+	int turn;
+	int player_decision;
 	array pos;
 	pos = arrInit(&pos, 4);
 	pos = arrLoad(&pos, -1);
@@ -409,7 +405,7 @@ int play(players *players, array *played, deck *deck, int turn )
 		}
 		i++;
 	}
-
+	/* Rimuove la settima carta dallo schermo */
 	GotoXY(44, 19);
 	printf("     ");
 	GotoXY(44, 20);
@@ -431,37 +427,59 @@ int play(players *players, array *played, deck *deck, int turn )
 
 			// caso in cui il giocatore sia umano
 			while ( players->player[turn].ai == false){
-				turn = playerTurn(players, played, deck, &pos, turn);
+				player_decision = playerTurn(players, played, deck, &pos, &turn);
+
+				if ( player_decision == 1){
+					free(pos.d);
+					return 0;
+				}
+				if ( player_decision == 2){
+					free(pos.d);
+					//salva
+					return 0;
+				}
+
 			}
 			// caso in cui il giocatore sia ia
 			if (players->player[turn].ai == true){
+
 				// turno dell'ia
-				Sleep(1000);
+				printTurn(players->player[turn].name);
+				printBet(&players->player[turn].bet_cards);
+				printPlayed(played);
+				printHand(&players->player[turn].run_cards);
 				iamain( &players->player[turn].run_cards, played, players->player[turn].bet_cards.d[0], players->player[turn].bet_cards.d[1] );
 
 				// stampa le carte
+				GotoXY(25, 22);
+				printf(">>L'IA STA GIOCANDO<<");
+				Sleep(1500);
 				printPlayed(played);
-				printTurn(players->player[turn].name);
-				printBet(&players->player[turn].bet_cards);
 
 				i = 0;
 				while( i < MAX_CARDS ){
 					if( players->player[turn].run_cards.d[i] == 0){
 						players->player[turn].run_cards.d[i] = GetCard(deck);
-						printHand(&players->player[turn].run_cards);
+
 					}
 					i++;
 				}
+
 				printPlayed(played);
 				printTurn(players->player[turn].name);
 				printBet(&players->player[turn].bet_cards);
-				printHand(&players->player[turn].run_cards);
+				//printHand(&players->player[turn].run_cards);
 				Sleep(1000);
+				GotoXY(0,22);
+				printf("                                                                             ");
 				turn++;
 			}
 
 		} // ciclo Giocatori
-		if( arrCountNotX(played, 0) == 8
+		/*
+		// Condizioni di attivazione fase di corsa
+		if(
+		  arrCountNotX(played, 0) == 8
 		||arrCountX(played, WOLF) == 4
 		||arrCountX(played, HARE) == 4
 		||arrCountX(played, TORTOISE) == 4
@@ -470,15 +488,16 @@ int play(players *players, array *played, deck *deck, int turn )
 
 			runPhase(players, played);
 		}
-
+		*/
+		arrLoad(played, 0);
 
 	} // fine partita
 
-	free(pos.d);
+	//free(pos.d);
 	return 0;
 }
 
-int playerTurn(players *players, array *played,deck *deck, array * pos, int turn)
+int playerTurn(players *players, array *played,deck *deck, array * pos, int *turn)
 {
 	char input;
 	int converted;
@@ -489,13 +508,13 @@ int playerTurn(players *players, array *played,deck *deck, array * pos, int turn
 
 	if ( input == 's' || input == 'S' ){
 		//salva
-		free(pos->d);
-		return 0;
+
+		return 2;
 	}
 	if ( input == 27 ){
 		//Torna al menu
-		free(pos->d);
-		return 0;
+
+		return 1;
 	}
 	if ( (converted >= 1 && converted <= 6) || input == ' '){
 
@@ -512,15 +531,15 @@ int playerTurn(players *players, array *played,deck *deck, array * pos, int turn
 			i = 0;
 			while ( i < MAX_TURN){
 				if ( pos->d[i] != -1){
-					arrFillavb(played, players->player[turn].run_cards.d[ pos->d[i] ] , 0);
-					players->player[turn].run_cards.d[ pos->d[i] ] = 0;
+					arrFillavb(played, players->player[*turn].run_cards.d[ pos->d[i] ] , 0);
+					players->player[*turn].run_cards.d[ pos->d[i] ] = 0;
 				}
 				i++;
 			}
 			i = 0;
 			while( i < MAX_CARDS ){
-				if( players->player[turn].run_cards.d[i] == 0){
-					players->player[turn].run_cards.d[i] = GetCard(deck);
+				if( players->player[*turn].run_cards.d[i] == 0){
+					players->player[*turn].run_cards.d[i] = GetCard(deck);
 				}
 				i++;
 			}
@@ -529,27 +548,27 @@ int playerTurn(players *players, array *played,deck *deck, array * pos, int turn
 
 			// stampa le carte
 			printPlayed(played);
-			printTurn(players->player[turn].name);
-			printBet(&players->player[turn].bet_cards);
-			printHand(&players->player[turn].run_cards);
+			printTurn(players->player[*turn].name);
+			printBet(&players->player[*turn].bet_cards);
+			printHand(&players->player[*turn].run_cards);
 
-			turn++;
+			*turn = *turn + 1;
 			// rimuove gli indicatori
 			GotoXY(0,22);
 			printf("                                                                             ");
 
 
 		} else if (input != ' ' ) {
-			playerGetCard( &players->player[turn], played, converted, pos);
+			playerGetCard( &players->player[*turn], played, converted, pos);
 
 			printPlayed(played);
-			printTurn(players->player[turn].name);
-			printBet(&players->player[turn].bet_cards);
-			printHand(&players->player[turn].run_cards);
+			printTurn(players->player[*turn].name);
+			printBet(&players->player[*turn].bet_cards);
+			printHand(&players->player[*turn].run_cards);
 		}
 	}
 
-	return turn;
+	return 0;
 
 }
 
@@ -608,9 +627,10 @@ int runPhase(players *players, array *played)
 		printAnimal(FOX, move + run.d[FOX] );
 		run.d[FOX] += move;
 	}
+	//arrLoad(played, 0);
 
-	arrLoad( played,0);
-
+	free(path.d);
+	free(run.d);
 
 	return 0;
 }
