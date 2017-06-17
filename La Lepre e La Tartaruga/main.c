@@ -10,7 +10,8 @@
 
 int main()
 {
-	int menu, err; // menu -> input dell'utente - err -> variabile per la gestione degli errori
+	// menu -> input dell'utente - err -> variabile per la gestione degli errori
+	int menu, err;
 	int turn;
 	players players;
 	array played;
