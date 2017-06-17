@@ -18,11 +18,11 @@ int newGame(players *players, array *played, deck *deck, int *turn)
 
 	*turn = 0;
 
-	arrInit(played, MAX_PLAYED_CARDS, false);
+	arrInit(played, MAX_PLAYED_CARDS);
 	arrLoad(played, 0);
 
 	deck->card_list = listInit();
-	deck->totals = arrInit(&deck->totals, 6, false);
+	deck->totals = arrInit(&deck->totals, 6);
 
 	shuffle_deck(deck);
 
@@ -89,7 +89,7 @@ deck shuffle_deck( deck *deck )
 {
 	int number;
 	srand(time(NULL));
-	deck->totals = arrInit(&deck->totals, 6, false);
+	deck->totals = arrInit(&deck->totals, 6);
 	deck->totals = arrLoad(&deck->totals, 0);
 
 	while ( deck->totals.d[0] < 81 ){
@@ -124,45 +124,25 @@ deck shuffle_deck( deck *deck )
 	return *deck;
 }
 
-players create_players(players *players, bool allocated)
+players create_players(players *players)
 {
 	int i;
 
-	if ( allocated == false){
+	players->player = malloc( MAX_PLAYERS * sizeof(player) );
+	i = 0;
+	while ( i < MAX_PLAYERS ){
 
-		players->player = malloc( players->n_players * sizeof(player) );
-		i = 0;
-		while ( i < players->n_players ){
+		// crea giocatori di default
+		players->player[i].ai = false;
 
-			// crea giocatori di default
-			players->player[i].ai = false;
+		players->player[i].bet_cards = arrInit( &players->player[i].bet_cards, MAX_BETS);
+		players->player[i].bet_cards = arrLoad( &players->player[i].bet_cards, 0);
 
-			players->player[i].bet_cards = arrInit( &players->player[i].bet_cards, MAX_BETS, allocated);
-			players->player[i].bet_cards = arrLoad( &players->player[i].bet_cards, 0);
+		players->player[i].run_cards= arrInit( &players->player[i].run_cards, MAX_CARDS);
+		players->player[i].run_cards= arrLoad( &players->player[i].run_cards, 0);
 
-			players->player[i].run_cards= arrInit( &players->player[i].run_cards, MAX_CARDS, allocated);
-			players->player[i].run_cards= arrLoad( &players->player[i].run_cards, 0);
-
-			i++;
-		}
+		i++;
 	}
-
-	if ( allocated == true){
-		players->player = realloc(players->player, players->n_players * sizeof(player) );
-		i = 0;
-		while ( i < players->n_players ){
-
-			// resetta gli array dei giocatori
-			players->player[i].bet_cards = arrInit( &players->player[i].bet_cards, MAX_BETS, allocated);
-			players->player[i].bet_cards = arrLoad( &players->player[i].bet_cards, 0);
-
-			players->player[i].run_cards= arrInit( &players->player[i].run_cards, MAX_CARDS, allocated);
-			players->player[i].run_cards= arrLoad( &players->player[i].run_cards, 0);
-
-			i++;
-		}
-	}
-
 
 	return *players;
 }
@@ -171,9 +151,8 @@ players name_players(players *players_d)
 {
 	int i;
 
-
 	i = 0;
-	while ( i < players_d->n_players ){
+	while ( i < MAX_PLAYERS ){
 
 		if (players_d->player[i].ai == false){
 			strcpy(players_d->player[i].name, "Giocatore");
@@ -215,7 +194,7 @@ players firstBetCard(players *players_d)
 	int i, n;
 	array betcards;
 
-	betcards = arrInit(&betcards,5, false);
+	betcards = arrInit(&betcards,5);
 	betcards.d[0] = WOLF;
 	betcards.d[1] = HARE;
 	betcards.d[2] = TORTOISE;
@@ -242,9 +221,9 @@ int secondBetCard(player player, deck *deck, array *played)
 	char input;
 	array temp;
 	bool flag;
-
+	previous = 0;
 	pos = - 1;
-	arrInit(&temp, 7, false);
+	arrInit(&temp, 7);
 	arrLoad(&temp, 0);
 
 	// carica il vettore temporaneo per la settima carta scommessa
@@ -385,19 +364,20 @@ array playerGetCard(player *player, array *played, int input, array *pos)
 //Carta selezionata, su cui si deve basare la selezione delle successive carte
 int check_played_card(array *arr)
 {
-	int px;
-	int i = 0;
+	int i, x;
+	i = 0;
+	x = 0;
 
 	while(i < 4)
 	{
 		if(arr->d[i] != -1)
 		{
-			px = arr->d[i];
+			x = arr->d[i];
 			i = 4;
 		}
 		i++;
 	}
-	return px;
+	return x;
 
 }
 
@@ -407,7 +387,7 @@ int play(players *players, array *played, deck *deck, int turn )
 	//int converted;
 
 	array pos;
-	pos = arrInit(&pos, 4, false);
+	pos = arrInit(&pos, 4);
 	pos = arrLoad(&pos, -1);
 	int i, check;
 
@@ -578,9 +558,9 @@ int runPhase(players *players, array *played)
 	array path;
 	array run;
 	int move;
-	arrInit( &path, 11, true);
+	arrInit( &path, 11);
 	arrLoad( &path,0);
-	arrInit( &run, 6, true);
+	arrInit( &run, 6);
 	arrLoad( &run,0);
 	path.d[3] = 1;
 	path.d[7] = 1;

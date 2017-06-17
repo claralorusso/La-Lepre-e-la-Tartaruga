@@ -9,7 +9,7 @@ typedef struct array{
 
 
 
-array arrInit(array *, int, bool );
+array arrInit(array *, int);
 array arrLoad(array *, int );
 int arrSearch(array *, int );
 void arrPrint(array *);

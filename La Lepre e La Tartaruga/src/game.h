@@ -33,7 +33,7 @@ int rules(void);
 
 /// Funzioni essenziali del gioco
 deck shuffle_deck(deck *);
-players create_players(players *, bool);
+players create_players(players *);
 players name_players(players *);
 int GetCard(deck *);
 players firstBetCard(players *);

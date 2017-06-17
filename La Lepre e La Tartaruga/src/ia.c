@@ -13,7 +13,7 @@ int betcard()
 int iamain(array *cards, array *played_cards, int betcard1, int betcard2)
 {
 	aiturn turn;
-	turn.pos = arrInit(&turn.pos, MAX_TURN, false);
+	turn.pos = arrInit(&turn.pos, MAX_TURN);
 	turn.pos = arrLoad(&turn.pos, -1);
 
 	int i, j, sum1, sum2, temp;

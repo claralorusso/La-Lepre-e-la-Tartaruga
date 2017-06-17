@@ -11,5 +11,6 @@
 #define MAX_PLAYED_CARDS 8
 #define MAX_TURN 4
 #define MAX_BETS 2
+#define MAX_PLAYERS 5
 
 #endif /* GLOBALS_H_ */

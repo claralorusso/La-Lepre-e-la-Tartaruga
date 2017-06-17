@@ -16,20 +16,18 @@ int main()
 	players players;
 	array played;
 	deck deck;
-	bool allocated;
 
 	/* Settaggi iniziali  */
-	allocated = false;
 	menu = 0;
 	err = 0;
 	err = initConsole();
 
 	/* Setta le impostazioni a parametri di default */
 	players.n_players = 2;
-	create_players(&players, allocated);
+	create_players(&players);
 	players.player[1].ai = true;
 	name_players(&players);
-	allocated = true;
+
 	while ( err == 0){
 
 		printTitle();
@@ -44,8 +42,6 @@ int main()
 			err = play(&players, &played, &deck, turn);
 
 			listDelete(deck.card_list);
-
-			create_players(&players, allocated);
 			name_players(&players);
 
 		}
