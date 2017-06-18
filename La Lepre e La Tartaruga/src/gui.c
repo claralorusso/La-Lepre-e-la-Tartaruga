@@ -51,14 +51,14 @@ static char reference5[] = "F - Volpe";
 
 /// Percorso
 static char field[] =
-"           :______::______::______::______::____:\n"
-"      START|      ||      ||      ||   |  ||    |\n"
-"           :______::______::______::___|__:|    |\n"
+YELLOW"           :______::______::______::______::____:\n"
+"      "WHITE"START"YELLOW"|      ||      ||      ||   "CYANO"|"YELLOW"  ||    |\n"
+"           :______::______::______::___"CYANO"|"YELLOW"__:|    |\n"
 "                                           :____:\n"
 "                                           :____:\n"
-" E :______::______::______::______::______:|    |\n"
-" N |      ||      ||      ||   |  ||      ||    |\n"
-" D :______::______::______::___|__::______::____:\n";
+" "WHITE"E"YELLOW" :______::______::______::______::______:|    |\n"
+" "WHITE"N"YELLOW" |      ||      ||      ||   "CYANO"|"YELLOW"  ||      ||    |\n"
+" "WHITE"D"YELLOW" :______::______::______::___"CYANO"|"YELLOW"__::______::____:\n"WHITE;
 
 /// Comandi
 static char commands[] = "      (1 - 6) Selezione Carta (Spazio) Fine Turno (S) Salva          (ESC) Esci";

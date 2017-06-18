@@ -61,7 +61,8 @@ int main()
 			system("cls");
 			err = rules();
 		}
-		if (menu == 27 ){ // esci
+		// esci
+		if (menu == 27 ){
 			return 0;
 
 		} else {

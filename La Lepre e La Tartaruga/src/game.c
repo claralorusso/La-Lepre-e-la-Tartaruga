@@ -54,19 +54,6 @@ int newGame(players *players, array *played, deck *deck)
 
 int loadGame(void)
 {
-	printRoute();
-
-	printAnimal(0, 0);
-	for(int j = 0; j < 5;j++){
-		for(int i = 0; i < 12;i++){
-			printAnimal(j+1, i);
-			system("pause > nul");
-		}
-	}
-
-
-	system("pause > nul");
-
 	return 0;
 }
 
@@ -168,22 +155,23 @@ players name_players(players *players_d)
 	return *players_d;
 }
 
-int GetCard(deck *deck_d)
+int GetCard(deck *deck)
 {
 	int card;
-	node * temp;
+	//node * temp;
 
 	card = 0;
-	temp = deck_d->card_list;
+	//temp = deck->card_list;
+	// se il mazzo è finito lo rimescola
+	if ( deck->totals.d[0] == 0 ){
+		shuffle_deck(deck);
+	}
+	// Prende l'ultima carta del mazzo e la elimina
+	card = listGetLast(deck->card_list);
+	deck->card_list = listDLast( deck->card_list);
 
-	//card = listgetlast(temp);
-	//deck_d->card_list = listdlast(temp);
-
-	card = listGetRand(temp);
-	deck_d->card_list = listDel( temp, card);
-
-	deck_d->totals.d[card]--;
-	deck_d->totals.d[0]--;
+	deck->totals.d[card]--;
+	deck->totals.d[0]--;
 
 	return card;
 }

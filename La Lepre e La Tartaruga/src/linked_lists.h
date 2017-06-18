@@ -35,7 +35,7 @@ list listDel(list , int );
 int listPrint(list );
 int listLenght(list );
 int listGetLast(list );
-list listDelLast(list );
+list listDLast(list );
 int listGetRand(list );
 void listDelete(list );
 
