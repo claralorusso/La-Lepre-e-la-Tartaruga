@@ -42,7 +42,7 @@ array playerGetCard(player *, array *, int , array *);
 int check_played_card(array *);
 int play(players *p, array *, deck * );
 int runPhase(players *players, array *played);
-int playerTurn(players *players, array *played,deck *deck, array * pos, int *turn);
+int playerTurn(players *players, array *played,deck *deck, array * pos, int turn);
 
 /// Funzioni di gestione
 void errorHandle(int error);

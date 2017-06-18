@@ -295,6 +295,7 @@ array playerGetCard(player *player, array *played, int input, array *pos)
 	int i, count;
 	int played_card;
 	int check = 0;
+
 	/* Conta quante carte mancanti ha il giocatore */
 	count = arrCountNotX(pos, -1);
 	flag = false;
@@ -374,7 +375,9 @@ int play(players *players, array *played, deck *deck)
 	pos = arrInit(&pos, 4);
 	pos = arrLoad(&pos, -1);
 	int i, check;
+	bool finish;
 
+	finish = false;
 	// Scelta delle seconde carte scommessa
 	i = 0;
 	while( i < players->n_players ){
@@ -402,10 +405,10 @@ int play(players *players, array *played, deck *deck)
 	printf("     ");
 
 	// resta nel ciclo finchè non finisce la partita
-	while(1){
+	while(finish == false){
 
 		turn = 0;
-		// i giocatori giocano i loro turni
+		// fase di gioco
 		while ( turn < players->n_players ){
 			// stampa le carte
 			printPlayed(played);
@@ -415,7 +418,7 @@ int play(players *players, array *played, deck *deck)
 
 			// caso in cui il giocatore sia umano
 			while ( players->player[turn].ai == false){
-				player_decision = playerTurn(players, played, deck, &pos, &turn);
+				player_decision = playerTurn(players, played, deck, &pos, turn);
 
 				if ( player_decision == 1){
 					free(pos.d);
@@ -426,7 +429,9 @@ int play(players *players, array *played, deck *deck)
 					//salva
 					return 0;
 				}
-
+				if ( player_decision == 0){
+					turn++;
+				}
 			}
 			// caso in cui il giocatore sia ia
 			if (players->player[turn].ai == true){
@@ -462,8 +467,12 @@ int play(players *players, array *played, deck *deck)
 				printf("                                                                             ");
 				turn++;
 			}
+			printPlayed(played);
+			printTurn(players->player[turn].name);
+			printBet(&players->player[turn].bet_cards);
+			printHand(&players->player[turn].run_cards);
 
-		} // ciclo Giocatori
+		} // fase di gioco
 		/*
 		// Condizioni di attivazione fase di corsa
 		if(
@@ -476,8 +485,12 @@ int play(players *players, array *played, deck *deck)
 
 			runPhase(players, played);
 		}
-		*/
+		 */
 		arrLoad(played, 0);
+		printPlayed(played);
+		printTurn(players->player[turn].name);
+		printBet(&players->player[turn].bet_cards);
+		printHand(&players->player[turn].run_cards);
 
 	} // fine partita
 
@@ -485,7 +498,7 @@ int play(players *players, array *played, deck *deck)
 	return 0;
 }
 
-int playerTurn(players *players, array *played,deck *deck, array * pos, int *turn)
+int playerTurn(players *players, array *played,deck *deck, array * pos, int turn)
 {
 	char input;
 	int converted;
@@ -508,6 +521,8 @@ int playerTurn(players *players, array *played,deck *deck, array * pos, int *tur
 
 		if ( input == ' ' && arrCountNotX(pos, -1) > 0){
 			// fine turno
+			/*
+			// traduce le posizioni
 			i = 0;
 			while ( i < MAX_TURN){
 				if ( pos->d[i] != -1){
@@ -515,48 +530,39 @@ int playerTurn(players *players, array *played,deck *deck, array * pos, int *tur
 				}
 				i++;
 			}
-
+			*/
+			// gioca le carte selezionate
 			i = 0;
 			while ( i < MAX_TURN){
 				if ( pos->d[i] != -1){
-					arrFillavb(played, players->player[*turn].run_cards.d[ pos->d[i] ] , 0);
-					players->player[*turn].run_cards.d[ pos->d[i] ] = 0;
+					arrFillavb(played, players->player[turn].run_cards.d[ pos->d[i]-1 ] , 0);
+					players->player[turn].run_cards.d[ pos->d[i]-1 ] = 0;
 				}
 				i++;
 			}
+			// Prende le carte dal mazzo
 			i = 0;
 			while( i < MAX_CARDS ){
-				if( players->player[*turn].run_cards.d[i] == 0){
-					players->player[*turn].run_cards.d[i] = GetCard(deck);
+				if( players->player[turn].run_cards.d[i] == 0){
+					players->player[turn].run_cards.d[i] = GetCard(deck);
 				}
 				i++;
 			}
 			// resetta le posizioni
 			arrLoad(pos, -1);
 
-			// stampa le carte
-			printPlayed(played);
-			printTurn(players->player[*turn].name);
-			printBet(&players->player[*turn].bet_cards);
-			printHand(&players->player[*turn].run_cards);
 
-			*turn = *turn + 1;
 			// rimuove gli indicatori
 			GotoXY(0,22);
 			printf("                                                                             ");
-
+			return 0;
 
 		} else if (input != ' ' ) {
-			playerGetCard( &players->player[*turn], played, converted, pos);
-
-			printPlayed(played);
-			printTurn(players->player[*turn].name);
-			printBet(&players->player[*turn].bet_cards);
-			printHand(&players->player[*turn].run_cards);
+			playerGetCard( &players->player[turn], played, converted, pos);
 		}
 	}
 
-	return 0;
+	return 4;
 
 }
 
@@ -565,6 +571,7 @@ int runPhase(players *players, array *played)
 	array path;
 	array run;
 	int move;
+	int i;
 	arrInit( &path, 11);
 	arrLoad( &path,0);
 	arrInit( &run, 6);
@@ -576,46 +583,83 @@ int runPhase(players *players, array *played)
 	//spostamento lupo
 	if ( arrCountX(played, WOLF) == 1 || arrCountX(played, WOLF) == 2 ){
 		move = 1;
+		i = 0;
+		while ( run.d[WOLF]  < move + run.d[WOLF] ){
+			run.d[WOLF] += i;
+			printAnimal(WOLF, i + run.d[WOLF] );
+			i++;
+		}
+
 		printAnimal(WOLF, move + run.d[WOLF] );
 		run.d[WOLF] += move;
 
 	} else {
 		move = arrCountX(played, WOLF) - 1;
-		printAnimal(WOLF, move + run.d[WOLF] );
-		run.d[WOLF] += move;
+
+		i = 0;
+		while ( run.d[WOLF]  < move + run.d[WOLF] ){
+			run.d[WOLF] += i;
+			printAnimal(WOLF, i + run.d[WOLF] );
+			i++;
+		}
 	}
 
 	//spostamento lepre
 	if ( arrCountX(played, HARE) > 0  ) {
 		move = 2;
-		printAnimal(HARE, move + run.d[HARE] );
-		run.d[HARE] += move;
+
+		i = 0;
+		while ( run.d[HARE]  < move + run.d[HARE] ){
+			run.d[HARE] += i;
+			printAnimal(HARE, i + run.d[HARE] );
+			i++;
+		}
 	}
 
 	//spostamento tartaruga
 	if ( arrCountX(played, TORTOISE) >= 0  &&  arrCountX(played, TORTOISE) <= 3 ) {
 		move = 1;
-		printAnimal(TORTOISE, move + run.d[TORTOISE] );
-		run.d[TORTOISE] += move;
+
+		i = 0;
+		while ( run.d[TORTOISE]  < move + run.d[TORTOISE] ){
+			run.d[TORTOISE] += i;
+			printAnimal(TORTOISE, i + run.d[TORTOISE] );
+			i++;
+		}
 	} else {
 		move = 2;
-		printAnimal(TORTOISE, move + run.d[TORTOISE] );
-		run.d[TORTOISE] += move;
+
+		i = 0;
+		while ( run.d[TORTOISE]  < move + run.d[TORTOISE] ){
+			run.d[TORTOISE] += i;
+			printAnimal(TORTOISE, i + run.d[TORTOISE] );
+			i++;
+		}
 	}
 
 	//spostamento agnello
 	if ( arrCountX(played, LAMB) > 0 ) {
 		move = arrCountX(played, LAMB) + 1;
-		printAnimal(LAMB, move + run.d[LAMB] );
-		run.d[LAMB] += move;
+
+		i = 0;
+		while ( run.d[LAMB]  < move + run.d[LAMB] ){
+			run.d[LAMB] += i;
+			printAnimal(LAMB, i + run.d[LAMB] );
+			i++;
+		}
 	}
 	//spostamento volpe
 	if ( arrCountX(played, FOX) > 0 ) {
 		move = arrCountX(played, FOX);
-		printAnimal(FOX, move + run.d[FOX] );
-		run.d[FOX] += move;
+
+		i = 0;
+		while ( run.d[LAMB]  < move + run.d[LAMB] ){
+			run.d[LAMB] += i;
+			printAnimal(LAMB, i + run.d[LAMB] );
+			i++;
+		}
 	}
-	//arrLoad(played, 0);
+
 
 	free(path.d);
 	free(run.d);
