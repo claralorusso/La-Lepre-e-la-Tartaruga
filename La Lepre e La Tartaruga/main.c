@@ -10,7 +10,6 @@
 
 int main()
 {
-	int test;
 	// menu -> input dell'utente - err -> variabile per la gestione degli errori
 	int menu, err;
 	players players;
