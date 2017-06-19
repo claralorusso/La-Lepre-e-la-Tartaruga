@@ -12,6 +12,10 @@
 #include "ia.h"
 #include "tools.h"
 
+#define SAVE_GAME 10
+#define BACK_TO_MENU 20
+
+
 int newGame(players *players, array *played, deck *deck)
 {
 	int i, j;
@@ -54,6 +58,26 @@ int newGame(players *players, array *played, deck *deck)
 
 int loadGame(void)
 {
+	deck deck;
+	int test;
+	int i;
+	arrInit(&deck.totals, 6);
+	deck.card_list = listInit();
+	shuffle_deck(&deck);
+	printf("\n");
+	i = 0;
+	while(1){
+
+		test = GetCard(&deck);
+		printf("%d", test);
+		i++;
+		if ( i == 5){
+			printf("\n");
+			i = 0;
+		}
+	}
+
+
 	return 0;
 }
 
@@ -71,42 +95,50 @@ int rules(void)
 
 }
 
+void saveGame()
+{
+	system("cls");
+	printf("Funzione ancora da implementare!\n");
+	system("pause > nul");
+}
+
 deck shuffle_deck( deck *deck )
 {
 	int number;
-	srand(time(NULL));
+
 	deck->totals = arrLoad(&deck->totals, 0);
 
-	while ( deck->totals.d[0] < 81 ){
-		//Sleep(100);
+	while ( deck->totals.d[0] < 81){
+
 		number = rand()% 5 + 1;
-		if (number == WOLF && deck->totals.d[1] < 16){
+
+		if (number == WOLF && deck->totals.d[WOLF] < 16){
 			deck->card_list = listAdd(deck->card_list, WOLF);
 			deck->totals.d[WOLF]++;
 			deck->totals.d[0]++;
 		}
-		if (number == HARE && deck->totals.d[2] < 18){
+		if (number == HARE && deck->totals.d[HARE] < 18){
 			deck->card_list = listAdd(deck->card_list, HARE);
 			deck->totals.d[HARE]++;
 			deck->totals.d[0]++;
 		}
-		if (number == TORTOISE && deck->totals.d[3] < 17){
+		if (number == TORTOISE && deck->totals.d[TORTOISE] < 17){
 			deck->card_list = listAdd(deck->card_list, TORTOISE);
 			deck->totals.d[TORTOISE]++;
 			deck->totals.d[0]++;
 		}
-		if (number == LAMB && deck->totals.d[4] < 15){
+		if (number == LAMB && deck->totals.d[LAMB] < 15){
 			deck->card_list = listAdd(deck->card_list, LAMB);
 			deck->totals.d[LAMB]++;
 			deck->totals.d[0]++;
 		}
-		if (number == FOX && deck->totals.d[5] < 15){
+		if (number == FOX && deck->totals.d[FOX] < 15){
 			deck->card_list = listAdd(deck->card_list, FOX);
 			deck->totals.d[FOX]++;
 			deck->totals.d[0]++;
 		}
-
 	}
+
 	return *deck;
 }
 
@@ -158,18 +190,19 @@ players name_players(players *players_d)
 int GetCard(deck *deck)
 {
 	int card;
-	//node * temp;
 
 	card = 0;
-	//temp = deck->card_list;
+
 	// se il mazzo è finito lo rimescola
-	if ( deck->totals.d[0] == 0 ){
+	if ( listEmpty(deck->card_list) ){
 		shuffle_deck(deck);
 	}
+
 	// Prende l'ultima carta del mazzo e la elimina
 	card = listGetLast(deck->card_list);
 	deck->card_list = listDLast( deck->card_list);
 
+	// Riduce i totali delle carte
 	deck->totals.d[card]--;
 	deck->totals.d[0]--;
 
@@ -237,11 +270,11 @@ int secondBetCard(player player, deck *deck, array *played)
 
 			if ( input == 's' || input == 'S' ){ // in caso venga premuto il tasto per salvare
 				//salva
-				return 2;
+				return SAVE_GAME;
 			}
 			if ( input == 27 ){ // in caso venga premuto il tasto esci
 				//Torna al menu
-				return 1;
+				return BACK_TO_MENU;
 			}
 			if ( (input_value >= 1 && input_value <= 7)){
 
@@ -369,28 +402,32 @@ int check_played_card(array *arr)
 
 int play(players *players, array *played, deck *deck)
 {
+	int i, check;
 	int turn;
 	int player_decision;
 	array pos;
-	pos = arrInit(&pos, 4);
-	pos = arrLoad(&pos, -1);
-	int i, check;
 	bool finish;
 
+	pos = arrInit(&pos, 4);
+	pos = arrLoad(&pos, -1);
+
 	finish = false;
+
 	// Scelta delle seconde carte scommessa
 	i = 0;
 	while( i < players->n_players ){
 
 		check = secondBetCard(players->player[i], deck, played);
 
-		if ( check == 1){
-			// esci
+		if ( check == SAVE_GAME){
+			// salva
+			saveGame();
 			free(pos.d);
 			return 0;
 
-		} else if ( check == 2){
-			//salva
+		} else if ( check == BACK_TO_MENU){
+			//esci senza salvare
+
 			free(pos.d);
 			return 0;
 		}
@@ -409,7 +446,8 @@ int play(players *players, array *played, deck *deck)
 
 		turn = 0;
 		// fase di gioco
-		while ( turn < players->n_players-1 ){
+
+		while ( turn < players->n_players ){
 			// stampa le carte
 			printPlayed(played);
 			printTurn(players->player[turn].name);
@@ -417,29 +455,30 @@ int play(players *players, array *played, deck *deck)
 			printHand(&players->player[turn].run_cards);
 
 			// caso in cui il giocatore sia umano
-			while ( players->player[turn].ai == false ){
+			if ( players->player[turn].ai == false ){
+
 				player_decision = playerTurn(players, played, deck, &pos, turn);
 
-				if ( player_decision == 1){
+				if ( player_decision == SAVE_GAME){
 					free(pos.d);
-					return 0;
-				}
-				if ( player_decision == 2){
-					free(pos.d);
+					saveGame();
 					//salva
 					return 0;
 				}
-				if ( player_decision == 0){
-					turn++;
+				if ( player_decision == BACK_TO_MENU){
+					free(pos.d);
+					// esci senza salvare
+					return 0;
 				}
+
 				// stampa le carte
 				printPlayed(played);
 				printTurn(players->player[turn].name);
 				printBet(&players->player[turn].bet_cards);
 				printHand(&players->player[turn].run_cards);
-			}
+				//}
 			// caso in cui il giocatore sia ia
-			if (players->player[turn].ai == true){
+			} else if (players->player[turn].ai == true){
 
 				// turno dell'ia
 				printTurn(players->player[turn].name);
@@ -466,11 +505,10 @@ int play(players *players, array *played, deck *deck)
 				printPlayed(played);
 				printTurn(players->player[turn].name);
 				printBet(&players->player[turn].bet_cards);
-				//printHand(&players->player[turn].run_cards);
+				printHand(&players->player[turn].run_cards);
 				Sleep(1000);
 				GotoXY(0,22);
 				printf("                                                                             ");
-				turn++;
 			}
 			turn++;
 
@@ -507,54 +545,51 @@ int playerTurn(players *players, array *played,deck *deck, array * pos, int turn
 	int converted;
 	int i;
 
-	input = getch();
-	converted = input -'0';
+	while ( arrCountX(played, 0) >= 1 ){
+		input = getch();
+		converted = input -'0';
 
-	if ( input == 's' || input == 'S' ){
-		//salva
-
-		return 2;
-	}
-	if ( input == 27 ){
-		//Torna al menu
-
-		return 1;
-	}
-	// fine turno
-	if ( input == ' ' && arrCountNotX(pos, -1) > 0){
-		// gioca le carte selezionate
-		i = 0;
-		while ( i < MAX_TURN){
-			if ( pos->d[i] != -1){
-				arrFillavb(played, players->player[turn].run_cards.d[ pos->d[i]-1 ] , 0);
-				players->player[turn].run_cards.d[ pos->d[i]-1 ] = 0;
-			}
-			i++;
+		if ( input == 's' || input == 'S' ){
+			//salva
+			return SAVE_GAME;
 		}
-		// Prende le carte mancanti dal mazzo
-		i = 0;
-		while( i < MAX_CARDS ){
-			if( players->player[turn].run_cards.d[i] == 0){
-				players->player[turn].run_cards.d[i] = GetCard(deck);
-			}
-			i++;
+		if ( input == 27 ){
+			//Torna al menu
+			return BACK_TO_MENU;
 		}
-		// resetta le posizioni
-		arrLoad(pos, -1);
+		// fine turno
+		if ( input == ' ' && arrCountNotX(pos, -1) > 0){
+			// gioca le carte selezionate
+			i = 0;
+			while ( i < MAX_TURN){
+				if ( pos->d[i] != -1){
+					arrFillavb(played, players->player[turn].run_cards.d[ pos->d[i]-1 ] , 0);
+					players->player[turn].run_cards.d[ pos->d[i]-1 ] = 0;
+				}
+				i++;
+			}
+			// Prende le carte mancanti dal mazzo
+			i = 0;
+			while( i < MAX_CARDS ){
+				if( players->player[turn].run_cards.d[i] == 0){
+					players->player[turn].run_cards.d[i] = GetCard(deck);
+				}
+				i++;
+			}
+			// resetta le posizioni
+			arrLoad(pos, -1);
 
-		// rimuove gli indicatori
-		GotoXY(0,22);
-		printf("                                                                             ");
-		return 0;
+			// rimuove gli indicatori
+			GotoXY(0,22);
+			printf("                                                                             ");
+			return 0;
+		}
+		if ( (converted >= 1 && converted <= 6)){
 
+			playerGetCard( &players->player[turn], played, converted, pos);
+		}
 	}
-	if ( (converted >= 1 && converted <= 6)){
-
-		playerGetCard( &players->player[turn], played, converted, pos);
-
-	}
-
-	return 4;
+	return 0;
 
 }
 

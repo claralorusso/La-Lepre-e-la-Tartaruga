@@ -4,12 +4,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <conio.h>
+#include <time.h>
+#include <x86intrin.h>
 #include "src/game.h"
 #include "src/gui.h"
 #include "src/tools.h"
 
 int main()
 {
+	// utilizza l'ora + il clock della cpu come seed per la funzione rand()
+	srand( time(NULL) + __rdtsc() );
+
 	// menu -> input dell'utente - err -> variabile per la gestione degli errori
 	int menu, err;
 	players players;
@@ -26,7 +31,7 @@ int main()
 	/* Setta le impostazioni a parametri di default */
 	players.n_players = 5;
 	create_players(&players);
-	//players.player[1].ai = true;
+	players.player[1].ai = true;
 	name_players(&players);
 
 	while ( err == 0){
@@ -42,7 +47,7 @@ int main()
 			err = newGame(&players, &played, &deck);
 			err = play(&players, &played, &deck);
 
-			listDelete(deck.card_list);
+			listErase(deck.card_list);
 			name_players(&players);
 
 		}
@@ -73,7 +78,7 @@ int main()
 	errorHandle(err);
 
 	/* Elimina tutti gli array in memoria*/
-	listDelete(deck.card_list);
+	listErase(deck.card_list);
 	for (int i = 0; i < players.n_players;i++){
 		free(players.player[i].bet_cards.d);
 		free(players.player[i].run_cards.d);

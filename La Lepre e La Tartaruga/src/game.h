@@ -30,7 +30,7 @@ int newGame(players *, array *, deck *);
 int loadGame(void);
 int settings(void);
 int rules(void);
-
+void saveGame();
 /// Funzioni essenziali del gioco
 deck shuffle_deck(deck *);
 players create_players(players *);
@@ -41,8 +41,9 @@ int secondBetCard(player , deck *, array *);
 array playerGetCard(player *, array *, int , array *);
 int check_played_card(array *);
 int play(players *p, array *, deck * );
-int runPhase(players *players, array *played);
 int playerTurn(players *players, array *played,deck *deck, array * pos, int turn);
+int runPhase(players *players, array *played);
+
 
 /// Funzioni di gestione
 void errorHandle(int error);
