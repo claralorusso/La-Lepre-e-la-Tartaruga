@@ -31,7 +31,7 @@ int main()
 	/* Setta le impostazioni a parametri di default */
 	players.n_players = 5;
 	create_players(&players);
-	//players.player[1].ai = true;
+	players.player[1].ai = true;
 	name_players(&players);
 
 	while ( err == 0){
