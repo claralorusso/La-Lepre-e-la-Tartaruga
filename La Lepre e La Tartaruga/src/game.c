@@ -12,6 +12,8 @@
 #include "ia.h"
 #include "tools.h"
 
+
+
 int newGame(players *players, array *played, deck *deck)
 {
 	int i, j;
@@ -54,6 +56,26 @@ int newGame(players *players, array *played, deck *deck)
 
 int loadGame(void)
 {
+	deck deck;
+	int test;
+	int i;
+	arrInit(&deck.totals, 6);
+	deck.card_list = listInit();
+	shuffle_deck(&deck);
+	printf("\n");
+	i = 0;
+	while(1){
+
+		test = GetCard(&deck);
+		printf("%d", test);
+		i++;
+		if ( i == 5){
+			printf("\n");
+			i = 0;
+		}
+	}
+
+
 	return 0;
 }
 
@@ -74,39 +96,40 @@ int rules(void)
 deck shuffle_deck( deck *deck )
 {
 	int number;
-	srand(time(NULL));
+
 	deck->totals = arrLoad(&deck->totals, 0);
 
-	while ( deck->totals.d[0] < 81 ){
-		//Sleep(100);
+	while ( deck->totals.d[0] < 81){
+
 		number = rand()% 5 + 1;
-		if (number == WOLF && deck->totals.d[1] < 16){
+
+		if (number == WOLF && deck->totals.d[WOLF] < 16){
 			deck->card_list = listAdd(deck->card_list, WOLF);
 			deck->totals.d[WOLF]++;
 			deck->totals.d[0]++;
 		}
-		if (number == HARE && deck->totals.d[2] < 18){
+		if (number == HARE && deck->totals.d[HARE] < 18){
 			deck->card_list = listAdd(deck->card_list, HARE);
 			deck->totals.d[HARE]++;
 			deck->totals.d[0]++;
 		}
-		if (number == TORTOISE && deck->totals.d[3] < 17){
+		if (number == TORTOISE && deck->totals.d[TORTOISE] < 17){
 			deck->card_list = listAdd(deck->card_list, TORTOISE);
 			deck->totals.d[TORTOISE]++;
 			deck->totals.d[0]++;
 		}
-		if (number == LAMB && deck->totals.d[4] < 15){
+		if (number == LAMB && deck->totals.d[LAMB] < 15){
 			deck->card_list = listAdd(deck->card_list, LAMB);
 			deck->totals.d[LAMB]++;
 			deck->totals.d[0]++;
 		}
-		if (number == FOX && deck->totals.d[5] < 15){
+		if (number == FOX && deck->totals.d[FOX] < 15){
 			deck->card_list = listAdd(deck->card_list, FOX);
 			deck->totals.d[FOX]++;
 			deck->totals.d[0]++;
 		}
-
 	}
+
 	return *deck;
 }
 
@@ -158,18 +181,19 @@ players name_players(players *players_d)
 int GetCard(deck *deck)
 {
 	int card;
-	//node * temp;
 
 	card = 0;
-	//temp = deck->card_list;
+
 	// se il mazzo è finito lo rimescola
-	if ( deck->totals.d[0] == 0 ){
+	if ( listEmpty(deck->card_list) ){
 		shuffle_deck(deck);
 	}
+
 	// Prende l'ultima carta del mazzo e la elimina
 	card = listGetLast(deck->card_list);
 	deck->card_list = listDLast( deck->card_list);
 
+	// Riduce i totali delle carte
 	deck->totals.d[card]--;
 	deck->totals.d[0]--;
 

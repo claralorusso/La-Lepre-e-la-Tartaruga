@@ -37,7 +37,7 @@ int listLenght(list );
 int listGetLast(list );
 list listDLast(list );
 int listGetRand(list );
-void listDelete(list );
+void listErase(list );
 
 #endif /* LINKED_LISTS_H_ */
 

@@ -85,6 +85,7 @@ list listDel( list l, int el)
 			temp = current;
 			previous->next = current->next;
 			free( temp );
+
 		}
 	}
 	return l;
@@ -180,7 +181,6 @@ int listGetRand(list l)
 	if (listEmpty(l) ){ return -1;}
 
 	n = 0;
-	srand(time(NULL));
 
 	count = rand() % listLenght(l);
 	temp = l;
@@ -195,7 +195,7 @@ int listGetRand(list l)
 	return el;
 }
 
-void listDelete(list l){
+void listErase(list l){
 
 	node * current = l;
 	node * next;
