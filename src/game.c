@@ -405,9 +405,11 @@ int play(players *players, array *played, deck *deck)
 	int i, check;
 	int turn;
 	int player_decision;
-	array pos;
+	array pos, run;
 	bool finish;
 
+	run = arrInit(&run, 6);
+	run = arrLoad(&run, 0);
 	pos = arrInit(&pos, 4);
 	pos = arrLoad(&pos, -1);
 
@@ -433,6 +435,7 @@ int play(players *players, array *played, deck *deck)
 		}
 		i++;
 	}
+
 	/* Rimuove la settima carta dallo schermo */
 	GotoXY(44, 19);
 	printf("     ");
@@ -514,7 +517,7 @@ int play(players *players, array *played, deck *deck)
 
 		} // fase di gioco
 		turn = 0;
-		/*
+
 		// Condizioni di attivazione fase di corsa
 		if(
 		  arrCountNotX(played, 0) == 8
@@ -524,9 +527,8 @@ int play(players *players, array *played, deck *deck)
 		||arrCountX(played, LAMB) == 4
 		||arrCountX(played, FOX) == 4 ) {
 
-			runPhase(players, played);
+			runPhase(players, played, &run);
 		}
-		 */
 		arrLoad(played, 0);
 		printPlayed(played);
 		printTurn(players->player[turn].name);
@@ -593,16 +595,14 @@ int playerTurn(players *players, array *played,deck *deck, array * pos, int turn
 
 }
 
-int runPhase(players *players, array *played)
+int runPhase(players *players, array *played, array *run)
 {
 	array path;
-	array run;
-	int move;
-	int i;
+	int move, arrive;
+
 	arrInit( &path, 11);
 	arrLoad( &path,0);
-	arrInit( &run, 6);
-	arrLoad( &run,0);
+
 	path.d[3] = 1;
 	path.d[7] = 1;
 
@@ -610,86 +610,80 @@ int runPhase(players *players, array *played)
 	//spostamento lupo
 	if ( arrCountX(played, WOLF) == 1 || arrCountX(played, WOLF) == 2 ){
 		move = 1;
-		i = 0;
-		while ( run.d[WOLF]  < move + run.d[WOLF] ){
-			run.d[WOLF] += i;
-			printAnimal(WOLF, i + run.d[WOLF] );
-			i++;
+		arrive = move + run->d[WOLF];
+
+		while ( run->d[WOLF] != arrive ){
+			Sleep(200);
+			run->d[WOLF] ++;
+			printAnimal(WOLF, run->d[WOLF] );
 		}
 
-		printAnimal(WOLF, move + run.d[WOLF] );
-		run.d[WOLF] += move;
-
-	} else {
+	} else if ( arrCountX(played, WOLF) == 3 || arrCountX(played, WOLF) == 4 ){
 		move = arrCountX(played, WOLF) - 1;
+		arrive = move + run->d[WOLF];
 
-		i = 0;
-		while ( run.d[WOLF]  < move + run.d[WOLF] ){
-			run.d[WOLF] += i;
-			printAnimal(WOLF, i + run.d[WOLF] );
-			i++;
+		while ( run->d[WOLF] != arrive ){
+			Sleep(200);
+			run->d[WOLF] ++;
+			printAnimal(WOLF, run->d[WOLF] );
+
 		}
 	}
 
 	//spostamento lepre
-	if ( arrCountX(played, HARE) > 0  ) {
+	if ( arrCountX(played, HARE) > 0  && arrCountX(played, HARE) <= 4) {
 		move = 2;
-
-		i = 0;
-		while ( run.d[HARE]  < move + run.d[HARE] ){
-			run.d[HARE] += i;
-			printAnimal(HARE, i + run.d[HARE] );
-			i++;
+		arrive = move + run->d[HARE];
+		while ( run->d[HARE] != arrive ){
+			Sleep(200);
+			run->d[HARE]++;
+			printAnimal(HARE, run->d[HARE]);
 		}
 	}
 
 	//spostamento tartaruga
 	if ( arrCountX(played, TORTOISE) >= 0  &&  arrCountX(played, TORTOISE) <= 3 ) {
 		move = 1;
-
-		i = 0;
-		while ( run.d[TORTOISE]  < move + run.d[TORTOISE] ){
-			run.d[TORTOISE] += i;
-			printAnimal(TORTOISE, i + run.d[TORTOISE] );
-			i++;
+		arrive = move + run->d[TORTOISE];
+		while ( run->d[TORTOISE] != arrive ){
+			Sleep(200);
+			run->d[TORTOISE] ++;
+			printAnimal(TORTOISE, run->d[TORTOISE] );
 		}
-	} else {
+	} else if (arrCountX(played, TORTOISE) == 4){
 		move = 2;
-
-		i = 0;
-		while ( run.d[TORTOISE]  < move + run.d[TORTOISE] ){
-			run.d[TORTOISE] += i;
-			printAnimal(TORTOISE, i + run.d[TORTOISE] );
-			i++;
+		arrive = move + run->d[TORTOISE];
+		while ( run->d[TORTOISE] != arrive ){
+			Sleep(200);
+			run->d[TORTOISE] ++;
+			printAnimal(TORTOISE, run->d[TORTOISE] );
 		}
 	}
 
 	//spostamento agnello
 	if ( arrCountX(played, LAMB) > 0 ) {
 		move = arrCountX(played, LAMB) + 1;
-
-		i = 0;
-		while ( run.d[LAMB]  < move + run.d[LAMB] ){
-			run.d[LAMB] += i;
-			printAnimal(LAMB, i + run.d[LAMB] );
-			i++;
+		arrive = move + run->d[LAMB];
+		while ( run->d[LAMB] != arrive ){
+			Sleep(200);
+			run->d[LAMB] ++;
+			printAnimal(LAMB, run->d[LAMB] );
 		}
 	}
+
 	//spostamento volpe
 	if ( arrCountX(played, FOX) > 0 ) {
 		move = arrCountX(played, FOX);
-
-		i = 0;
-		while ( run.d[LAMB]  < move + run.d[LAMB] ){
-			run.d[LAMB] += i;
-			printAnimal(LAMB, i + run.d[LAMB] );
-			i++;
+		arrive = move + run->d[FOX];
+		while ( run->d[FOX] != arrive ){
+			Sleep(100);
+			run->d[FOX] ++;
+			printAnimal(FOX, run->d[FOX] );
 		}
 	}
 
-
 	free(path.d);
-	free(run.d);
+
 
 	return 0;
 }

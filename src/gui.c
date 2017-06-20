@@ -304,33 +304,33 @@ int printAnimal(int animal, int pos)
 		putch('F');
 	} else {
 		if (animal == WOLF){
-			GotoXY(get.animals[WOLF-1].xy[pos].x, get.animals[WOLF-1].xy[pos].y);
+			GotoXY(get.animals[0].xy[pos].x, get.animals[0].xy[pos].y);
 			putch('W');
-			GotoXY(get.animals[WOLF-1].xy[pos - 1].x, get.animals[WOLF-1].xy[pos - 1].y);
+			GotoXY(get.animals[0].xy[pos - 1].x, get.animals[0].xy[pos - 1].y);
 			putch(' ');
 		}
 		if (animal == HARE){
-			GotoXY(get.animals[HARE-1].xy[pos].x, get.animals[HARE-1].xy[pos].y);
+			GotoXY(get.animals[1].xy[pos].x, get.animals[1].xy[pos].y);
 			putch('H');
-			GotoXY(get.animals[HARE-1].xy[pos - 1].x, get.animals[HARE-1].xy[pos - 1].y);
+			GotoXY(get.animals[1].xy[pos - 1].x, get.animals[1].xy[pos - 1].y);
 			putch(' ');
 		}
 		if (animal == TORTOISE){
-			GotoXY(get.animals[TORTOISE-1].xy[pos].x, get.animals[TORTOISE-1].xy[pos].y);
+			GotoXY(get.animals[2].xy[pos].x, get.animals[2].xy[pos].y);
 			putch('T');
-			GotoXY(get.animals[TORTOISE-1].xy[pos - 1].x, get.animals[TORTOISE-1].xy[pos - 1].y);
+			GotoXY(get.animals[2].xy[pos - 1].x, get.animals[2].xy[pos - 1].y);
 			putch(' ');
 		}
 		if (animal == LAMB){
-			GotoXY(get.animals[LAMB-1].xy[pos].x, get.animals[LAMB-1].xy[pos].y);
+			GotoXY(get.animals[3].xy[pos].x, get.animals[3].xy[pos].y);
 			putch('L');
-			GotoXY(get.animals[LAMB-1].xy[pos -1].x, get.animals[LAMB-1].xy[pos - 1].y);
+			GotoXY(get.animals[3].xy[pos -1].x, get.animals[3].xy[pos - 1].y);
 			putch(' ');
 		}
 		if (animal == FOX){
-			GotoXY(get.animals[FOX-1].xy[pos].x, get.animals[FOX-1].xy[pos].y);
+			GotoXY(get.animals[4].xy[pos].x, get.animals[4].xy[pos].y);
 			putch('F');
-			GotoXY(get.animals[FOX-1].xy[pos -1].x, get.animals[FOX-1].xy[pos - 1].y);
+			GotoXY(get.animals[4].xy[pos -1].x, get.animals[4].xy[pos - 1].y);
 			putch(' ');
 		}
 	}
@@ -350,9 +350,8 @@ void allocPositions(movepos *set)
 }
 void setPositions(movepos *set)
 {
-	if ( sizeof(set->animals) < ( 12 * sizeof(coord) ) ){
-		allocPositions(set);
-	}
+
+	allocPositions(set);
 
 	/* Posizioni Lupo*/
 	//start

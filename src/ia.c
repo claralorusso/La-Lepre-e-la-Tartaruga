@@ -5,7 +5,6 @@
 
 int betcard()
 {
-	srand(time(NULL));
 
 	return ( rand() % 7 );
 }

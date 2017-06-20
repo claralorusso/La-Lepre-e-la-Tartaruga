@@ -42,7 +42,7 @@ array playerGetCard(player *, array *, int , array *);
 int check_played_card(array *);
 int play(players *p, array *, deck * );
 int playerTurn(players *players, array *played,deck *deck, array * pos, int turn);
-int runPhase(players *players, array *played);
+int runPhase(players *players, array *played, array *run);
 
 
 /// Funzioni di gestione
