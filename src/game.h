@@ -13,6 +13,7 @@ typedef struct player{
 	bool ai;
 	array bet_cards;
 	array run_cards;
+	int score;
 }player;
 
 typedef struct players{
@@ -40,10 +41,10 @@ players firstBetCard(players *);
 int secondBetCard(player , deck *, array *);
 array playerGetCard(player *, array *, int , array *);
 int check_played_card(array *);
-int play(players *p, array *, deck * );
-int playerTurn(players *players, array *played,deck *deck, array * pos, int turn);
-int runPhase(players *players, array *played);
-
+int play(players *p, array *, deck *, array * );
+int playerTurn(players *, array *,deck *, array *, int );
+bool runPhase(players *, array *, array *, array *);
+void StandPositions(array *run, array * winners);
 
 /// Funzioni di gestione
 void errorHandle(int error);

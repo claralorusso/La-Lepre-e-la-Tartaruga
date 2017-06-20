@@ -10,7 +10,7 @@ typedef struct aiturn{
 }aiturn;
 
 
-int iabetcard2();
+int ia2betcard(array *temp, int betcard);
 
 int iamain(array *, array *, int , int );
 
