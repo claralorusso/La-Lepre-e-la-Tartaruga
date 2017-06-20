@@ -58,25 +58,16 @@ int newGame(players *players, array *played, deck *deck)
 
 int loadGame(void)
 {
-	deck deck;
-	int test;
-	int i;
-	arrInit(&deck.totals, 6);
-	deck.card_list = listInit();
-	shuffle_deck(&deck);
-	printf("\n");
-	i = 0;
-	while(1){
-
-		test = GetCard(&deck);
-		printf("%d", test);
-		i++;
-		if ( i == 5){
-			printf("\n");
-			i = 0;
-		}
+	array test;
+	int max;
+	arrInit(&test, 10);
+	for(int i = 0; i < test.n;i++){
+		test.d[i] = rand() % 100;
 	}
-
+	arrPrint(&test);
+	max = arrMaxN(&test);
+	printf("\n%d", max);
+	system("pause");
 
 	return 0;
 }
@@ -156,8 +147,10 @@ players create_players(players *players)
 		players->player[i].bet_cards = arrInit( &players->player[i].bet_cards, MAX_BETS);
 		players->player[i].bet_cards = arrLoad( &players->player[i].bet_cards, 0);
 
-		players->player[i].run_cards= arrInit( &players->player[i].run_cards, MAX_CARDS);
-		players->player[i].run_cards= arrLoad( &players->player[i].run_cards, 0);
+		players->player[i].run_cards = arrInit( &players->player[i].run_cards, MAX_CARDS);
+		players->player[i].run_cards = arrLoad( &players->player[i].run_cards, 0);
+
+		players->player[i].score = 0;
 
 		i++;
 	}
@@ -260,10 +253,17 @@ int secondBetCard(player player, deck *deck, array *played)
 			printTurn(player.name);
 			printBet(&player.bet_cards);
 			printHand(&temp);
-		/*
+
 		if (player.ai == true){
-			// ia2betcard
-		} else */if ( player.ai == false || player.ai == true ) {
+			GotoXY(17, 22);
+			printf(">>L'IA STA SCEGLIENDO<<");
+			//Sleep(4000);
+			player.bet_cards.d[1] = ia2betcard(&temp, player.bet_cards.d[0]);
+			GotoXY(0,22);
+			printf("                                                                             ");
+			//Sleep(1000);
+			flag = false;
+		} else if ( player.ai == false) {
 
 			input = getch();
 			input_value = input -'0';
@@ -400,23 +400,24 @@ int check_played_card(array *arr)
 
 }
 
-int play(players *players, array *played, deck *deck)
+int play(players *players, array *played, deck *deck, array *winners)
 {
 	int i, check;
 	int turn;
 	int player_decision;
-	array pos, run;
+	array pos;
+	array run;
 	bool finish;
-
-
-
-	run = arrInit(&run, 6);
+	// SPOSTARE
+	run = arrInit(&run, 12);
 	run = arrLoad(&run, 0);
+	//----
 	pos = arrInit(&pos, 4);
 	pos = arrLoad(&pos, -1);
 
 	finish = false;
 
+	//SPOSTARE
 	// Scelta delle seconde carte scommessa
 	i = 0;
 	while( i < players->n_players ){
@@ -445,7 +446,7 @@ int play(players *players, array *played, deck *deck)
 	printf("     ");
 	GotoXY(44, 21);
 	printf("     ");
-
+	//-----
 	// resta nel ciclo finchè non finisce la partita
 	while(finish == false){
 
@@ -453,6 +454,7 @@ int play(players *players, array *played, deck *deck)
 		// fase di gioco
 
 		while ( turn < players->n_players ){
+
 			// stampa le carte
 			printPlayed(played);
 			printTurn(players->player[turn].name);
@@ -493,9 +495,9 @@ int play(players *players, array *played, deck *deck)
 				iamain( &players->player[turn].run_cards, played, players->player[turn].bet_cards.d[0], players->player[turn].bet_cards.d[1] );
 
 				// stampa le carte
-				GotoXY(25, 22);
+				GotoXY(17, 22);
 				printf(">>L'IA STA GIOCANDO<<");
-				Sleep(1500);
+				//Sleep(1500);
 				printPlayed(played);
 
 				i = 0;
@@ -511,7 +513,7 @@ int play(players *players, array *played, deck *deck)
 				printTurn(players->player[turn].name);
 				printBet(&players->player[turn].bet_cards);
 				printHand(&players->player[turn].run_cards);
-				Sleep(1000);
+				//Sleep(1000);
 				GotoXY(0,22);
 				printf("                                                                             ");
 			}
@@ -529,7 +531,7 @@ int play(players *players, array *played, deck *deck)
 		||arrCountX(played, LAMB) == 4
 		||arrCountX(played, FOX) == 4 ) {
 
-			runPhase(players, played, &run);
+			finish = runPhase(players, played, &run, winners);
 		}
 		arrLoad(played, 0);
 		printPlayed(played);
@@ -539,6 +541,31 @@ int play(players *players, array *played, deck *deck)
 
 	} // fine partita
 
+	i = 0;
+	int j = 0;
+	while ( i < players->n_players ){
+		j = 0;
+		while( j < 2 ){
+			if ( winners->d[ ( players->player[i].bet_cards.d[j] ) - 1 ] == 1){
+				players->player[i].score = players->player[i].score + 5;
+			} else if ( winners->d[ ( players->player[i].bet_cards.d[j] ) - 1 ] == 2){
+				players->player[i].score = players->player[i].score + 3;
+			}else if ( winners->d[ ( players->player[i].bet_cards.d[j] ) - 1 ] == 3){
+				players->player[i].score = players->player[i].score + 2;
+			}
+			j++;
+		}
+		i++;
+	}
+	system("cls");
+	i = 0;
+	while ( i < players->n_players ){
+		printf("\ngiocatore:%d score:%d", i + 1 , players->player[i].score);
+		i++;
+	}
+	//arrPrint(winners);
+
+	system("pause");
 	//free(pos.d);
 	return 0;
 }
@@ -597,62 +624,59 @@ int playerTurn(players *players, array *played,deck *deck, array * pos, int turn
 
 }
 
-int runPhase(players *players, array *played, array *run)
+bool runPhase(players *players, array *played, array *run, array *winners)
 {
-	array path;
 	int move, arrive;
-
-	arrInit( &path, 11);
-	arrLoad( &path,0);
-
-	path.d[3] = 1;
-	path.d[7] = 1;
-
+	bool flag;
 	move = 0;
-	//spostamento lupo
-	if ( arrCountX(played, WOLF) == 1 || arrCountX(played, WOLF) == 2 ){
-		move = 1;
-		arrive = move + run->d[WOLF];
-
-		while ( run->d[WOLF] != arrive ){
-			Sleep(200);
-			run->d[WOLF] ++;
-			printAnimal(WOLF, run->d[WOLF] );
-		}
-
-	} else if ( arrCountX(played, WOLF) == 3 || arrCountX(played, WOLF) == 4 ){
-		move = arrCountX(played, WOLF) - 1;
-		arrive = move + run->d[WOLF];
-
-		while ( run->d[WOLF] != arrive ){
-			Sleep(200);
-			run->d[WOLF] ++;
-			printAnimal(WOLF, run->d[WOLF] );
-
-		}
-	}
+	flag = 0;
 
 	//spostamento lepre
-	if ( arrCountX(played, HARE) > 0  && arrCountX(played, HARE) <= 4) {
+	if ( (arrCountX(played, HARE) > 0  && arrCountX(played, HARE) <= 4)
+			&& ( run->d[HARE] <= run->d[WOLF] || run->d[HARE] <= run->d[FOX] || run->d[HARE] <= run->d[TORTOISE] || run->d[HARE] <= run->d[LAMB] )
+			&& run->d[HARE] != 11){
+
 		move = 2;
 		arrive = move + run->d[HARE];
-		while ( run->d[HARE] != arrive ){
+		while ( run->d[HARE] != arrive && run->d[HARE] != 11){
 			Sleep(200);
 			run->d[HARE]++;
 			printAnimal(HARE, run->d[HARE]);
 		}
 	}
+	//spostamento lupo
+	if ( ( arrCountX( played, WOLF) == 1 || arrCountX(played, WOLF) == 2 )  && run->d[WOLF] != 11){
+		move = 1;
+		arrive = move + run->d[WOLF];
+
+		while ( run->d[WOLF] != arrive && run->d[WOLF] != 11){
+			Sleep(200);
+			run->d[WOLF] ++;
+			printAnimal(WOLF, run->d[WOLF] );
+		}
+
+	} else if ( ( arrCountX(played, WOLF) == 3 || arrCountX(played, WOLF)  == 4 ) && run->d[WOLF] != 11){
+		move = arrCountX(played, WOLF) - 1;
+		arrive = move + run->d[WOLF];
+
+		while ( run->d[WOLF] != arrive && run->d[WOLF] != 11 ){
+			Sleep(200);
+			run->d[WOLF] ++;
+			printAnimal(WOLF, run->d[WOLF] );
+
+		}
+	}
 
 	//spostamento tartaruga
-	if ( arrCountX(played, TORTOISE) >= 0  &&  arrCountX(played, TORTOISE) <= 3 ) {
+	if ( ( arrCountX(played, TORTOISE) >= 0  &&  arrCountX(played, TORTOISE) <= 3 ) && run->d[TORTOISE] != 11 ) {
 		move = 1;
 		arrive = move + run->d[TORTOISE];
-		while ( run->d[TORTOISE] != arrive ){
+		while ( run->d[TORTOISE] != arrive && run->d[TORTOISE] != 11){
 			Sleep(200);
 			run->d[TORTOISE] ++;
 			printAnimal(TORTOISE, run->d[TORTOISE] );
 		}
-	} else if (arrCountX(played, TORTOISE) == 4){
+	} else if ( arrCountX(played, TORTOISE) == 4 && run->d[TORTOISE] != 11 ){
 		move = 2;
 		arrive = move + run->d[TORTOISE];
 		while ( run->d[TORTOISE] != arrive ){
@@ -663,31 +687,63 @@ int runPhase(players *players, array *played, array *run)
 	}
 
 	//spostamento agnello
-	if ( arrCountX(played, LAMB) > 0 ) {
+	if ( arrCountX(played, LAMB) > 0 && run->d[LAMB] != 11 ) {
 		move = arrCountX(played, LAMB) + 1;
 		arrive = move + run->d[LAMB];
-		while ( run->d[LAMB] != arrive ){
+		while ( run->d[LAMB] != arrive && flag == false && run->d[LAMB] != 11){
+			if ((run->d[LAMB] == 7 || run->d[LAMB] == 3))
+			{
+				flag = true;
+			}
 			Sleep(200);
 			run->d[LAMB] ++;
 			printAnimal(LAMB, run->d[LAMB] );
+
 		}
 	}
 
 	//spostamento volpe
-	if ( arrCountX(played, FOX) > 0 ) {
+	if ( arrCountX(played, FOX) > 0 && run->d[FOX] != 11 ) {
 		move = arrCountX(played, FOX);
 		arrive = move + run->d[FOX];
-		while ( run->d[FOX] != arrive ){
+		while ( run->d[FOX] != arrive && run->d[FOX] != 11 ){
 			Sleep(100);
 			run->d[FOX] ++;
-			printAnimal(FOX, run->d[FOX] );
+			printAnimal(FOX, run->d[FOX]);
 		}
 	}
 
-	free(path.d);
+	StandPositions(run, winners);
+	if ( arrMaxN(winners) == 3 || arrCountX(winners, 0) == 0 ){
+		return true;
+	}
+
+	return false;
+}
 
 
-	return 0;
+void StandPositions(array *run, array * winners)
+{
+	int first;
+
+	first = arrMaxN(winners);
+
+	if(run->d[WOLF] == 11 && winners->d[0] == 0 ){
+		winners->d[0] = first + 1;
+	}
+	if(run->d[HARE] == 11 && winners->d[1] == 0){
+		winners->d[1] = first + 1;
+	}
+	if(run->d[TORTOISE] == 11 && winners->d[2] == 0 ){
+		winners->d[2] = first + 1;
+	}
+	if(run->d[LAMB] == 11 && winners->d[3] == 0 ){
+		winners->d[3] = first + 1;
+	}
+	if(run->d[FOX] == 11 && winners->d[4] == 0 ){
+		winners->d[4] = first + 1;
+	}
+
 }
 
 

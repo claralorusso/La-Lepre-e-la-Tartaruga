@@ -106,3 +106,21 @@ int arrCountX(array *arr, int x )
 
 	return sum;
 }
+
+// Restituisce il numero massimo dell'array in input
+int arrMaxN(array *arr)
+{
+	int max;
+	int i;
+
+	max = arr->d[0];
+	i = 0;
+	while ( i < arr->n){
+		if ( max < arr->d[i] ){
+			max = arr->d[i];
+		}
+		i++;
+	}
+
+	return max;
+}

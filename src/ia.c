@@ -3,10 +3,16 @@
 #include <time.h>
 #include "ia.h"
 
-int betcard()
+int ia2betcard(array *temp, int betcard)
 {
+	int pos;
+	int ia2betcard;
 
-	return ( rand() % 7 );
+	pos = ( rand() % 7 );
+	ia2betcard = temp->d[pos];
+	temp->d[pos] = 0;
+
+	return ia2betcard;
 }
 
 int iamain(array *cards, array *played_cards, int betcard1, int betcard2)

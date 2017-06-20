@@ -17,4 +17,5 @@ int countninarow(array *, int , int );
 array arrFillavb(array  *, int , int ); // Inserisce el nella prima posizione disponibile diversa da x
 int arrCountNotX(array  *, int ); // Conta tutti gli elementi diversi da x
 int arrCountX(array *, int  );// Conta tutti gli elementi uguali x
+int arrMaxN(array *arr);
 #endif /* ARRAYS_H_ */
