@@ -39,9 +39,9 @@ void printTurn(char []);
 
 void printPointer(int , bool );
 
-void allocPositions(movepos *set);
+void allocPositions();
 
-void setPositions(movepos *set);
+void setPositions();
 
 int printAnimal(int animal, int pos);
 

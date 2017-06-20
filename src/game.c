@@ -408,6 +408,8 @@ int play(players *players, array *played, deck *deck)
 	array pos, run;
 	bool finish;
 
+
+
 	run = arrInit(&run, 6);
 	run = arrLoad(&run, 0);
 	pos = arrInit(&pos, 4);

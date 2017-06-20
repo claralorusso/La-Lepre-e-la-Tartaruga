@@ -24,6 +24,7 @@ int main()
 	/* Settaggi iniziali  */
 	arrInit(&deck.totals, 6);
 	arrInit(&played, MAX_PLAYED_CARDS);
+	setPositions();
 	menu = 0;
 	err = 0;
 	err = initConsole();
