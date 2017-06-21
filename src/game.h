@@ -27,9 +27,9 @@ typedef struct deck{
 }deck;
 
 /// Funzioni principali
-int newGame(players *, array *, deck *);
+int newGame(players *, array *, deck *, array *);
 int loadGame(void);
-int settings(void);
+int settings(players *);
 int rules(void);
 void saveGame();
 /// Funzioni essenziali del gioco
@@ -41,10 +41,10 @@ players firstBetCard(players *);
 int secondBetCard(player , deck *, array *);
 array playerGetCard(player *, array *, int , array *);
 int check_played_card(array *);
-int play(players *p, array *, deck *, array * );
+int play(players *p, array *, deck *, array *, array * );
 int playerTurn(players *, array *,deck *, array *, int );
 bool runPhase(players *, array *, array *, array *);
-void StandPositions(array *run, array * winners);
+void StandPositions(array *run, array *);
 
 /// Funzioni di gestione
 void errorHandle(int error);

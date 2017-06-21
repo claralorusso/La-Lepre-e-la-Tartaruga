@@ -16,10 +16,12 @@
 #define BACK_TO_MENU 20
 
 
-int newGame(players *players, array *played, deck *deck)
+int newGame(players *players, array *played, deck *deck, array *run)
 {
 	int i, j;
 
+	/* Azzera le posizioni dei giocatori*/
+	arrLoad(run, 0);
 	/* Resetta le Carte Giocate */
 	arrLoad(played, 0);
 
@@ -72,10 +74,120 @@ int loadGame(void)
 	return 0;
 }
 
-int settings(void)
+int settings(players *p)
 {
+	char input;
+	int i;
+	int setting;
+	char type[10];
 
-	system("pause > nul");
+	players temp;
+
+	temp = *p;
+	setting = 0;
+
+	GotoXY(30, 5);
+	printf("Numero Giocatori: ");
+
+	GotoXY(29, 5 );
+	putch('>');
+
+	i = 0;
+	while ( i < temp.n_players ){
+
+		GotoXY(30, 6 + i);
+		printf("Tipo Giocatore%d -> ", i + 1);
+		i++;
+	}
+	input = 0;
+	while ( input != ' ' || input != 27 ){
+
+		GotoXY(48, 5);
+		printf("%d", temp.n_players );
+
+		i = 0;
+		while ( i < temp.n_players  ){
+
+			// Aggiorna il numero di giocatori a schermo
+			if ( temp.player[i].ai == false ){
+				strcpy(type, "Umano");
+			} else if ( temp.player[i].ai == true ){
+				strcpy(type, "I.A.");
+			}
+			GotoXY(30, 6 + i);
+			printf("Tipo Giocatore%d -> ", i + 1);
+			GotoXY(48, 6 + i);
+			printf("%s", type);
+			i++;
+		}
+		input = getch();
+		if ( (input == 'w' || input == 'W') && setting > 0){
+			setting--;
+			GotoXY(29, 5 + setting);
+			putch('>');
+
+			GotoXY(29, 5 + setting + 1);
+			putch(' ');
+
+		} else if ( (input == 's' || input == 'S') && setting < temp.n_players ){
+			setting++;
+			GotoXY(29, 5 + setting);
+			putch('>');
+
+			GotoXY(29, 5 + setting - 1);
+			putch(' ');
+		} else if ( input == ' '){
+			*p = temp;
+			return 0;
+
+		} else if ( input == 27 ){
+			return 0;
+		}
+
+		if ( setting == 0 ){
+
+			if ( ( input == 'd' || input == 'D' ) && temp.n_players  < 5 ){
+				temp.n_players ++;
+			} else if ( (input == 'a' || input == 'A') && temp.n_players  > 2){
+				temp.n_players --;
+				// cancella da schermo giocatori non esistenti
+				if (temp.n_players  == 4){
+					GotoXY(0, 10);
+					printf("                                                                        ");
+
+				} else if (temp.n_players  == 3){
+					GotoXY(0, 9);
+					printf("                                                                        ");
+				} else if (temp.n_players  == 2){
+					GotoXY(0, 8);
+					printf("                                                                        ");
+				}
+			}
+		} else if ( setting >= 1 && setting <= 5){
+
+			if ( ( input == 'd' || input == 'D' ) && temp.player[setting - 1].ai != true ){
+				temp.player[setting - 1].ai = true;
+				GotoXY(48, 6 + setting - 1);
+				printf("        ");
+				GotoXY(48, 6 + setting - 1);
+				printf("I.A.");
+			} else if ( (input == 'a' || input == 'A') && temp.player[setting - 1].ai != false ){
+				temp.player[setting - 1].ai = false;
+				GotoXY(48, 6 + setting - 1);
+				printf("        ");
+				GotoXY(48, 6 + setting - 1);
+				printf("Umano");
+			}
+		}
+
+
+
+		//GotoXY(0, 0);
+		//printf("                                                ");
+	}
+
+
+	//system("pause > nul");
 	return 0;
 }
 
@@ -257,11 +369,11 @@ int secondBetCard(player player, deck *deck, array *played)
 		if (player.ai == true){
 			GotoXY(17, 22);
 			printf(">>L'IA STA SCEGLIENDO<<");
-			//Sleep(4000);
+			Sleep(1000);
 			player.bet_cards.d[1] = ia2betcard(&temp, player.bet_cards.d[0]);
 			GotoXY(0,22);
 			printf("                                                                             ");
-			//Sleep(1000);
+			Sleep(1000);
 			flag = false;
 		} else if ( player.ai == false) {
 
@@ -400,18 +512,14 @@ int check_played_card(array *arr)
 
 }
 
-int play(players *players, array *played, deck *deck, array *winners)
+int play(players *players, array *played, deck *deck, array *winners, array *run)
 {
-	int i, check;
-	int turn;
-	int player_decision;
-	array pos;
-	array run;
-	bool finish;
-	// SPOSTARE
-	run = arrInit(&run, 12);
-	run = arrLoad(&run, 0);
-	//----
+	int i; // Indice
+	int turn; // Indica il turno del giocatore
+	int player_decision; // Input del giocatore
+	array pos; // Posizioni delle carte giocate dal giocatore
+	bool finish; // Controlla che il gioco sia finito
+
 	pos = arrInit(&pos, 4);
 	pos = arrLoad(&pos, -1);
 
@@ -419,20 +527,23 @@ int play(players *players, array *played, deck *deck, array *winners)
 
 	//SPOSTARE
 	// Scelta delle seconde carte scommessa
+
 	i = 0;
 	while( i < players->n_players ){
+		// controlla che il giocatore non abbia già una carta scommessa
+		if ( players->player[i].bet_cards.d[1] == 0 ){
 
-		check = secondBetCard(players->player[i], deck, played);
+			player_decision = secondBetCard(players->player[i], deck, played);
+		}
 
-		if ( check == SAVE_GAME){
+		if ( player_decision == SAVE_GAME){
 			// salva
 			saveGame();
 			free(pos.d);
 			return 0;
 
-		} else if ( check == BACK_TO_MENU){
+		} else if ( player_decision == BACK_TO_MENU){
 			//esci senza salvare
-
 			free(pos.d);
 			return 0;
 		}
@@ -447,6 +558,7 @@ int play(players *players, array *played, deck *deck, array *winners)
 	GotoXY(44, 21);
 	printf("     ");
 	//-----
+	player_decision = 0;
 	// resta nel ciclo finchè non finisce la partita
 	while(finish == false){
 
@@ -477,13 +589,12 @@ int play(players *players, array *played, deck *deck, array *winners)
 					// esci senza salvare
 					return 0;
 				}
-
 				// stampa le carte
 				printPlayed(played);
 				printTurn(players->player[turn].name);
 				printBet(&players->player[turn].bet_cards);
 				printHand(&players->player[turn].run_cards);
-				//}
+
 			// caso in cui il giocatore sia ia
 			} else if (players->player[turn].ai == true){
 
@@ -497,23 +608,19 @@ int play(players *players, array *played, deck *deck, array *winners)
 				// stampa le carte
 				GotoXY(17, 22);
 				printf(">>L'IA STA GIOCANDO<<");
-				//Sleep(1500);
-				printPlayed(played);
 
+				// Da il numero di carte necessarie all'ia
 				i = 0;
 				while( i < MAX_CARDS ){
 					if( players->player[turn].run_cards.d[i] == 0){
 						players->player[turn].run_cards.d[i] = GetCard(deck);
-
 					}
 					i++;
 				}
-
+				Sleep(1000);
 				printPlayed(played);
-				printTurn(players->player[turn].name);
-				printBet(&players->player[turn].bet_cards);
 				printHand(&players->player[turn].run_cards);
-				//Sleep(1000);
+				Sleep(1000);
 				GotoXY(0,22);
 				printf("                                                                             ");
 			}
@@ -531,7 +638,7 @@ int play(players *players, array *played, deck *deck, array *winners)
 		||arrCountX(played, LAMB) == 4
 		||arrCountX(played, FOX) == 4 ) {
 
-			finish = runPhase(players, played, &run, winners);
+			finish = runPhase(players, played, run, winners);
 		}
 		arrLoad(played, 0);
 		printPlayed(played);
@@ -708,7 +815,7 @@ bool runPhase(players *players, array *played, array *run, array *winners)
 		arrive = move + run->d[FOX];
 		while ( run->d[FOX] != arrive && run->d[FOX] != 11 ){
 			Sleep(100);
-			run->d[FOX] ++;
+			run->d[FOX]++;
 			printAnimal(FOX, run->d[FOX]);
 		}
 	}

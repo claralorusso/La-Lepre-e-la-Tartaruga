@@ -20,11 +20,13 @@ int main()
 	players players;
 	array played;
 	array winners;
+	array run;
 	deck deck;
 
 	/* Settaggi iniziali  */
 	arrInit(&winners, 5);
 	arrLoad(&winners, 0);
+	arrInit(&run, 12);
 	arrInit(&deck.totals, 6);
 	arrInit(&played, MAX_PLAYED_CARDS);
 	setPositions();
@@ -33,13 +35,13 @@ int main()
 	err = initConsole();
 
 	/* Setta le impostazioni a parametri di default */
-	players.n_players = 5;
+	players.n_players = 2;
 	create_players(&players);
 	players.player[0].ai = false;
-	players.player[1].ai = false;
-	players.player[2].ai = true;
-	players.player[3].ai = false;
-	players.player[4].ai = true;
+	players.player[1].ai = true;
+	//players.player[2].ai = true;
+	//players.player[3].ai = false;
+	//players.player[4].ai = true;
 	name_players(&players);
 
 	while ( err == 0){
@@ -52,12 +54,12 @@ int main()
 
 			system("cls");
 
-			err = newGame(&players, &played, &deck);
-			err = play(&players, &played, &deck, &winners);
+			err = newGame(&players, &played, &deck, &run);
+			err = play(&players, &played, &deck, &winners, &run);
 
 			listErase(deck.card_list);
 			name_players(&players);
-			arrLoad(&winners, 5);
+			arrLoad(&winners, 0);
 
 		}
 		if (menu == '2'){
@@ -68,7 +70,7 @@ int main()
 		if (menu == '3'){
 
 			system("cls");
-			err = settings();
+			err = settings(&players);
 		}
 		if (menu == '4'){
 
