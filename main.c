@@ -39,9 +39,9 @@ int main()
 	create_players(&players);
 	players.player[0].ai = false;
 	players.player[1].ai = true;
-	//players.player[2].ai = true;
-	//players.player[3].ai = false;
-	//players.player[4].ai = true;
+	players.player[2].ai = false;
+	players.player[3].ai = false;
+	players.player[4].ai = false;
 	name_players(&players);
 
 	while ( err == 0){

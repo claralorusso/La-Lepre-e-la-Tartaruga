@@ -80,8 +80,17 @@ int settings(players *p)
 	int i;
 	int setting;
 	char type[10];
-
 	players temp;
+	coord angle1, angle2;
+
+	angle1.x = 3;
+	angle1.y = 3;
+
+	angle2.x = 76;
+	angle2.y = 22;
+
+	printStaticsSettings();
+	drawSquare( angle1,  angle2);
 
 	temp = *p;
 	setting = 0;
@@ -96,7 +105,9 @@ int settings(players *p)
 	while ( i < temp.n_players ){
 
 		GotoXY(30, 6 + i);
-		printf("Tipo Giocatore%d -> ", i + 1);
+		printf("%s", temp.player[i].name);
+		GotoXY(45, 6 + i);
+		printf(" -> ");
 		i++;
 	}
 	input = 0;
@@ -115,8 +126,10 @@ int settings(players *p)
 				strcpy(type, "I.A.");
 			}
 			GotoXY(30, 6 + i);
-			printf("Tipo Giocatore%d -> ", i + 1);
-			GotoXY(48, 6 + i);
+			printf("%s", temp.player[i].name);
+			GotoXY(45, 6 + i);
+			printf(" -> ");
+			GotoXY(49, 6 + i);
 			printf("%s", type);
 			i++;
 		}
@@ -150,11 +163,11 @@ int settings(players *p)
 				temp.n_players ++;
 			} else if ( (input == 'a' || input == 'A') && temp.n_players  > 2){
 				temp.n_players --;
+
 				// cancella da schermo giocatori non esistenti
 				if (temp.n_players  == 4){
 					GotoXY(0, 10);
 					printf("                                                                        ");
-
 				} else if (temp.n_players  == 3){
 					GotoXY(0, 9);
 					printf("                                                                        ");
@@ -162,28 +175,51 @@ int settings(players *p)
 					GotoXY(0, 8);
 					printf("                                                                        ");
 				}
+
 			}
 		} else if ( setting >= 1 && setting <= 5){
 
 			if ( ( input == 'd' || input == 'D' ) && temp.player[setting - 1].ai != true ){
+
 				temp.player[setting - 1].ai = true;
 				GotoXY(48, 6 + setting - 1);
 				printf("        ");
 				GotoXY(48, 6 + setting - 1);
 				printf("I.A.");
 			} else if ( (input == 'a' || input == 'A') && temp.player[setting - 1].ai != false ){
+
 				temp.player[setting - 1].ai = false;
 				GotoXY(48, 6 + setting - 1);
 				printf("        ");
 				GotoXY(48, 6 + setting - 1);
 				printf("Umano");
+
+			} else if ( (input == 'c' || input == 'C') ){
+
+				// richiede nuovo nome
+				GotoXY(5, 15);
+				printf("Inserire nome Giocatore (MAX 15 CARATTERI) -> ");
+				strcpy(temp.player[setting - 1].name, "" );
+
+				// controlla che il nuovo sia valido
+				while ( strlen(temp.player[setting - 1].name) <= 0 || strlen(temp.player[setting - 1].name) > 15){
+
+					GotoXY(51, 15);
+					printf("                                                                                                                                                  ");
+					drawSquare( angle1,  angle2);
+					GotoXY(51, 15);
+					gets(temp.player[setting - 1].name);
+
+				}
+				// Cancella vecchio nome giocatore
+				GotoXY(25, 6 + setting - 1);
+				printf("                    ");
+				// Cancella frase
+				GotoXY(5, 15);
+				printf("                                                                                        ");
 			}
 		}
-
-
-
-		//GotoXY(0, 0);
-		//printf("                                                ");
+		drawSquare( angle1,  angle2);
 	}
 
 
@@ -193,6 +229,18 @@ int settings(players *p)
 
 int rules(void)
 {
+	coord angle1, angle2;
+	angle1.x = 3;
+	angle1.y = 2;
+
+	angle2.x = 60;
+	angle2.y = 20;
+
+	drawSquare( angle1,  angle2);
+
+
+
+
 	system("pause > nul");
 	return 0;
 
@@ -277,14 +325,9 @@ players name_players(players *players_d)
 	i = 0;
 	while ( i < MAX_PLAYERS ){
 
-		if (players_d->player[i].ai == false){
 			strcpy(players_d->player[i].name, "Giocatore");
 			players_d->player[i].name[9] = 49 + i;
 			players_d->player[i].name[10] = '\0';
-
-		} else if (players_d->player[i].ai == true){
-			strcpy(players_d->player[i].name, "I.A.       ");
-		}
 
 		i++;
 	}
@@ -362,7 +405,7 @@ int secondBetCard(player player, deck *deck, array *played)
 	while( flag == true){
 
 			printPlayed(played);
-			printTurn(player.name);
+			printTurn(player.name, player.ai);
 			printBet(&player.bet_cards);
 			printHand(&temp);
 
@@ -569,7 +612,7 @@ int play(players *players, array *played, deck *deck, array *winners, array *run
 
 			// stampa le carte
 			printPlayed(played);
-			printTurn(players->player[turn].name);
+			printTurn(players->player[turn].name, players->player[turn].ai);
 			printBet(&players->player[turn].bet_cards);
 			printHand(&players->player[turn].run_cards);
 
@@ -591,7 +634,7 @@ int play(players *players, array *played, deck *deck, array *winners, array *run
 				}
 				// stampa le carte
 				printPlayed(played);
-				printTurn(players->player[turn].name);
+				printTurn(players->player[turn].name, players->player[turn].ai);
 				printBet(&players->player[turn].bet_cards);
 				printHand(&players->player[turn].run_cards);
 
@@ -599,7 +642,7 @@ int play(players *players, array *played, deck *deck, array *winners, array *run
 			} else if (players->player[turn].ai == true){
 
 				// turno dell'ia
-				printTurn(players->player[turn].name);
+				printTurn(players->player[turn].name, players->player[turn].ai);
 				printBet(&players->player[turn].bet_cards);
 				printPlayed(played);
 				printHand(&players->player[turn].run_cards);
@@ -642,7 +685,7 @@ int play(players *players, array *played, deck *deck, array *winners, array *run
 		}
 		arrLoad(played, 0);
 		printPlayed(played);
-		printTurn(players->player[turn].name);
+		printTurn(players->player[turn].name, players->player[turn].ai);
 		printBet(&players->player[turn].bet_cards);
 		printHand(&players->player[turn].run_cards);
 
@@ -852,7 +895,6 @@ void StandPositions(array *run, array * winners)
 	}
 
 }
-
 
 void errorHandle(int error)
 {

@@ -35,7 +35,9 @@ void printRef();
 
 void printStatics();
 
-void printTurn(char []);
+void printStaticsSettings();
+
+void printTurn(char [], bool);
 
 void printPointer(int , bool );
 
@@ -46,5 +48,7 @@ void setPositions();
 int printAnimal(int animal, int pos);
 
 void playerErrors();
+
+void drawSquare(coord angle1, coord angle2);
 
 #endif /* GUI_H_ */
