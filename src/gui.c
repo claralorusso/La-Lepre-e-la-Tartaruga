@@ -63,6 +63,8 @@ YELLOW"           :______::______::______::______::____:\n"
 /// Comandi
 static char commands[] = "      (1 - 6) Selezione Carta (Spazio) Fine Turno (S) Salva          (ESC) Esci";
 
+static char settings[] = "  (W - S) Muovi Cursore (A - D) Modifica (Spazio) Salva Modifiche    (ESC) Esci";
+
 static movepos animals_position;
 
 
@@ -82,6 +84,23 @@ void printRef()
 	printf("%s",reference5);
 }
 
+void printStaticsSettings()
+{
+	int i;
+	GotoXY(25, 0);
+	printf("LA LEPRE E LA TARTARUGA");
+	GotoXY(28, 1);
+	printf("IMPOSTAZIONI");
+	GotoXY(0, 23);
+	i = 0;
+	while (i < 80){
+		printf("-");
+		i++;
+	}
+
+	GotoXY(0, 24);
+	printf("%s",settings);
+}
 void printStatics()
 {
 	int i;
@@ -152,10 +171,17 @@ void printBet(array *bets)
 	}
 }
 
-void printTurn(char name[])
+void printTurn(char name[], bool ia)
 {
-	GotoXY(20, 16);
-	printf("Turno di %s", name);
+	GotoXY(15, 16);
+	printf("                                                        ");
+	GotoXY(15, 16);
+	printf(MAGENTA "Sta giocando: %s", name);
+	if ( ia == true ){
+		GotoXY(43, 16);
+		printf("(I.A.)");
+	}
+	printf( WHITE );
 }
 
 void printHand(array *cards)
@@ -561,5 +587,47 @@ void playerErrors()
 	printf("                ");
 	GotoXY(60, 14);
 	printf("                ");
+
+}
+
+void drawSquare(coord angle1, coord angle2)
+{
+	int row;
+	int columns;
+	int i;
+
+	row = angle2.x - angle1.x;
+	columns = angle2.y - angle1.y;
+	// riga superiore
+	i = 0;
+	while ( i < row ){
+		GotoXY( angle1.x + i, angle1.y );
+		putch('-');
+		i++;
+	}
+	// riga inferiore
+	i = 0;
+	while ( i < row ){
+		GotoXY( angle1.x + i, angle2.y );
+		putch('-');
+		i++;
+	}
+
+	// colonna sinistra
+	i = 0;
+	while ( i <= columns ){
+		GotoXY( angle1.x, angle1.y + i );
+		putch('|');
+		i++;
+	}
+	// colonna destra
+	i = 0;
+	while ( i <= columns ){
+		GotoXY( angle2.x, angle1.y + i );
+		putch('|');
+		i++;
+	}
+
+
 
 }
