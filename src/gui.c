@@ -278,8 +278,9 @@ void printPointer(int pos, bool flag)
 
 	GotoXY(pointers[pos].x, pointers[pos].y);
 	if ( flag == false){
-
+		printf(GREEN);
 		putchar('^');
+		printf(WHITE);
 	} else if ( flag == true ){
 
 		putchar(' ');
@@ -551,9 +552,9 @@ void setPositions()
 void playerErrors()
 {
 	GotoXY(60, 13);
-	printf("Non puoi giocare");
+	printf(RED"Non puoi giocare"WHITE);
 	GotoXY(60, 14);
-	printf("  questa carta!");
+	printf(RED"  questa carta!"WHITE);
 
 	Sleep(500);
 	GotoXY(60, 13);
