@@ -6,8 +6,8 @@
 #include "arrays.h"
 #include "tools.h"
 
-
-#define KNRM  "\x1B[0m"
+#define BG_WHITE "\x1b[47m"
+#define BLACK  "\x1b[30m"
 #define RED  "\x1B[31m"
 #define GREEN  "\x1B[32m"
 #define YELLOW  "\x1B[33m"

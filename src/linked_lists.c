@@ -210,3 +210,41 @@ void listErase(list l){
 
 	l = NULL;
 }
+
+
+array listIntoArray(list l)
+{
+	array arr;
+	int i;
+
+	arrInit(&arr, listLenght(l));
+	arrLoad(&arr, 0);
+
+	i = 0;
+	while(l != NULL && i < arr.n)
+	{
+		arr.d[i] = l->data;
+		l = l->next;
+		i++;
+	}
+
+	return arr;
+}
+
+list arrIntoList(array *arr)
+{
+	int i;
+	list l;
+
+	l = listInit();
+
+	i = 0;
+
+	while ( i < arr->n ){
+
+		l = listAdd(l,arr->d[i]);
+		i++;
+	}
+
+	return l;
+}

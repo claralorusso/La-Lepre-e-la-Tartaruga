@@ -53,18 +53,20 @@ static char reference5[] = "F - Volpe";
 /// Percorso
 static char field[] =
 YELLOW"           :______::______::______::______::____:\n"
-"      "WHITE"START"YELLOW"|      ||      ||      ||   "CYANO"|"YELLOW"  ||    |\n"
+"      "RED"START"YELLOW"|      ||      ||      ||   "CYANO"|"YELLOW"  ||    |\n"
 "           :______::______::______::___"CYANO"|"YELLOW"__:|    |\n"
 "                                           :____:\n"
 "                                           :____:\n"
-" "WHITE"E"YELLOW" :______::______::______::______::______:|    |\n"
-" "WHITE"N"YELLOW" |      ||      ||      ||   "CYANO"|"YELLOW"  ||      ||    |\n"
-" "WHITE"D"YELLOW" :______::______::______::___"CYANO"|"YELLOW"__::______::____:\n"WHITE;
+" "RED"E"YELLOW" :______::______::______::______::______:|    |\n"
+" "RED"N"YELLOW" |      ||      ||      ||   "CYANO"|"YELLOW"  ||      ||    |\n"
+" "RED"D"YELLOW" :______::______::______::___"CYANO"|"YELLOW"__::______::____:\n"BLACK;
 
 /// Comandi
 static char commands[] = "      (1 - 6) Selezione Carta (Spazio) Fine Turno (S) Salva          (ESC) Esci";
 
-static char settings_commands[] = "  (W - S) Muovi Cursore (A - D) Modifica (Spazio) Salva Modifiche    (ESC) Esci";
+static char settings_commands[] =
+		" ("RED"W - S"BLACK") Sposta Cursore ("RED"A - D"BLACK") Modifica Selezione ("RED"Spazio"BLACK") Salva Modifiche     "
+		" ("RED"C"BLACK") Modifica Nome                                                 ("RED"ESC"BLACK") Esci";
 
 static movepos animals_position;
 
@@ -72,7 +74,7 @@ static movepos animals_position;
 void printRef()
 {
 	GotoXY(60, 1);
-	printf("Legenda:");
+	printf(BLU"Legenda:"BLACK);
 	GotoXY(60, 2);
 	printf("%s",reference1);
 	GotoXY(60, 3);
@@ -88,18 +90,18 @@ void printRef()
 void printStaticsSettings()
 {
 	int i;
-	GotoXY(25, 0);
+	GotoXY(25, 1);
 	printf("LA LEPRE E LA TARTARUGA");
-	GotoXY(28, 1);
-	printf("IMPOSTAZIONI");
-	GotoXY(0, 23);
+	GotoXY(30, 3);
+	printf(BLU"IMPOSTAZIONI:"BLACK);
+	GotoXY(0, 22);
 	i = 0;
 	while (i < 80){
 		printf("-");
 		i++;
 	}
 
-	GotoXY(0, 24);
+	GotoXY(0, 23);
 	printf("%s",settings_commands);
 }
 void printStatics()
@@ -177,12 +179,12 @@ void printTurn(char name[], bool ia)
 	GotoXY(15, 16);
 	printf("                                                        ");
 	GotoXY(15, 16);
-	printf(MAGENTA "Sta giocando: %s", name);
+	printf(GREEN"Sta giocando: %s", name);
 	if ( ia == true ){
 		GotoXY(43, 16);
 		printf("(I.A.)");
 	}
-	printf( WHITE );
+	printf( BLACK );
 }
 
 void printHand(array *cards)
@@ -190,7 +192,7 @@ void printHand(array *cards)
 	int i;
 
 	GotoXY(8, 18);
-	printf("Carte Corsa");
+	printf(GREEN"Carte Corsa"BLACK);
 	GotoXY(8, 19);
 	i = 0;
 	while ( i < cards->n ){
@@ -234,7 +236,7 @@ void printPlayed(array *cards)
 	int i;
 
 	GotoXY(5, 11);
-	printf("Carte Giocate");
+	printf(GREEN"Carte Giocate"BLACK);
 	GotoXY(5, 12);
 	i = 0;
 	while ( i < cards->n ){
@@ -307,7 +309,7 @@ void printPointer(int pos, bool flag)
 	if ( flag == false){
 		printf(GREEN);
 		putchar('^');
-		printf(WHITE);
+		printf(BLACK);
 	} else if ( flag == true ){
 
 		putchar(' ');
@@ -579,9 +581,9 @@ void setPositions()
 void playerErrors()
 {
 	GotoXY(60, 13);
-	printf(RED"Non puoi giocare"WHITE);
+	printf(RED"Non puoi giocare");
 	GotoXY(60, 14);
-	printf(RED"  questa carta!"WHITE);
+	printf("  questa carta!"BLACK);
 
 	Sleep(500);
 	GotoXY(60, 13);
@@ -651,10 +653,10 @@ void printScore(players *p, array *order)
 	printf("LA LEPRE E LA TARTARUGA");
 
 	GotoXY(33, start.y - 3);
-	printf(RED"CLASSIFICA");
+	printf(GREEN"CLASSIFICA");
 
 	GotoXY(start.x, start.y);
-	printf("%-15s %-5s %-5s","Giocatore", "Tipo", "Punti"WHITE );
+	printf("%-15s %-5s %-5s","Giocatore", "Tipo", "Punti"BLACK );
 
 	GotoXY(15, angle2.y + 3);
 	printf("PARTITA TERMINATA, PREMI UN TASTO PER TORNARE AL MENU");

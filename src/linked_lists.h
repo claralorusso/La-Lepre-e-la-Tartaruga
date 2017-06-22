@@ -10,6 +10,7 @@
 #define LINKED_LISTS_H_
 
 #include "tools.h"
+#include "arrays.h"
 
 /** \struct node
  *  Struttura di una lista di interi
@@ -28,16 +29,30 @@ typedef node *list;
 
 
 list listInit(void);
+
 bool listEmpty(list );
+
 list listPush(list , int );
+
 list listAdd(list , int );
+
 list listDel(list , int );
+
 int listPrint(list );
+
 int listLenght(list );
+
 int listGetLast(list );
+
 list listDLast(list );
+
 int listGetRand(list );
+
 void listErase(list );
+
+array listIntoArray(list l);
+
+list arrIntoList(array *arr);
 
 #endif /* LINKED_LISTS_H_ */
 
