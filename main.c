@@ -56,7 +56,10 @@ int main()
 
 			err = newGame(&players, &played, &deck, &run);
 			err = play(&players, &played, &deck, &winners, &run);
+			scores(&players, &winners);
+			sortScore(&players);
 
+			system("pause");
 			listErase(deck.card_list);
 			name_players(&players);
 			arrLoad(&winners, 0);

@@ -660,10 +660,10 @@ int play(players *players, array *played, deck *deck, array *winners, array *run
 					}
 					i++;
 				}
-				Sleep(1000);
+				//Sleep(1000);
 				printPlayed(played);
 				printHand(&players->player[turn].run_cards);
-				Sleep(1000);
+				//Sleep(1000);
 				GotoXY(0,22);
 				printf("                                                                             ");
 			}
@@ -691,8 +691,26 @@ int play(players *players, array *played, deck *deck, array *winners, array *run
 
 	} // fine partita
 
+	system("cls");
+	/*
 	i = 0;
-	int j = 0;
+	while ( i < players->n_players ){
+		printf("\ngiocatore:%d score:%d", i + 1 , players->player[i].score);
+		i++;
+	}
+	*/
+
+
+	//free(pos.d);
+	return 0;
+}
+
+void scores(players *players, array *winners)
+{
+	int i;
+	int j;
+
+	i = 0;
 	while ( i < players->n_players ){
 		j = 0;
 		while( j < 2 ){
@@ -707,17 +725,52 @@ int play(players *players, array *played, deck *deck, array *winners, array *run
 		}
 		i++;
 	}
-	system("cls");
+}
+int getMaxScore(players *p)
+{
+	int i;
+	int max;
+
+	max = p->player[0].score;
+
 	i = 0;
-	while ( i < players->n_players ){
-		printf("\ngiocatore:%d score:%d", i + 1 , players->player[i].score);
+	while ( i < p->n_players ){
+		if ( max < p->player[i].score){
+
+			max = p->player[i].score;
+		}
 		i++;
 	}
-	//arrPrint(winners);
 
-	system("pause");
-	//free(pos.d);
-	return 0;
+	return max;
+}
+
+void sortScore( players *p )
+{
+	int i, j;
+	int max;
+
+	max = getMaxScore(p);
+	j = 0;
+	while ( max >= 0){
+		i = 0;
+		while (i < p->n_players ){
+			if ( max == p->player[i].score ){
+				j++;
+				GotoXY(10, 5+j);
+				printf("%s",p->player[i].name);
+				GotoXY(35, 5+j);
+				printf("%d",p->player[i].score);
+			}
+			i++;
+		}
+		max--;
+	}
+	i = 0;
+	while ( i < p->n_players ){
+		p->player[i].score = 0;
+		i++;
+	}
 }
 
 int playerTurn(players *players, array *played,deck *deck, array * pos, int turn)

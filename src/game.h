@@ -59,6 +59,11 @@ bool runPhase(players *, array *, array *, array *);
 
 void StandPositions(array *run, array *);
 
+int getMaxScore(players *p);
+
+void sortScore( players *p );
+
+void scores(players *players, array *winners);
 /// Funzioni di gestione
 void errorHandle(int error);
 
