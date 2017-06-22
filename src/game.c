@@ -58,18 +58,84 @@ int newGame(players *players, array *played, deck *deck, array *run)
 	return 0;
 }
 
-int loadGame(void)
+int saveGame(array *winners, array *played, players *p, deck * deck)
 {
-	array test;
-	int max;
-	arrInit(&test, 10);
-	for(int i = 0; i < test.n;i++){
-		test.d[i] = rand() % 100;
+	FILE * save;
+	array temp;
+
+	if ( (save = fopen("Salvataggio.sav", "wb") ) == NULL ){
+		return 11;
 	}
-	arrPrint(&test);
-	max = arrMaxN(&test);
-	printf("\n%d", max);
+
+	fwrite(winners, sizeof(array), 1, save );
+
+	fwrite(played, sizeof(array), 1, save );
+
+	fwrite(p, sizeof(players), 1, save );
+
+	fwrite(&(deck->totals), sizeof(array), 1, save );
+
+	temp = listIntoArray(deck->card_list);
+
+	fwrite( &(temp), sizeof(temp), 1, save );
+
+	fclose(save);
+
+
+
+	return 0;
+}
+
+
+
+int loadGame(array *winners, array *played, players *p, deck * deck)
+{
+	FILE * save;
+	array temp;
+
+		if ( (save = fopen("Salvataggio.sav", "rb") ) == NULL ){
+			return 11;
+		}
+
+	fread(winners, sizeof(array), 1, save );
+
+	fread(played, sizeof(array), 1, save );
+
+	fread(p, sizeof(players), 1, save );
+
+	fread(&deck->totals, sizeof(array), 1, save );
+
+	fread( &temp, sizeof(temp), 1, save );
+
+	fclose(save);
+
+	deck->card_list = arrIntoList(&temp);
+
+	/*
+	printf("Winners\n");
+	arrPrint(winners);
+
+	printf("Played\n");
+	arrPrint(played);
+
+	int i = 0;
+	while (i < p->n_players){
+		printf("%-15s tipo %d carta scommessa 1 %d carta scommessa 2 %d\n",
+				p->player[i].name, p->player[i].ai,p->player[i].bet_cards.d[0], p->player[i].bet_cards.d[1]   );
+		i++;
+	}
+
+	printf("totals\n");
+	arrPrint(&deck->totals);
+
+	printf("Deck\n");
+	arrPrint(&temp);
 	system("pause");
+	listPrint(deck->card_list);
+
+	system("pause");
+
+	*/
 
 	return 0;
 }
@@ -79,81 +145,93 @@ int settings(players *p)
 	char input;
 	int i;
 	int setting;
-	char type[10];
+	char type[10], name[15];
 	players temp;
-	coord angle1, angle2;
+	coord angle1, angle2, start;
 
-	angle1.x = 3;
-	angle1.y = 3;
+	start.x = 25;
+	start.y = 6;
 
-	angle2.x = 76;
-	angle2.y = 22;
+	angle1.x = start.x - 3;
+	angle1.y = start.y - 2;
 
+	angle2.x = start.x + 25;
+	angle2.y = start.y + 7;
+
+	// Stampa elementi statici
 	printStaticsSettings();
 	drawSquare( angle1,  angle2);
 
-	temp = *p;
+	// Alloca lo spazio per il vettore temporaneo
+	create_players(&temp);
+	// Copia le variabile necessarie per le successive modifiche
+	temp.n_players = p->n_players;
+	name_players(&temp);
+	i = 0;
+	while ( i < temp.n_players ){
+		strcpy(temp.player[i].name,  p->player[i].name) ;
+		i++;
+	}
 	setting = 0;
 
-	GotoXY(30, 5);
-	printf("Numero Giocatori: ");
+	GotoXY(start.x, start.y);
+	printf(RED"Numero Giocatori: "BLACK);
 
-	GotoXY(29, 5 );
+	GotoXY(start.x - 1, start.y );
 	putch('>');
 
 	i = 0;
 	while ( i < temp.n_players ){
 
-		GotoXY(30, 6 + i);
-		printf("%s", temp.player[i].name);
-		GotoXY(45, 6 + i);
-		printf(" -> ");
+		GotoXY(start.x, (start.y + 1) + i);
+		printf("%-15s%-4s", temp.player[i].name, " -> ");
 		i++;
 	}
 	input = 0;
 	while ( input != ' ' || input != 27 ){
 
-		GotoXY(48, 5);
-		printf("%d", temp.n_players );
+		GotoXY(start.x + 19, start.y);
+		printf("%-1d", temp.n_players );
 
 		i = 0;
 		while ( i < temp.n_players  ){
 
-			// Aggiorna il numero di giocatori a schermo
+			// Controlla il tipo di giocatore
 			if ( temp.player[i].ai == false ){
 				strcpy(type, "Umano");
 			} else if ( temp.player[i].ai == true ){
 				strcpy(type, "I.A.");
 			}
-			GotoXY(30, 6 + i);
-			printf("%s", temp.player[i].name);
-			GotoXY(45, 6 + i);
-			printf(" -> ");
-			GotoXY(49, 6 + i);
-			printf("%s", type);
+			// Stampa i giocatori
+			GotoXY(start.x, (start.y + 1) + i);
+			printf("%-15s%-4s"RED"%-5s"BLACK, temp.player[i].name, " -> ", type);
 			i++;
 		}
+
 		input = getch();
 		if ( (input == 'w' || input == 'W') && setting > 0){
 			setting--;
-			GotoXY(29, 5 + setting);
+			//stampa il nuovo indicatore
+			GotoXY(start.x - 1, start.y + setting);
 			putch('>');
-
-			GotoXY(29, 5 + setting + 1);
+			//rimuove il vecchio indicatore
+			GotoXY(start.x - 1, start.y + setting + 1);
 			putch(' ');
 
 		} else if ( (input == 's' || input == 'S') && setting < temp.n_players ){
 			setting++;
-			GotoXY(29, 5 + setting);
+			//stampa il nuovo indicatore
+			GotoXY(start.x - 1, start.y + setting);
 			putch('>');
-
-			GotoXY(29, 5 + setting - 1);
+			//rimuove il vecchio indicatore
+			GotoXY(start.x - 1, start.y + setting - 1);
 			putch(' ');
 		} else if ( input == ' '){
 			*p = temp;
 			return 0;
 
 		} else if ( input == 27 ){
+
 			return 0;
 		}
 
@@ -165,14 +243,15 @@ int settings(players *p)
 				temp.n_players --;
 
 				// cancella da schermo giocatori non esistenti
-				if (temp.n_players  == 4){
-					GotoXY(0, 10);
+				if (temp.n_players  == MAX_PLAYERS - 1){
+
+					GotoXY(0, start.y + MAX_PLAYERS);
 					printf("                                                                        ");
-				} else if (temp.n_players  == 3){
-					GotoXY(0, 9);
+				} else if (temp.n_players  == MAX_PLAYERS - 2){
+					GotoXY(0, start.y + MAX_PLAYERS - 1);
 					printf("                                                                        ");
-				} else if (temp.n_players  == 2){
-					GotoXY(0, 8);
+				} else if (temp.n_players  == MAX_PLAYERS - 3){
+					GotoXY(0, start.y + MAX_PLAYERS - 2);
 					printf("                                                                        ");
 				}
 
@@ -182,48 +261,50 @@ int settings(players *p)
 			if ( ( input == 'd' || input == 'D' ) && temp.player[setting - 1].ai != true ){
 
 				temp.player[setting - 1].ai = true;
-				GotoXY(48, 6 + setting - 1);
+				GotoXY(start.x + 19, (start.y + 1) + setting - 1);
 				printf("        ");
-				GotoXY(48, 6 + setting - 1);
+				GotoXY(start.x + 19, (start.y + 1) + setting - 1);
 				printf("I.A.");
 			} else if ( (input == 'a' || input == 'A') && temp.player[setting - 1].ai != false ){
 
 				temp.player[setting - 1].ai = false;
-				GotoXY(48, 6 + setting - 1);
+				GotoXY(start.x + 19, (start.y + 1) + setting - 1);
 				printf("        ");
-				GotoXY(48, 6 + setting - 1);
+				GotoXY(start.x + 19, (start.y + 1) + setting - 1);
 				printf("Umano");
 
 			} else if ( (input == 'c' || input == 'C') ){
 
 				// richiede nuovo nome
-				GotoXY(5, 15);
+				GotoXY(5, start.y + MAX_PLAYERS + 5);
 				printf("Inserire nome Giocatore (MAX 15 CARATTERI) -> ");
-				strcpy(temp.player[setting - 1].name, "" );
 
-				// controlla che il nuovo sia valido
-				while ( strlen(temp.player[setting - 1].name) <= 0 || strlen(temp.player[setting - 1].name) > 15){
-
-					GotoXY(51, 15);
-					printf("                                                                                                                                                  ");
-					drawSquare( angle1,  angle2);
-					GotoXY(51, 15);
-					gets(temp.player[setting - 1].name);
-
+				// utilizza una variabile di appoggio per ottenere il nome
+				gets(name);
+				// controlla che il nuovo nome sia valido
+				if ( strlen(name) <= 0 || strlen(name) > 15){
+					strcpy(name, temp.player[setting - 1].name );
+					GotoXY(25, start.y + MAX_PLAYERS + 7);
+					printf("NOME NON VALIDO");
+					Sleep(500);
+					GotoXY(25, start.y + MAX_PLAYERS + 7);
+					printf("               ");
+				}
+				// se il nuovo nome è valido lo inserisce nella varibile del giocatore
+				if ( strlen(name) > 0 && strlen(name) <= 15){
+					strcpy(temp.player[setting - 1].name, name );
 				}
 				// Cancella vecchio nome giocatore
-				GotoXY(25, 6 + setting - 1);
+				GotoXY(25, (start.y + 1) + setting - 1);
 				printf("                    ");
 				// Cancella frase
-				GotoXY(5, 15);
+				GotoXY(5, start.y + MAX_PLAYERS + 5);
 				printf("                                                                                        ");
 			}
 		}
 		drawSquare( angle1,  angle2);
 	}
 
-
-	//system("pause > nul");
 	return 0;
 }
 
@@ -244,13 +325,6 @@ int rules(void)
 	system("pause > nul");
 	return 0;
 
-}
-
-void saveGame()
-{
-	system("cls");
-	printf("Funzione ancora da implementare!\n");
-	system("pause > nul");
 }
 
 deck shuffle_deck( deck *deck )
@@ -293,46 +367,46 @@ deck shuffle_deck( deck *deck )
 	return *deck;
 }
 
-players create_players(players *players)
+players create_players(players *p)
 {
 	int i;
 
-	players->player = malloc( MAX_PLAYERS * sizeof(player) );
+	p->player = malloc( MAX_PLAYERS * sizeof(player) );
 	i = 0;
 	while ( i < MAX_PLAYERS ){
 
 		// crea giocatori di default
-		players->player[i].ai = false;
+		p->player[i].ai = false;
 
-		players->player[i].bet_cards = arrInit( &players->player[i].bet_cards, MAX_BETS);
-		players->player[i].bet_cards = arrLoad( &players->player[i].bet_cards, 0);
+		p->player[i].bet_cards = arrInit( &p->player[i].bet_cards, MAX_BETS);
+		p->player[i].bet_cards = arrLoad( &p->player[i].bet_cards, 0);
 
-		players->player[i].run_cards = arrInit( &players->player[i].run_cards, MAX_CARDS);
-		players->player[i].run_cards = arrLoad( &players->player[i].run_cards, 0);
+		p->player[i].run_cards = arrInit( &p->player[i].run_cards, MAX_CARDS);
+		p->player[i].run_cards = arrLoad( &p->player[i].run_cards, 0);
 
-		players->player[i].score = 0;
+		p->player[i].score = 0;
 
 		i++;
 	}
 
-	return *players;
+	return *p;
 }
 
-players name_players(players *players_d)
+players name_players(players *p)
 {
 	int i;
 
 	i = 0;
 	while ( i < MAX_PLAYERS ){
 
-			strcpy(players_d->player[i].name, "Giocatore");
-			players_d->player[i].name[9] = 49 + i;
-			players_d->player[i].name[10] = '\0';
+			strcpy(p->player[i].name, "Giocatore");
+			p->player[i].name[9] = 49 + i;
+			p->player[i].name[10] = '\0';
 
 		i++;
 	}
 
-	return *players_d;
+	return *p;
 }
 
 int GetCard(deck *deck)
@@ -563,12 +637,17 @@ int play(players *players, array *played, deck *deck, array *winners, array *run
 	array pos; // Posizioni delle carte giocate dal giocatore
 	bool finish; // Controlla che il gioco sia finito
 
+	printRoute();
+	printAnimal(0, 0);
+	printStatics();
+	printRef();
+
+	// Alloca e carica pos
 	pos = arrInit(&pos, 4);
 	pos = arrLoad(&pos, -1);
-
+	//Setta il flag di fine partita
 	finish = false;
 
-	//SPOSTARE
 	// Scelta delle seconde carte scommessa
 
 	i = 0;
@@ -581,7 +660,7 @@ int play(players *players, array *played, deck *deck, array *winners, array *run
 
 		if ( player_decision == SAVE_GAME){
 			// salva
-			saveGame();
+			saveGame(winners, played, players, deck);
 			free(pos.d);
 			return 0;
 
@@ -600,7 +679,8 @@ int play(players *players, array *played, deck *deck, array *winners, array *run
 	printf("     ");
 	GotoXY(44, 21);
 	printf("     ");
-	//-----
+	/*--------------------------------------- */
+
 	player_decision = 0;
 	// resta nel ciclo finchè non finisce la partita
 	while(finish == false){
@@ -623,7 +703,7 @@ int play(players *players, array *played, deck *deck, array *winners, array *run
 
 				if ( player_decision == SAVE_GAME){
 					free(pos.d);
-					saveGame();
+					saveGame(winners, played, players, deck);
 					//salva
 					return 0;
 				}
@@ -970,6 +1050,8 @@ void errorHandle(int error)
 int initConsole(void)
 {
 	system("mode 80,25");
+
+	system("color f0");
 
 	hidecursor();
 

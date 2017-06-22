@@ -53,6 +53,7 @@ int main()
 
 			system("cls");
 
+			//Inizia una nuova partita
 			err = newGame(&players, &played, &deck, &run);
 			err = play(&players, &played, &deck, &winners, &run);
 
@@ -64,7 +65,13 @@ int main()
 		if (menu == '2'){
 
 			system("cls");
-			err = loadGame();
+			err = loadGame(&winners, &played, &players, &deck);
+			err = play(&players, &played, &deck, &winners, &run);
+
+			listErase(deck.card_list);
+			name_players(&players);
+			arrLoad(&winners, 0);
+
 		}
 		if (menu == '3'){
 
