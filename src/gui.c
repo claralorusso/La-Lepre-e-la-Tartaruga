@@ -7,6 +7,7 @@
 #include "globals.h"
 #include "tools.h"
 
+
 /// Definizione della schermata del titolo
 
 static char title[] =
@@ -63,7 +64,7 @@ YELLOW"           :______::______::______::______::____:\n"
 /// Comandi
 static char commands[] = "      (1 - 6) Selezione Carta (Spazio) Fine Turno (S) Salva          (ESC) Esci";
 
-static char settings[] = "  (W - S) Muovi Cursore (A - D) Modifica (Spazio) Salva Modifiche    (ESC) Esci";
+static char settings_commands[] = "  (W - S) Muovi Cursore (A - D) Modifica (Spazio) Salva Modifiche    (ESC) Esci";
 
 static movepos animals_position;
 
@@ -99,7 +100,7 @@ void printStaticsSettings()
 	}
 
 	GotoXY(0, 24);
-	printf("%s",settings);
+	printf("%s",settings_commands);
 }
 void printStatics()
 {
@@ -588,6 +589,7 @@ void playerErrors()
 	GotoXY(60, 14);
 	printf("                ");
 
+	return;
 }
 
 void drawSquare(coord angle1, coord angle2)
@@ -628,6 +630,49 @@ void drawSquare(coord angle1, coord angle2)
 		i++;
 	}
 
+	return;
+}
 
+void printScore(players *p, array *order)
+{
+	int i;
+	coord angle1, angle2, start;
 
+	start.x = 25;
+	start.y = 10;
+
+	angle1.x = start.x - 5;
+	angle1.y = start.y - 2;
+
+	angle2.x = start.x + 31;
+	angle2.y = start.y + 8;
+
+	GotoXY(26, 1);
+	printf("LA LEPRE E LA TARTARUGA");
+
+	GotoXY(33, start.y - 3);
+	printf(RED"CLASSIFICA");
+
+	GotoXY(start.x, start.y);
+	printf("%-15s %-5s %-5s","Giocatore", "Tipo", "Punti"WHITE );
+
+	GotoXY(15, angle2.y + 3);
+	printf("PARTITA TERMINATA, PREMI UN TASTO PER TORNARE AL MENU");
+
+	drawSquare(angle1, angle2);
+	i = 0;
+
+	while ( i < p->n_players){
+
+		GotoXY(start.x, (start.y + 2) + i);
+		if (p->player[ order->d[i] ].ai == true){
+			printf("%-15s %-5s %-2d", p->player[ order->d[i] ].name,"I.A.", p->player[ order->d[i] ].score );
+		} else if ( p->player[ order->d[i] ].ai == false){
+			printf("%-15s %-5s %-2d", p->player[ order->d[i] ].name,"Umano", p->player[ order->d[i] ].score );
+		}
+
+		i++;
+	}
+
+	return;
 }

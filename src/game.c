@@ -692,6 +692,8 @@ int play(players *players, array *played, deck *deck, array *winners, array *run
 	} // fine partita
 
 	system("cls");
+	scores(players, winners);
+	sortScore(players);
 	/*
 	i = 0;
 	while ( i < players->n_players ){
@@ -749,6 +751,9 @@ void sortScore( players *p )
 {
 	int i, j;
 	int max;
+	array order;
+	arrInit(&order,5);
+	arrLoad(&order,0);
 
 	max = getMaxScore(p);
 	j = 0;
@@ -756,21 +761,21 @@ void sortScore( players *p )
 		i = 0;
 		while (i < p->n_players ){
 			if ( max == p->player[i].score ){
+				order.d[j] = i;
 				j++;
-				GotoXY(10, 5+j);
-				printf("%s",p->player[i].name);
-				GotoXY(35, 5+j);
-				printf("%d",p->player[i].score);
 			}
 			i++;
 		}
 		max--;
 	}
+	printScore(p, &order);
+
 	i = 0;
 	while ( i < p->n_players ){
 		p->player[i].score = 0;
 		i++;
 	}
+	system("pause > nul");
 }
 
 int playerTurn(players *players, array *played,deck *deck, array * pos, int turn)

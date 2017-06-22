@@ -5,6 +5,7 @@
 #include "linked_lists.h"
 #include "globals.h"
 
+
 typedef struct player{
 	char name[15];
 	bool ai;

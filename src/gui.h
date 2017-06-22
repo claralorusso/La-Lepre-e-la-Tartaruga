@@ -1,9 +1,11 @@
 #ifndef GUI_H_
 #define GUI_H_
 
+#include <stdio.h>
+#include "game.h"
 #include "arrays.h"
 #include "tools.h"
-#include <stdio.h>
+
 
 #define KNRM  "\x1B[0m"
 #define RED  "\x1B[31m"
@@ -50,5 +52,7 @@ int printAnimal(int animal, int pos);
 void playerErrors();
 
 void drawSquare(coord angle1, coord angle2);
+
+void printScore(players *, array *);
 
 #endif /* GUI_H_ */

@@ -5,7 +5,6 @@
 #include <stdlib.h>
 #include <conio.h>
 #include <time.h>
-#include <x86intrin.h>
 #include "src/game.h"
 #include "src/gui.h"
 #include "src/tools.h"
@@ -13,7 +12,7 @@
 int main()
 {
 	// utilizza l'ora + il clock della cpu come seed per la funzione rand()
-	srand( time(NULL) + __rdtsc() );
+	srand( time(NULL) );
 
 	// menu -> input dell'utente - err -> variabile per la gestione degli errori
 	int menu, err;
@@ -56,10 +55,7 @@ int main()
 
 			err = newGame(&players, &played, &deck, &run);
 			err = play(&players, &played, &deck, &winners, &run);
-			scores(&players, &winners);
-			sortScore(&players);
 
-			system("pause");
 			listErase(deck.card_list);
 			name_players(&players);
 			arrLoad(&winners, 0);
