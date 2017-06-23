@@ -55,4 +55,6 @@ void drawSquare(coord angle1, coord angle2);
 
 void printScore(players *, array *);
 
+int SelectorMovement(char input, coord start, int *option, int max);
+
 #endif /* GUI_H_ */

@@ -35,13 +35,13 @@ int main()
 
 	/* Setta le impostazioni a parametri di default */
 	players.n_players = 2;
-	create_players(&players);
+	createPlayers(&players);
 	players.player[0].ai = false;
 	players.player[1].ai = true;
 	players.player[2].ai = false;
 	players.player[3].ai = false;
 	players.player[4].ai = false;
-	name_players(&players);
+	namePlayers(&players);
 
 	while ( err == 0){
 
@@ -58,7 +58,7 @@ int main()
 			err = play(&players, &played, &deck, &winners, &run);
 
 			listErase(deck.card_list);
-			name_players(&players);
+			namePlayers(&players);
 			arrLoad(&winners, 0);
 
 		}
@@ -69,7 +69,7 @@ int main()
 			err = play(&players, &played, &deck, &winners, &run);
 
 			listErase(deck.card_list);
-			name_players(&players);
+			namePlayers(&players);
 			arrLoad(&winners, 0);
 
 		}
