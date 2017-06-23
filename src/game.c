@@ -27,7 +27,7 @@ int newGame(players *players, array *played, deck *deck, array *run)
 
 	/* Prepara il mazzo*/
 	deck->card_list = listInit();
-	shuffle_deck(deck);
+	shuffleDeck(deck);
 
 	/* Resetta le Carte Scommessa*/
 	i = 0;
@@ -159,36 +159,29 @@ int settings(players *p)
 	angle2.y = start.y + 7;
 
 	// Stampa elementi statici
+	GotoXY(start.x, start.y);
+	printf(RED"Numero Giocatori: "BLACK);
 	printStaticsSettings();
 	drawSquare( angle1,  angle2);
 
 	// Alloca lo spazio per il vettore temporaneo
-	create_players(&temp);
+	createPlayers(&temp);
 	// Copia le variabile necessarie per le successive modifiche
 	temp.n_players = p->n_players;
-	name_players(&temp);
+	namePlayers(&temp);
 	i = 0;
 	while ( i < temp.n_players ){
+		temp.player[i].ai = p->player[i].ai;
 		strcpy(temp.player[i].name,  p->player[i].name) ;
 		i++;
 	}
-	setting = 0;
 
-	GotoXY(start.x, start.y);
-	printf(RED"Numero Giocatori: "BLACK);
-
-	GotoXY(start.x - 1, start.y );
-	putch('>');
-
-	i = 0;
-	while ( i < temp.n_players ){
-
-		GotoXY(start.x, (start.y + 1) + i);
-		printf("%-15s%-4s", temp.player[i].name, " -> ");
-		i++;
-	}
+	// Ciclo principale dell'input
 	input = 0;
+	setting = 0;
 	while ( input != ' ' || input != 27 ){
+
+		if ( SelectorMovement( input, start, &setting, temp.n_players ) == 1 ) return 0;
 
 		GotoXY(start.x + 19, start.y);
 		printf("%-1d", temp.n_players );
@@ -199,7 +192,8 @@ int settings(players *p)
 			// Controlla il tipo di giocatore
 			if ( temp.player[i].ai == false ){
 				strcpy(type, "Umano");
-			} else if ( temp.player[i].ai == true ){
+			}
+			if ( temp.player[i].ai == true ){
 				strcpy(type, "I.A.");
 			}
 			// Stampa i giocatori
@@ -209,32 +203,6 @@ int settings(players *p)
 		}
 
 		input = getch();
-		if ( (input == 'w' || input == 'W') && setting > 0){
-			setting--;
-			//stampa il nuovo indicatore
-			GotoXY(start.x - 1, start.y + setting);
-			putch('>');
-			//rimuove il vecchio indicatore
-			GotoXY(start.x - 1, start.y + setting + 1);
-			putch(' ');
-
-		} else if ( (input == 's' || input == 'S') && setting < temp.n_players ){
-			setting++;
-			//stampa il nuovo indicatore
-			GotoXY(start.x - 1, start.y + setting);
-			putch('>');
-			//rimuove il vecchio indicatore
-			GotoXY(start.x - 1, start.y + setting - 1);
-			putch(' ');
-		} else if ( input == ' '){
-			*p = temp;
-			return 0;
-
-		} else if ( input == 27 ){
-
-			return 0;
-		}
-
 		if ( setting == 0 ){
 
 			if ( ( input == 'd' || input == 'D' ) && temp.n_players  < 5 ){
@@ -269,7 +237,7 @@ int settings(players *p)
 
 				temp.player[setting - 1].ai = false;
 				GotoXY(start.x + 19, (start.y + 1) + setting - 1);
-				printf("        ");
+				printf("      ");
 				GotoXY(start.x + 19, (start.y + 1) + setting - 1);
 				printf("Umano");
 
@@ -308,6 +276,110 @@ int settings(players *p)
 	return 0;
 }
 
+int settingsMenu(players *temp, char *input, int *setting, coord start, coord angle1, coord angle2)
+{
+
+	char type[5];
+	char name[15];
+
+	if ( SelectorMovement( *input, start, setting, temp->n_players ) == 1 ) return 0;
+
+	GotoXY(start.x + 19, start.y);
+	printf("%-1d", temp->n_players );
+
+	int i = 0;
+	while ( i < temp->n_players  ){
+
+		// Controlla il tipo di giocatore
+		if ( temp->player[i].ai == false ){
+			strcpy(type, "Umano");
+		}
+		if ( temp->player[i].ai == true ){
+			strcpy(type, "I.A.");
+		}
+		// Stampa i giocatori
+		GotoXY(start.x, (start.y + 1) + i);
+		printf("%-15s%-4s"RED"%-5s"BLACK, temp->player[i].name, " -> ", type);
+		i++;
+	}
+
+	(*input) = getch();
+	if ( *setting == 0 ){
+
+		if ( ( (*input) == 'd' || (*input) == 'D' ) && temp->n_players  < 5 ){
+			temp->n_players ++;
+		} else if ( ( (*input) == 'a' || (*input) == 'A') && temp->n_players  > 2){
+			temp->n_players --;
+
+			// cancella da schermo giocatori non esistenti
+			if (temp->n_players  == MAX_PLAYERS - 1){
+
+				GotoXY(0, start.y + MAX_PLAYERS);
+				printf("                                                                        ");
+			} else if (temp->n_players  == MAX_PLAYERS - 2){
+				GotoXY(0, start.y + MAX_PLAYERS - 1);
+				printf("                                                                        ");
+			} else if (temp->n_players  == MAX_PLAYERS - 3){
+				GotoXY(0, start.y + MAX_PLAYERS - 2);
+				printf("                                                                        ");
+			}
+
+		}
+	} else if ( *setting >= 1 && *setting <= 5){
+
+		if ( ( *input == 'd' || *input == 'D' ) && temp->player[*setting - 1].ai != true ){
+
+			temp->player[*setting - 1].ai = true;
+			GotoXY(start.x + 19, (start.y + 1) + *setting - 1);
+			printf("        ");
+			GotoXY(start.x + 19, (start.y + 1) + *setting - 1);
+			printf("I.A.");
+		} else if ( (*input == 'a' || *input == 'A') && temp->player[*setting - 1].ai != false ){
+
+			temp->player[*setting - 1].ai = false;
+			GotoXY(start.x + 19, (start.y + 1) + *setting - 1);
+			printf("      ");
+			GotoXY(start.x + 19, (start.y + 1) + *setting - 1);
+			printf("Umano");
+
+		} else if ( (*input == 'c' || *input == 'C') ){
+
+			// richiede nuovo nome
+			GotoXY(5, start.y + MAX_PLAYERS + 5);
+			printf("Inserire nome Giocatore (MAX 15 CARATTERI) -> ");
+
+			// utilizza una variabile di appoggio per ottenere il nome
+			gets(name);
+			// controlla che il nuovo nome sia valido
+			if ( strlen(name) <= 0 || strlen(name) > 15){
+				strcpy(name, temp->player[*setting - 1].name );
+				GotoXY(25, start.y + MAX_PLAYERS + 7);
+				printf("NOME NON VALIDO");
+				Sleep(500);
+				GotoXY(25, start.y + MAX_PLAYERS + 7);
+				printf("               ");
+			}
+			// se il nuovo nome è valido lo inserisce nella varibile del giocatore
+			if ( strlen(name) > 0 && strlen(name) <= 15){
+				strcpy(temp->player[*setting - 1].name, name );
+			}
+			// Cancella vecchio nome giocatore
+			GotoXY(25, (start.y + 1) + *setting - 1);
+			printf("                    ");
+			// Cancella frase
+			GotoXY(5, start.y + MAX_PLAYERS + 5);
+			printf("                                                                                        ");
+		}
+	}
+	drawSquare( angle1,  angle2);
+	if ( *input != ' ' || *input != 27){
+		settingsMenu(temp,  input,  setting,  start,  angle1,  angle2);
+	}
+
+
+	return 0;
+}
+
 int rules(void)
 {
 	coord angle1, angle2;
@@ -327,7 +399,7 @@ int rules(void)
 
 }
 
-deck shuffle_deck( deck *deck )
+deck shuffleDeck( deck *deck )
 {
 	int number;
 
@@ -367,7 +439,7 @@ deck shuffle_deck( deck *deck )
 	return *deck;
 }
 
-players create_players(players *p)
+players createPlayers(players *p)
 {
 	int i;
 
@@ -392,7 +464,7 @@ players create_players(players *p)
 	return *p;
 }
 
-players name_players(players *p)
+players namePlayers(players *p)
 {
 	int i;
 
@@ -417,7 +489,7 @@ int GetCard(deck *deck)
 
 	// se il mazzo è finito lo rimescola
 	if ( listEmpty(deck->card_list) ){
-		shuffle_deck(deck);
+		shuffleDeck(deck);
 	}
 
 	// Prende l'ultima carta del mazzo e la elimina
@@ -565,7 +637,7 @@ array playerGetCard(player *player, array *played, int input, array *pos)
 	//Impedisce di giocare carte di animali diversi
 	if(count >= 1)
 	{
-		check = check_played_card(pos);
+		check = checkPlayedCards(pos);
 		played_card = player->run_cards.d[check-1];
 	} else {
 		played_card = player->run_cards.d[input-1];
@@ -610,7 +682,7 @@ array playerGetCard(player *player, array *played, int input, array *pos)
 }
 
 //Carta selezionata, su cui si deve basare la selezione delle successive carte
-int check_played_card(array *arr)
+int checkPlayedCards(array *arr)
 {
 	int i, x;
 	i = 0;

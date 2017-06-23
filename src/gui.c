@@ -678,3 +678,40 @@ void printScore(players *p, array *order)
 
 	return;
 }
+// Gestisce il movimento di un cursore su una lista di max elementi
+// input = input inserito dall'utente, start = coordinate di partenza,
+// option = variabile che indica l'elemento a cui si punta, max = massimo elementi della lista
+int SelectorMovement(char input, coord start, int *option, int max)
+{
+	// funzione viene richiamata per la prima volta, stampa la prima freccia nella prima posizione
+	if ( (*option) == 0 && input == 0){
+		GotoXY(start.x - 1, start.y  );
+		putch('>');
+		return 0;
+	}
+
+	if ( (input == 'w' || input == 'W') && (*option) > 0){
+		(*option)--;
+			//stampa il nuovo indicatore
+			GotoXY(start.x - 1, start.y + (*option) );
+			putch('>');
+			//rimuove il vecchio indicatore
+			GotoXY(start.x - 1, start.y + (*option) + 1);
+			putch(' ');
+
+		}
+	if ( (input == 's' || input == 'S') && (*option) < max){
+			(*option)++;
+			//stampa il nuovo indicatore
+			GotoXY(start.x - 1, start.y + (*option) );
+			putch('>');
+			//rimuove il vecchio indicatore
+			GotoXY(start.x - 1, start.y + (*option) - 1);
+			putch(' ');
+		}
+	if ( input == ' ' || input == 27 ){
+		return 1;
+	}
+
+	return 0;
+}

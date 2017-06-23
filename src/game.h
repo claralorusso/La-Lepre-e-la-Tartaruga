@@ -31,16 +31,18 @@ int loadGame(array *winners, array *played, players *p, deck * deck);
 
 int settings(players *);
 
+int settingsMenu(players *temp, char *input, int *setting, coord start, coord angle1, coord angle2);
+
 int rules(void);
 
 int saveGame(array *winners, array *played, players *p, deck * deck );
 
 /// Funzioni essenziali del gioco
-deck shuffle_deck(deck *);
+deck shuffleDeck(deck *);
 
-players create_players(players *);
+players createPlayers(players *);
 
-players name_players(players *);
+players namePlayers(players *);
 
 int GetCard(deck *);
 
@@ -50,7 +52,7 @@ int secondBetCard(player , deck *, array *);
 
 array playerGetCard(player *, array *, int , array *);
 
-int check_played_card(array *);
+int checkPlayedCards(array *);
 
 int play(players *p, array *, deck *, array *, array * );
 

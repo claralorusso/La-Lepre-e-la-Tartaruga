@@ -19,7 +19,7 @@ typedef struct positions{
  *	Crea il tipo di dati per la lista eunumerata bool
  *
  */
-typedef enum {false = 0, true = 1} bool;
+typedef enum bool{false = 0, true = 1} bool;
 
 #endif /* TOOLS_H_ */
 
