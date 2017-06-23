@@ -63,7 +63,7 @@ int saveGame(array *winners, array *played, players *p, deck * deck)
 	FILE * save;
 	array temp;
 
-	if ( (save = fopen("Salvataggio.sav", "wb") ) == NULL ){
+	if ( (save = fopen("sav\\Salvataggio.sav", "wb") ) == NULL ){
 		return 11;
 	}
 
@@ -86,16 +86,14 @@ int saveGame(array *winners, array *played, players *p, deck * deck)
 	return 0;
 }
 
-
-
 int loadGame(array *winners, array *played, players *p, deck * deck)
 {
-	FILE * save;
 	array temp;
+	FILE * save;
 
-		if ( (save = fopen("Salvataggio.sav", "rb") ) == NULL ){
-			return 11;
-		}
+	if ( (save = fopen("sav\\Salvataggio.sav", "rb") ) == NULL ){
+		return 11;
+	}
 
 	fread(winners, sizeof(array), 1, save );
 
@@ -276,120 +274,23 @@ int settings(players *p)
 	return 0;
 }
 
-int settingsMenu(players *temp, char *input, int *setting, coord start, coord angle1, coord angle2)
-{
-
-	char type[5];
-	char name[15];
-
-	if ( SelectorMovement( *input, start, setting, temp->n_players ) == 1 ) return 0;
-
-	GotoXY(start.x + 19, start.y);
-	printf("%-1d", temp->n_players );
-
-	int i = 0;
-	while ( i < temp->n_players  ){
-
-		// Controlla il tipo di giocatore
-		if ( temp->player[i].ai == false ){
-			strcpy(type, "Umano");
-		}
-		if ( temp->player[i].ai == true ){
-			strcpy(type, "I.A.");
-		}
-		// Stampa i giocatori
-		GotoXY(start.x, (start.y + 1) + i);
-		printf("%-15s%-4s"RED"%-5s"BLACK, temp->player[i].name, " -> ", type);
-		i++;
-	}
-
-	(*input) = getch();
-	if ( *setting == 0 ){
-
-		if ( ( (*input) == 'd' || (*input) == 'D' ) && temp->n_players  < 5 ){
-			temp->n_players ++;
-		} else if ( ( (*input) == 'a' || (*input) == 'A') && temp->n_players  > 2){
-			temp->n_players --;
-
-			// cancella da schermo giocatori non esistenti
-			if (temp->n_players  == MAX_PLAYERS - 1){
-
-				GotoXY(0, start.y + MAX_PLAYERS);
-				printf("                                                                        ");
-			} else if (temp->n_players  == MAX_PLAYERS - 2){
-				GotoXY(0, start.y + MAX_PLAYERS - 1);
-				printf("                                                                        ");
-			} else if (temp->n_players  == MAX_PLAYERS - 3){
-				GotoXY(0, start.y + MAX_PLAYERS - 2);
-				printf("                                                                        ");
-			}
-
-		}
-	} else if ( *setting >= 1 && *setting <= 5){
-
-		if ( ( *input == 'd' || *input == 'D' ) && temp->player[*setting - 1].ai != true ){
-
-			temp->player[*setting - 1].ai = true;
-			GotoXY(start.x + 19, (start.y + 1) + *setting - 1);
-			printf("        ");
-			GotoXY(start.x + 19, (start.y + 1) + *setting - 1);
-			printf("I.A.");
-		} else if ( (*input == 'a' || *input == 'A') && temp->player[*setting - 1].ai != false ){
-
-			temp->player[*setting - 1].ai = false;
-			GotoXY(start.x + 19, (start.y + 1) + *setting - 1);
-			printf("      ");
-			GotoXY(start.x + 19, (start.y + 1) + *setting - 1);
-			printf("Umano");
-
-		} else if ( (*input == 'c' || *input == 'C') ){
-
-			// richiede nuovo nome
-			GotoXY(5, start.y + MAX_PLAYERS + 5);
-			printf("Inserire nome Giocatore (MAX 15 CARATTERI) -> ");
-
-			// utilizza una variabile di appoggio per ottenere il nome
-			gets(name);
-			// controlla che il nuovo nome sia valido
-			if ( strlen(name) <= 0 || strlen(name) > 15){
-				strcpy(name, temp->player[*setting - 1].name );
-				GotoXY(25, start.y + MAX_PLAYERS + 7);
-				printf("NOME NON VALIDO");
-				Sleep(500);
-				GotoXY(25, start.y + MAX_PLAYERS + 7);
-				printf("               ");
-			}
-			// se il nuovo nome è valido lo inserisce nella varibile del giocatore
-			if ( strlen(name) > 0 && strlen(name) <= 15){
-				strcpy(temp->player[*setting - 1].name, name );
-			}
-			// Cancella vecchio nome giocatore
-			GotoXY(25, (start.y + 1) + *setting - 1);
-			printf("                    ");
-			// Cancella frase
-			GotoXY(5, start.y + MAX_PLAYERS + 5);
-			printf("                                                                                        ");
-		}
-	}
-	drawSquare( angle1,  angle2);
-	if ( *input != ' ' || *input != 27){
-		settingsMenu(temp,  input,  setting,  start,  angle1,  angle2);
-	}
-
-
-	return 0;
-}
-
 int rules(void)
-{
-	coord angle1, angle2;
-	angle1.x = 3;
-	angle1.y = 2;
+{	/*
+	char list[10000];
+	FILE * test;
 
-	angle2.x = 60;
-	angle2.y = 20;
+	ListDirectoryContents("sav\\", list);
 
-	drawSquare( angle1,  angle2);
+	printf("%s", list);
+
+	if ( (test = fopen("test.txt", "w") ) == NULL){
+		return 0;
+	}
+	fprintf(test,"%s",list);
+	*/
+	int saveN;
+	saveN = fileNumber("sav\\", ".sav");
+	printf("%d" , saveN);
 
 
 
@@ -1039,7 +940,7 @@ bool runPhase(players *players, array *played, array *run, array *winners)
 	} else if ( arrCountX(played, TORTOISE) == 4 && run->d[TORTOISE] != 11 ){
 		move = 2;
 		arrive = move + run->d[TORTOISE];
-		while ( run->d[TORTOISE] != arrive ){
+		while ( run->d[TORTOISE] != arrive && run->d[TORTOISE] != 11){
 			Sleep(200);
 			run->d[TORTOISE] ++;
 			printAnimal(TORTOISE, run->d[TORTOISE] );

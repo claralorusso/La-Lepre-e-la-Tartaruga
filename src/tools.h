@@ -13,8 +13,6 @@ typedef struct positions{
 	int npos;
 }positions;
 
-
-
 /** \typedef \enum boolean
  *	Crea il tipo di dati per la lista eunumerata bool
  *
@@ -31,3 +29,7 @@ void getCursorXY(int *, int *);
 void hidecursor();
 
 int consoleTitle(char []);
+
+bool ListDirectoryContents( const char *, char [2048] );
+
+int fileNumber( char [], char [4]  );

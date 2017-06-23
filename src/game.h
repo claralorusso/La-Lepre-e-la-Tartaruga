@@ -31,8 +31,6 @@ int loadGame(array *winners, array *played, players *p, deck * deck);
 
 int settings(players *);
 
-int settingsMenu(players *temp, char *input, int *setting, coord start, coord angle1, coord angle2);
-
 int rules(void);
 
 int saveGame(array *winners, array *played, players *p, deck * deck );
