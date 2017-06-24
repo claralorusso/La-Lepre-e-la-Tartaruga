@@ -100,17 +100,19 @@ bool ListDirectoryContents(const char *directory, char list[])
     return true;
 }
 
-int fileNumber(char dir[], char extension[4]  )
+int getFileQuantity(char dir[], char extension[4])
 {
 	char save_list[10000];
 	char c;
 
 	int i;
 	int count;
-
 	if ( ListDirectoryContents(dir, save_list) == false ) {
 		return -1;
 	}
+
+
+
 	count = 0;
 	i = 0;
 	while ( i < strlen(save_list) ){
@@ -126,4 +128,52 @@ int fileNumber(char dir[], char extension[4]  )
 		i++;
 	}
 	return count;
+}
+
+
+int getFilePath(char dir[], char extension[4], string_arr *saves  )
+{
+	char save_list[10000];
+	char c, x;
+
+	int i, j, k, temp;
+	int save_len;
+
+	if ( ListDirectoryContents(dir, save_list) == false ) {
+		return -1;
+	}
+	saves->n_string = getFileQuantity(dir, extension);
+	saves->s = malloc(saves->n_string * sizeof( string ) );
+
+	temp = 0;
+	i = 0;
+	while ( i < strlen(save_list) && temp < saves->n_string){
+
+		c = save_list[i];
+		// trova la fine riga
+		if ( c == '\n' ){
+			// controlla che il file sia il file cercato
+			if ( save_list[i - 4] == extension[0] && save_list[i - 3] == extension[1] && save_list[i - 2] == extension[2] && save_list[i - 1] == extension[3] && temp < saves->n_string){
+
+				save_len = 0;
+				j = i - 1;
+				while ( (x = save_list[j]) != '\\' ){
+					save_len++;
+					j--;
+				}
+
+
+				k = 0;
+				while ( k < save_len ){
+					saves->s[temp].string[k] = save_list[ (i- save_len) + k ];
+				}
+				temp++;
+
+
+			}
+		i++;
+		}
+	}
+
+	return save_len;
 }

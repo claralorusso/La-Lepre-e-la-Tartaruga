@@ -13,6 +13,15 @@ typedef struct positions{
 	int npos;
 }positions;
 
+typedef struct string{
+	char string[100];
+}string;
+
+typedef struct string_arr{
+	string *s;
+	int n_string;
+}string_arr;
+
 /** \typedef \enum boolean
  *	Crea il tipo di dati per la lista eunumerata bool
  *
@@ -32,4 +41,6 @@ int consoleTitle(char []);
 
 bool ListDirectoryContents( const char *, char [2048] );
 
-int fileNumber( char [], char [4]  );
+int getFileQuantity( char [], char [4]  );
+
+int getFilePath(char dir[], char extension[4], string_arr *saves );

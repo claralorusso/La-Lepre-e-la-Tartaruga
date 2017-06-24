@@ -289,7 +289,7 @@ int rules(void)
 	fprintf(test,"%s",list);
 	*/
 	int saveN;
-	saveN = fileNumber("sav\\", ".sav");
+	saveN = getFileQuantity("sav\\", ".sav");
 	printf("%d" , saveN);
 
 
