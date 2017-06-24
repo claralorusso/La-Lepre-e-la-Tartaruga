@@ -63,9 +63,152 @@ int saveGame(array *winners, array *played, players *p, deck * deck)
 	char input;
 	int i, j;
 	int setting;
-	char saveName[20], saveSelected[15];
+	char saveName[20], saveSelected[20];
 	FILE * save;
 	array temp;
+	coord angle1;
+	coord angle2;
+	coord start;
+	string_arr saves;
+	bool saved = false;
+
+	start.x = 25;
+	start.y = 6;
+
+	angle1.x = start.x - 3;
+	angle1.y = start.y - 2;
+
+	angle2.x = start.x + 25;
+	angle2.y = start.y + 7;
+
+	system("cls");
+
+	getFilePath("sav\\", ".sav", &saves);
+
+	printStaticsSaveGame();
+
+	drawSquare(angle1,angle2);
+
+	input = 0;
+	setting = 0;
+	while ( input != 27 && saved == false){
+
+		i = 0;
+		while ( i < saves.n_string ){
+
+			GotoXY(start.x + 7,start.y + i);
+			j = 0;
+			while ( saves.s[i].string[j] != '.' ){
+				putchar(saves.s[i].string[j] );
+				j++;
+			}
+
+			i++;
+		}
+		SelectorMovement( input, start, &setting, 5, 'c');
+
+		input = getch();
+
+		if ( setting >= 0 && setting < 5 ){
+			if ( (input == 'c') ){
+
+				if ( setting >= saves.n_string - 1 ){
+
+					GotoXY(10,20);
+					printf("Nome Salvataggio:");
+					GotoXY(30, 20);
+					gets(saveName);
+					if (  ( strlen(saveName) ) <= 0  ||  ( strlen(saveName) ) > 15 ){
+						GotoXY(10,19);
+						printf("INSERISCI UN NOME VALIDO");
+						GotoXY(10,19);
+						printf("                        ");
+						GotoXY(10,20);
+						printf("                                                                           ");
+						//strcpy(saveName, "");
+					}
+					if ( ( strlen(saveName) ) >= 0  &&  ( strlen(saveName) ) <= 15) {
+						sprintf(saveSelected,"sav\\""\%s.sav", saveName);
+						saved = true;
+					}
+				} else {
+
+					strcpy(saveName, saves.s[setting].string);
+					strncpy(saveSelected,"", sizeof(saveSelected));
+					sprintf(saveSelected,"sav\\""\%s", saveName);
+					saved = true;
+				}
+			}
+			if ( (input == 'x' || input == 'X') && setting <= saves.n_string){
+
+				GotoXY(10,20);
+				printf("Conferma cancellazione salvataggio selezionato: (S/N)");
+				input = getch();
+				if ( input == 's' || input == 'S' ){
+					strncpy(saveName, "", sizeof(saveName));
+					sprintf(saveName,"sav\\""\%s", saves.s[setting].string);
+					remove(saveName);
+					getFilePath("sav\\", ".sav", &saves);
+					GotoXY(start.x + 7, start.y + setting);
+					printf("               ");
+					GotoXY(10,21);
+					printf("Salvataggio Eliminato");
+					Sleep(500);
+					GotoXY(10,21);
+					printf("                     ");
+
+				}else if ( input == 'n' || input == 'N' ){
+					Sleep(500);
+				}
+
+				GotoXY(10,20);
+				printf("                                                     ");
+				input = '0';
+
+			}
+
+		}
+
+	}
+
+	if( input != 27)
+	{
+		if ( (save = fopen(saveSelected, "wb") ) == NULL ){
+
+			return 11;
+		}
+
+		fwrite(winners, sizeof(array), 1, save );
+
+		fwrite(played, sizeof(array), 1, save );
+
+		fwrite(p, sizeof(players), 1, save );
+
+		fwrite(&(deck->totals), sizeof(array), 1, save );
+
+		temp = listIntoArray(deck->card_list);
+
+		fwrite( &(temp), sizeof(temp), 1, save );
+
+		fclose(save);
+	}
+
+
+	system("cls");
+
+	return 0;
+}
+
+int loadGame(array *winners, array *played, players *p, deck * deck)
+{
+	array temp;
+	FILE * save;
+	char input;
+	int i, j;
+	int setting;
+	char saveName[20], saveSelected[15];
+
+
 	coord angle1;
 	coord angle2;
 	coord start;
@@ -144,38 +287,8 @@ int saveGame(array *winners, array *played, players *p, deck * deck)
 
 	}
 
-	if( input != 27)
-	{
-		if ( (save = fopen(saveSelected, "wb") ) == NULL ){
-
-			return 11;
-		}
-
-		fwrite(winners, sizeof(array), 1, save );
-
-		fwrite(played, sizeof(array), 1, save );
-
-		fwrite(p, sizeof(players), 1, save );
-
-		fwrite(&(deck->totals), sizeof(array), 1, save );
-
-		temp = listIntoArray(deck->card_list);
-
-		fwrite( &(temp), sizeof(temp), 1, save );
-
-		fclose(save);
-	}
-
 
 	system("cls");
-
-	return 0;
-}
-
-int loadGame(array *winners, array *played, players *p, deck * deck)
-{
-	array temp;
-	FILE * save;
 
 	if ( (save = fopen("sav\\Salvataggio.sav", "rb") ) == NULL ){
 		return 11;
@@ -195,31 +308,6 @@ int loadGame(array *winners, array *played, players *p, deck * deck)
 
 	deck->card_list = arrIntoList(&temp);
 
-	/*
-	printf("Winners\n");
-	arrPrint(winners);
-
-	printf("Played\n");
-	arrPrint(played);
-
-	int i = 0;
-	while (i < p->n_players){
-		printf("%-15s tipo %d carta scommessa 1 %d carta scommessa 2 %d\n",
-				p->player[i].name, p->player[i].ai,p->player[i].bet_cards.d[0], p->player[i].bet_cards.d[1]   );
-		i++;
-	}
-
-	printf("totals\n");
-	arrPrint(&deck->totals);
-
-	printf("Deck\n");
-	arrPrint(&temp);
-	system("pause");
-	listPrint(deck->card_list);
-
-	system("pause");
-
-	*/
 
 	return 0;
 }
