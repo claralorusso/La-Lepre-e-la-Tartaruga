@@ -68,6 +68,7 @@ static char settings_commands[] =
 		" ("RED"W - S"BLACK") Sposta Cursore ("RED"A - D"BLACK") Modifica Selezione ("RED"Spazio"BLACK") Salva Modifiche     "
 		" ("RED"C"BLACK") Modifica Nome                                                 ("RED"ESC"BLACK") Esci";
 
+
 static char saveGame_commands[] =  " ("RED"W - S"BLACK") Sposta Cursore (Spazio) Seleziona Salvataggio     (ESC) Esci";
 
 static movepos animals_position;
