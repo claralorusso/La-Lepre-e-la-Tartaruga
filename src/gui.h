@@ -39,6 +39,8 @@ void printStatics();
 
 void printStaticsSettings();
 
+void printStaticsSaveGame();
+
 void printTurn(char [], bool);
 
 void printPointer(int , bool );
@@ -55,6 +57,6 @@ void drawSquare(coord angle1, coord angle2);
 
 void printScore(players *, array *);
 
-int SelectorMovement(char input, coord start, int *option, int max);
+int SelectorMovement(char input, coord start, int *option, int max, char);
 
 #endif /* GUI_H_ */

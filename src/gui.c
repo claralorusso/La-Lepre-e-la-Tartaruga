@@ -68,6 +68,8 @@ static char settings_commands[] =
 		" ("RED"W - S"BLACK") Sposta Cursore ("RED"A - D"BLACK") Modifica Selezione ("RED"Spazio"BLACK") Salva Modifiche     "
 		" ("RED"C"BLACK") Modifica Nome                                                 ("RED"ESC"BLACK") Esci";
 
+static char saveGame_commands[] =  " ("RED"W - S"BLACK") Sposta Cursore (Spazio) Seleziona Salvataggio     (ESC) Esci";
+
 static movepos animals_position;
 
 
@@ -104,6 +106,34 @@ void printStaticsSettings()
 	GotoXY(0, 23);
 	printf("%s",settings_commands);
 }
+
+
+void printStaticsSaveGame()
+{
+	int i;
+	GotoXY(25, 1);
+	printf("LA LEPRE E LA TARTARUGA");
+	GotoXY(30, 3);
+	printf(BLU"SALVA PARTITA:"BLACK);
+
+	GotoXY(25, 6);
+	i = 0;
+	while ( i < 5){
+		GotoXY(25, 6 + i);
+		printf("SLOT-%d)", i + 1);
+		i++;
+	}
+	GotoXY(0, 23);
+	i = 0;
+	while (i < 80){
+		printf("-");
+		i++;
+	}
+
+	GotoXY(0, 24);
+	printf("%s",saveGame_commands);
+}
+
 void printStatics()
 {
 	int i;
@@ -119,6 +149,7 @@ void printStatics()
 	GotoXY(0, 24);
 	printf("%s",commands);
 }
+
 void printTitle(void)
 {
 	printf("%s", title);
@@ -681,7 +712,7 @@ void printScore(players *p, array *order)
 // Gestisce il movimento di un cursore su una lista di max elementi
 // input = input inserito dall'utente, start = coordinate di partenza,
 // option = variabile che indica l'elemento a cui si punta, max = massimo elementi della lista
-int SelectorMovement(char input, coord start, int *option, int max)
+int SelectorMovement(char input, coord start, int *option, int max, char confirm)
 {
 	// funzione viene richiamata per la prima volta, stampa la prima freccia nella prima posizione
 	if ( (*option) == 0 && input == 0){
@@ -709,7 +740,7 @@ int SelectorMovement(char input, coord start, int *option, int max)
 			GotoXY(start.x - 1, start.y + (*option) - 1);
 			putch(' ');
 		}
-	if ( input == ' ' || input == 27 ){
+	if ( input == confirm || input == 27 ){
 		return 1;
 	}
 

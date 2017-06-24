@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <conio.h>
 #include "tools.h"
 
 
@@ -87,8 +88,7 @@ bool ListDirectoryContents(const char *directory, char list[])
 
             } else {
             	// Stampa a video
-              //printf("File: %s\n", paths);
-
+            	//printf("File: %s\n", paths);
             	strncat(list, paths, strlen(paths) );
             }
 
@@ -110,9 +110,6 @@ int getFileQuantity(char dir[], char extension[4])
 	if ( ListDirectoryContents(dir, save_list) == false ) {
 		return -1;
 	}
-
-
-
 	count = 0;
 	i = 0;
 	while ( i < strlen(save_list) ){
@@ -127,6 +124,7 @@ int getFileQuantity(char dir[], char extension[4])
 		}
 		i++;
 	}
+	strcpy(save_list,"");
 	return count;
 }
 
@@ -135,45 +133,42 @@ int getFilePath(char dir[], char extension[4], string_arr *saves  )
 {
 	char save_list[10000];
 	char c, x;
-
-	int i, j, k, temp;
+	int i, j, sFound;
 	int save_len;
 
-	if ( ListDirectoryContents(dir, save_list) == false ) {
-		return -1;
-	}
+	ListDirectoryContents(dir, save_list);
+
 	saves->n_string = getFileQuantity(dir, extension);
 	saves->s = malloc(saves->n_string * sizeof( string ) );
 
-	temp = 0;
+	sFound = 0;
 	i = 0;
-	while ( i < strlen(save_list) && temp < saves->n_string){
+	while ( i < strlen(save_list) ){
 
 		c = save_list[i];
 		// trova la fine riga
 		if ( c == '\n' ){
 			// controlla che il file sia il file cercato
-			if ( save_list[i - 4] == extension[0] && save_list[i - 3] == extension[1] && save_list[i - 2] == extension[2] && save_list[i - 1] == extension[3] && temp < saves->n_string){
+			if ( save_list[i - 4] == extension[0] && save_list[i - 3] == extension[1] && save_list[i - 2] == extension[2] && save_list[i - 1] == extension[3] ){
 
 				save_len = 0;
 				j = i - 1;
 				while ( (x = save_list[j]) != '\\' ){
+
 					save_len++;
 					j--;
 				}
+				strncpy( saves->s[sFound].string, save_list + i - save_len , save_len);
+				saves->s[sFound].string[save_len] = '\0';
 
-
-				k = 0;
-				while ( k < save_len ){
-					saves->s[temp].string[k] = save_list[ (i- save_len) + k ];
-				}
-				temp++;
-
-
+				sFound++;
 			}
-		i++;
+
 		}
+		i++;
 	}
 
-	return save_len;
+	strcpy(save_list,"");
+
+	return sFound;
 }
