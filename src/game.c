@@ -265,7 +265,20 @@ int settings(players *p)
 	setting = 0;
 	while ( input != ' ' || input != 27 ){
 
-		if ( SelectorMovement( input, start, &setting, temp.n_players, ' ' ) == 1 ) return 0;
+		if ( SelectorMovement( input, start, &setting, temp.n_players, ' ' ) == 1 ) {
+			if ( input == ' '){
+				p->n_players = temp.n_players;
+				i = 0;
+				while ( i < temp.n_players ){
+					p->player[i].ai = temp.player[i].ai;
+					strcpy(p->player[i].name,  temp.player[i].name) ;
+					i++;
+				}
+			}
+
+			return 0;
+		}
+
 
 		GotoXY(start.x + 19, start.y);
 		printf("%-1d", temp.n_players );
@@ -356,6 +369,7 @@ int settings(players *p)
 		}
 		drawSquare( angle1,  angle2);
 	}
+
 
 	return 0;
 }
@@ -747,9 +761,8 @@ int play(players *players, array *played, deck *deck, array *winners, array *run
 	// resta nel ciclo finchè non finisce la partita
 	while(finish == false){
 
-		turn = 0;
 		// fase di gioco
-
+		turn = 0;
 		while ( turn < players->n_players ){
 
 			// stampa le carte
@@ -762,29 +775,28 @@ int play(players *players, array *played, deck *deck, array *winners, array *run
 			if ( players->player[turn].ai == false ){
 
 				player_decision = playerTurn(players, played, deck, &pos, turn);
-
+				printPlayed(played);
+				printBet(&players->player[turn].bet_cards);
+				printHand(&players->player[turn].run_cards);
+				Sleep(300);
 				if ( player_decision == SAVE_GAME){
-
+					// salva
 					saveGame(winners, played, players, deck);
-					printRoute();
 					printAnimal(0, 0);
+					printRoute();
 					printStatics();
 					printRef();
+					printPlayed(played);
+					printBet(&players->player[turn].bet_cards);
+					printHand(&players->player[turn].run_cards);
 					turn--;
-					//free(pos.d);
-					//salva
-					//return 0;
+
 				}
 				if ( player_decision == BACK_TO_MENU){
 					free(pos.d);
-					// esci senza salvare
+					// esci
 					return 0;
 				}
-				// stampa le carte
-				printPlayed(played);
-				printTurn(players->player[turn].name, players->player[turn].ai);
-				printBet(&players->player[turn].bet_cards);
-				printHand(&players->player[turn].run_cards);
 
 			// caso in cui il giocatore sia ia
 			} else if (players->player[turn].ai == true){
