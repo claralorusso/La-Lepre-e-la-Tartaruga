@@ -27,7 +27,7 @@ int main()
 	saved_turn = 0;
 	arrInit(&winners, 5);
 	arrLoad(&winners, 0);
-	arrInit(&run, 12);
+	arrInit(&run, 6);
 	arrInit(&deck.totals, 6);
 	arrInit(&played, MAX_PLAYED_CARDS);
 	setPositions();
@@ -36,12 +36,12 @@ int main()
 	err = initConsole();
 
 	/* Setta le impostazioni a parametri di default */
-	players.n_players = 2;
+	players.n_players = 4;
 	createPlayers(&players);
 	players.player[0].ai = false;
 	players.player[1].ai = true;
-	players.player[2].ai = false;
-	players.player[3].ai = false;
+	players.player[2].ai = true;
+	players.player[3].ai = true;
 	players.player[4].ai = false;
 	namePlayers(&players);
 
@@ -52,10 +52,8 @@ int main()
 
 		menu = getch();
 		if (menu == '1'){
-
+			// Nuova Partita
 			system("cls");
-			//Inizia una nuova partita
-
 			err = newGame(&players, &played, &deck, &run);
 			err = play(&players, &played, &deck, &winners, &run, false, &saved_turn);
 
@@ -66,36 +64,43 @@ int main()
 
 		}
 		if (menu == '2'){
-
+			// Carica Parita
 			system("cls");
 			err = loadGame(&winners, &played, &players, &deck, &run, &saved_turn);
 			if ( err != -1){
 				err = play(&players, &played, &deck, &winners, &run, true, &saved_turn);
-				listErase(deck.card_list);
+				// resetta le impostazioni a default
 				namePlayers(&players);
+				players.n_players = 4;
+				players.player[0].ai = false;
+				players.player[1].ai = true;
+				players.player[2].ai = true;
+				players.player[3].ai = true;
+				players.player[4].ai = false;
+				listErase(deck.card_list);
 				arrLoad(&winners, 0);
 				arrLoad(&run, 0);
+
 				err = 0;
 			}
-			err = 0;
-
-
 		}
 		if (menu == '3'){
-
+			// Impostazioni
 			system("cls");
 			err = settings(&players);
 		}
 		if (menu == '4'){
-
+			// Regoole e aiuto
 			system("cls");
 			err = rules();
 		}
-		// esci
+
 		if (menu == 27 ){
+			// Esci dal Gioco
 			return 0;
 
 		} else {
+
 			system("cls");
 		}
 

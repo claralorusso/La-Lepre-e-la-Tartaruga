@@ -379,18 +379,18 @@ void printPointer(int pos, bool flag)
 }
 int printAnimal(int animal, int pos)
 {
-	if (pos == 0){
-		GotoXY(animals_position.animals[0].xy[pos].x, animals_position.animals[0].xy[pos].y);
-		putch('W');
-		GotoXY(animals_position.animals[1].xy[pos].x, animals_position.animals[1].xy[pos].y);
-		putch('H');
-		GotoXY(animals_position.animals[2].xy[pos].x, animals_position.animals[2].xy[pos].y);
-		putch('T');
-		GotoXY(animals_position.animals[3].xy[pos].x, animals_position.animals[3].xy[pos].y);
-		putch('L');
-		GotoXY(animals_position.animals[4].xy[pos].x, animals_position.animals[4].xy[pos].y);
-		putch('F');
-	} else {
+	//if (pos == 0){
+		//GotoXY(animals_position.animals[0].xy[pos].x, animals_position.animals[0].xy[pos].y);
+		//putch('W');
+		//GotoXY(animals_position.animals[1].xy[pos].x, animals_position.animals[1].xy[pos].y);
+		//putch('H');
+		//GotoXY(animals_position.animals[2].xy[pos].x, animals_position.animals[2].xy[pos].y);
+		//putch('T');
+		//GotoXY(animals_position.animals[3].xy[pos].x, animals_position.animals[3].xy[pos].y);
+		//putch('L');
+		//GotoXY(animals_position.animals[4].xy[pos].x, animals_position.animals[4].xy[pos].y);
+		//putch('F');
+	//} else {
 		if (animal == WOLF){
 			GotoXY(animals_position.animals[0].xy[pos].x, animals_position.animals[0].xy[pos].y);
 			putch('W');
@@ -418,10 +418,10 @@ int printAnimal(int animal, int pos)
 		if (animal == FOX){
 			GotoXY(animals_position.animals[4].xy[pos].x, animals_position.animals[4].xy[pos].y);
 			putch('F');
-			GotoXY(animals_position.animals[4].xy[pos -1].x, animals_position.animals[4].xy[pos - 1].y);
+			GotoXY(animals_position.animals[4].xy[pos - 1].x, animals_position.animals[4].xy[pos - 1].y);
 			putch(' ');
 		}
-	}
+	//}
 
 return 0;
 }
@@ -440,7 +440,6 @@ void allocPositions()
 
 void setPositions()
 {
-
 	allocPositions();
 
 	/* Posizioni Lupo*/

@@ -591,20 +591,7 @@ int settings(players *p)
 
 int rules(void)
 {
-	string_arr saves;
-	int i;
-	//saves.n_string = getFileQuantity("sav\\", ".sav");
-	//saves.s = malloc(saves.n_string * sizeof( string ) );
 
-	getFilePath("sav\\", ".sav", &saves);
-	//printf("%d\n" , saveN);
-
-	i = 0;
-
-	while ( i < saves.n_string ){
-		printf("%d %s \n",i , saves.s[i].string );
-		i++;
-	}
 
 
 	system("pause > nul");
@@ -924,7 +911,7 @@ int play(players *players, array *played, deck *deck, array *winners, array *run
 
 	printRoute();
 	i = 0;
-	while ( i < 5){
+	while ( i < 6){
 		printAnimal(i, run->d[i]);
 		i++;
 	}
