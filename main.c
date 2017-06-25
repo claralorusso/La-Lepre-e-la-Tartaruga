@@ -43,7 +43,7 @@ int main()
 	players.player[4].ai = false;
 	namePlayers(&players);
 
-	while ( err == 0){
+	while ( err == 0 ){
 
 		printTitle();
 		printMenu();
@@ -52,7 +52,6 @@ int main()
 		if (menu == '1'){
 
 			system("cls");
-
 			//Inizia una nuova partita
 			err = newGame(&players, &played, &deck, &run);
 			err = play(&players, &played, &deck, &winners, &run);
@@ -60,17 +59,24 @@ int main()
 			listErase(deck.card_list);
 			namePlayers(&players);
 			arrLoad(&winners, 0);
+			arrLoad(&run, 0);
 
 		}
 		if (menu == '2'){
 
 			system("cls");
-			err = loadGame(&winners, &played, &players, &deck);
-			err = play(&players, &played, &deck, &winners, &run);
+			err = loadGame(&winners, &played, &players, &deck, &run);
+			if ( err != -1){
+				system("pause");
+				err = play(&players, &played, &deck, &winners, &run);
+				listErase(deck.card_list);
+				namePlayers(&players);
+				arrLoad(&winners, 0);
+				arrLoad(&run, 0);
+				err = 0;
+			}
+			err = 0;
 
-			listErase(deck.card_list);
-			namePlayers(&players);
-			arrLoad(&winners, 0);
 
 		}
 		if (menu == '3'){
