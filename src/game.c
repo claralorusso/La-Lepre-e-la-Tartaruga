@@ -183,19 +183,66 @@ int saveGame(array *winners, array *played, players *p, deck * deck, array *run)
 
 			return 11;
 		}
-		fwrite(run, sizeof(array), 1, save );
+		i = 0;
+		fwrite( &run->n, sizeof(int), 1, save );
+		while ( i < run->n ){
+			fwrite( &run->d[i], sizeof(int), 1, save );
+			i++;
+		}
 
-		fwrite(winners, sizeof(array), 1, save );
 
-		fwrite(played, sizeof(array), 1, save );
+		i = 0;
+		fwrite( &winners->n, sizeof(int), 1, save );
+		while ( i < winners->n ){
+			fwrite( &winners->d[i], sizeof(int), 1, save );
+			i++;
+		}
 
-		fwrite(p, sizeof(players), 1, save );
 
-		fwrite(&(deck->totals), sizeof(array), 1, save );
+		i = 0;
+		fwrite( &played->n, sizeof(int), 1, save );
+		while ( i < played->n ){
+			fwrite( &played->d[i], sizeof(int), 1, save );
+			i++;
+		}
+
+
+		i = 0;
+		fwrite( &deck->totals.n, sizeof(int), 1, save );
+		while ( i < deck->totals.n ){
+			fwrite( &deck->totals.d[i], sizeof(int), 1, save );
+			i++;
+		}
+
 
 		temp = listIntoArray(deck->card_list);
 
-		fwrite( &(temp), sizeof(temp), 1, save );
+		i = 0;
+		fwrite( &temp.n, sizeof(int), 1, save );
+		while ( i < temp.n ){
+			fwrite( &temp.d[i], sizeof(int), 1, save );
+			i++;
+		}
+
+
+		i = 0;
+		fwrite( &p->n_players, sizeof(int), 1, save );
+		while ( i < p->n_players ){
+			fwrite( p->player[i].name, sizeof(p->player[i].name), 1, save );
+			fwrite( &p->player[i].ai , sizeof(bool), 1, save );
+			fwrite( &p->player[i].score , sizeof(int), 1, save );
+			j = 0;
+			while (j < MAX_BETS){
+				fwrite( &p->player[i].bet_cards.d[j], sizeof(int), 1, save );
+				j++;
+			}
+			j = 0;
+			while (j < MAX_CARDS){
+				fwrite( &p->player[i].run_cards.d[j], sizeof(int), 1, save );
+				j++;
+			}
+			i++;
+		}
 
 		fclose(save);
 	}
@@ -312,21 +359,67 @@ int loadGame(array *winners, array *played, players *p, deck * deck, array *run)
 		if ( (save = fopen(saveSelected, "rb") ) == NULL ){
 				return 2;
 			}
-			fread(run, sizeof(array), 1, save );
+		i = 0;
+		fread( &run->n, sizeof(int), 1, save );
+		while ( i < run->n ){
+			fread( &run->d[i], sizeof(int), 1, save );
+			i++;
+		}
 
-			fread(winners, sizeof(array), 1, save );
 
-			fread(played, sizeof(array), 1, save );
+		i = 0;
+		fread( &winners->n, sizeof(int), 1, save );
+		while ( i < winners->n ){
+			fread( &winners->d[i], sizeof(int), 1, save );
+			i++;
+		}
 
-			fread(p, sizeof(players), 1, save );
 
-			fread(&deck->totals, sizeof(array), 1, save );
+		i = 0;
+		fread( &played->n, sizeof(int), 1, save );
+		while ( i < played->n ){
+			fread( &played->d[i], sizeof(int), 1, save );
+			i++;
+		}
 
-			fread( &temp, sizeof(temp), 1, save );
+
+		i = 0;
+		fread( &deck->totals.n, sizeof(int), 1, save );
+		while ( i < deck->totals.n ){
+			fread( &deck->totals.d[i], sizeof(int), 1, save );
+			i++;
+		}
+
+		i = 0;
+		fread( &temp.n, sizeof(int), 1, save );
+		while ( i < temp.n ){
+			fread( &temp.d[i], sizeof(int), 1, save );
+			i++;
+		}
+		deck->card_list = arrIntoList(&temp);
+
+		i = 0;
+		fread( &p->n_players, sizeof(int), 1, save );
+		while ( i < p->n_players ){
+			fread( p->player[i].name, sizeof(p->player[i].name), 1, save );
+			fread( &p->player[i].ai , sizeof(bool), 1, save );
+			fread( &p->player[i].score , sizeof(int), 1, save );
+			j = 0;
+			while (j < MAX_BETS){
+				fread( &p->player[i].bet_cards.d[j], sizeof(int), 1, save );
+				j++;
+			}
+			j = 0;
+			while (j < MAX_CARDS){
+				fread( &p->player[i].run_cards.d[j], sizeof(int), 1, save );
+				j++;
+			}
+			i++;
+		}
 
 			fclose(save);
 
-			deck->card_list = arrIntoList(&temp);
+
 	}
 
 	system("pause");
