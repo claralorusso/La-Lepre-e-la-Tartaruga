@@ -1,0 +1,52 @@
+La Lepre e la Tartaruga e' un gioco di percorso in cui si possono sfidare 
+da 2 a 5 giocatori. Il campo di gioco e' un percorso di 11 caselle lungo 
+cui si muoveranno 5 pedine raffiguranti 5 animali diversi: 
+lepre, tartaruga, lupo, volpe e agnello. 
+Il movimento delle pedine e' determinato dalla giocata strategica di 
+carte corsa assegnate ai giocatori: ogni giocatore giochera' 
+le carte corsa in base alla propria carta scommessa. 
+La partita termina quando 3 animali avranno varcato la linea di arrivo 
+e in base alle carte scommessa dei giocatori verranno assegnati loro 
+diversi punteggi.
+
+SVOLGIMENTO
+Inizialmente le pedine dei 5 animali si trovano tutte sulla linea di partenza.
+A ogni giocatore viene assegnata una carta scommessa. Successivamente ogni 
+giocatore riceve 7 carte corsa, tra le quali dovra' scegliere la sua 
+seconda carta scommessa. 
+A ogni turno ogni giocatore e' in possesso di 6 carte corsa.
+Al proprio turno ogni giocatore gioca da 1 a 4 carte raffiguranti lo 
+stesso animale. Una volta giocate le carte, prendera' 
+altre carte dal mazzo fino ad averne di nuovo 6.
+Se alla fine del turno sono state giocate 8 carte totali o sono state 
+giocate 4 carte dello stesso animale, si attiva la fase di corsa.
+Non e' mai consentito superare il totale di 8 carte o il 
+totale di 4 carte raffiguranti lo stesso animale.
+
+FASE DI CORSA
+Durante questa fase le pedine avanzano in base alle carte che i giocatori 
+hanno giocato durante i propri turni. 
+Ogni pedina si muove in base alla modalità di avanzamento del relativo animale:
+LEPRE: Se sono state giocate da 1 a 4 carte Lepre, 
+la lepre avanza di 2 caselle. Ma se delle carte lepre sono state giocate 
+quando la lepre e' gia' al primo posto, la lepre non avanza. 
+Questa regola va ignorata se la lepre e' ancora sulla linea di partenza.
+TARTARUGA: Se sono state giocate da 0 a 3 carte Tartaruga, la tartaruga 
+avanza di 1 casella. Ma se sono state giocate 4 carte tartaruga, la tartaruga 
+avanza di 2 caselle.
+LUPO: Se sono state giocate da 1 a 2 carte Lupo, il lupo avanza di 1 casella. 
+Se sono state giocate da 3 a 4 carte lupo, il lupo avanza di un numero 
+di caselle pari al numero di carte lupo giocate meno 1. 
+VOLPE: La volpe avanza di un numero di caselle pari al numero 
+di carte volpe giocate.
+AGNELLO: L'agnello avanza di un numero di caselle pari al numero 
+di carte agnello giocate piu' 1. Tuttavia, l'agnello deve fermarsi se 
+raggiunge una casella con il ruscello.
+
+
+	COMANDI	ESC  per tornare al menu principale
+			( 1 - 6 ) per giocare le carte
+			S  per salvare la partita
+			   w
+			a     s   tasti direzionali per selezionare le impostazioni
+			   d
