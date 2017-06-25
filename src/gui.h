@@ -41,6 +41,8 @@ void printStaticsSettings();
 
 void printStaticsSaveGame();
 
+void printStaticsLoadGame();
+
 void printTurn(char [], bool);
 
 void printPointer(int , bool );

@@ -69,7 +69,8 @@ static char settings_commands[] =
 		" ("RED"C"BLACK") Modifica Nome                                                 ("RED"ESC"BLACK") Esci";
 
 
-static char saveGame_commands[] =  " ("RED"W - S"BLACK") Sposta Cursore (Spazio) Seleziona Salvataggio     (ESC) Esci";
+static char saveGame_commands[] =  " ("RED"W - S"BLACK") Sposta Cursore ("RED"Spazio"BLACK") Salva ("RED"X"BLACK") Elimina               ("RED"ESC"BLACK") Esci";
+static char loadGame_commands[] =  " ("RED"W - S"BLACK") Sposta Cursore ("RED"Spazio"BLACK") Carica ("RED"X"BLACK") Elimina              ("RED"ESC"BLACK") Esci";
 
 static movepos animals_position;
 
@@ -121,7 +122,7 @@ void printStaticsSaveGame()
 	i = 0;
 	while ( i < 5){
 		GotoXY(25, 6 + i);
-		printf("SLOT-%d)", i + 1);
+		printf("(SLOT)");
 		i++;
 	}
 	GotoXY(0, 23);
@@ -133,6 +134,32 @@ void printStaticsSaveGame()
 
 	GotoXY(0, 24);
 	printf("%s",saveGame_commands);
+}
+
+void printStaticsLoadGame()
+{
+	int i;
+	GotoXY(25, 1);
+	printf("LA LEPRE E LA TARTARUGA");
+	GotoXY(30, 3);
+	printf(BLU"CARICA PARTITA:"BLACK);
+
+	GotoXY(25, 6);
+	i = 0;
+	while ( i < 5){
+		GotoXY(25, 6 + i);
+		printf("(SLOT)");
+		i++;
+	}
+	GotoXY(0, 23);
+	i = 0;
+	while (i < 80){
+		printf("-");
+		i++;
+	}
+
+	GotoXY(0, 24);
+	printf("%s",loadGame_commands);
 }
 
 void printStatics()

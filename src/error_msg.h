@@ -12,4 +12,6 @@
 
 void printErrorGeneric(void);
 
+void printErrorLoadUnable(void);
+
 #endif /* ERROR_MSG_H_ */
