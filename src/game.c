@@ -591,7 +591,39 @@ int settings(players *p)
 
 int rules(void)
 {
+	FILE *file;
+	char c;
+	char page1[2048], page2[2048], page3[2048];
+	int i,j;
+	if( (file = fopen("rules.txt","r")) == NULL){
+		printf("Errore nell'apertura del file");
+	}
 
+
+	i = 0;
+	while ( (c = fgetc(file) ) != EOF && i < 596){
+		page1[i] = c;
+		i++;
+	}
+	j=0;
+	while ( (c = fgetc(file) ) != EOF && i < 1339){
+		page2[j] = c;
+		i++;
+		j++;
+	}
+	j=0;
+	while ( (c = fgetc(file) ) != EOF && i < 2451){
+		page3[j] = c;
+		i++;
+		j++;
+	}
+	printf(page1);
+	system("pause > nul");
+	system("cls");
+	printf(page2);
+	system("pause > nul");
+	system("cls");
+	printf(page3);
 
 
 	system("pause > nul");
