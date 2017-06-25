@@ -21,8 +21,10 @@ int main()
 	array winners;
 	array run;
 	deck deck;
+	int saved_turn;
 
 	/* Settaggi iniziali  */
+	saved_turn = 0;
 	arrInit(&winners, 5);
 	arrLoad(&winners, 0);
 	arrInit(&run, 12);
@@ -53,8 +55,9 @@ int main()
 
 			system("cls");
 			//Inizia una nuova partita
+
 			err = newGame(&players, &played, &deck, &run);
-			err = play(&players, &played, &deck, &winners, &run);
+			err = play(&players, &played, &deck, &winners, &run, false, &saved_turn);
 
 			listErase(deck.card_list);
 			namePlayers(&players);
@@ -65,10 +68,9 @@ int main()
 		if (menu == '2'){
 
 			system("cls");
-			err = loadGame(&winners, &played, &players, &deck, &run);
+			err = loadGame(&winners, &played, &players, &deck, &run, &saved_turn);
 			if ( err != -1){
-				system("pause");
-				err = play(&players, &played, &deck, &winners, &run);
+				err = play(&players, &played, &deck, &winners, &run, true, &saved_turn);
 				listErase(deck.card_list);
 				namePlayers(&players);
 				arrLoad(&winners, 0);

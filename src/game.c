@@ -58,7 +58,7 @@ int newGame(players *players, array *played, deck *deck, array *run)
 	return 0;
 }
 
-int saveGame(array *winners, array *played, players *p, deck * deck, array *run)
+int saveGame(array *winners, array *played, players *p, deck * deck, array *run, int *saved_turn)
 {
 	char input;
 	int i, j;
@@ -183,6 +183,9 @@ int saveGame(array *winners, array *played, players *p, deck * deck, array *run)
 
 			return 11;
 		}
+
+		fwrite( saved_turn, sizeof(int), 1, save );
+
 		i = 0;
 		fwrite( &run->n, sizeof(int), 1, save );
 		while ( i < run->n ){
@@ -215,14 +218,7 @@ int saveGame(array *winners, array *played, players *p, deck * deck, array *run)
 		}
 
 
-		temp = listIntoArray(deck->card_list);
 
-		i = 0;
-		fwrite( &temp.n, sizeof(int), 1, save );
-		while ( i < temp.n ){
-			fwrite( &temp.d[i], sizeof(int), 1, save );
-			i++;
-		}
 
 
 		i = 0;
@@ -242,6 +238,18 @@ int saveGame(array *winners, array *played, players *p, deck * deck, array *run)
 				j++;
 			}
 			i++;
+
+			}
+
+		temp = listIntoArray(deck->card_list);
+
+		i = 0;
+		fwrite( &temp.n, sizeof(int), 1, save );
+		while ( i < temp.n ){
+
+			fwrite( &temp.d[i], sizeof(int), 1, save );
+			i++;
+
 		}
 
 		fclose(save);
@@ -253,7 +261,7 @@ int saveGame(array *winners, array *played, players *p, deck * deck, array *run)
 	return 0;
 }
 
-int loadGame(array *winners, array *played, players *p, deck * deck, array *run)
+int loadGame(array *winners, array *played, players *p, deck * deck, array *run, int *saved_turn)
 {
 	char input;
 	int i, j;
@@ -265,7 +273,10 @@ int loadGame(array *winners, array *played, players *p, deck * deck, array *run)
 	coord angle2;
 	coord start;
 	string_arr saves;
-	bool loaded = false;
+	bool load = false;
+
+	arrInit(&temp, 81);
+
 
 	start.x = 25;
 	start.y = 6;
@@ -286,7 +297,7 @@ int loadGame(array *winners, array *played, players *p, deck * deck, array *run)
 
 	input = 0;
 	setting = 0;
-	while ( input != 27 && loaded == false){
+	while ( input != 27 && load == false){
 
 		i = 0;
 		while ( i < saves.n_string ){
@@ -311,7 +322,7 @@ int loadGame(array *winners, array *played, players *p, deck * deck, array *run)
 					strcpy(saveName, saves.s[setting].string);
 					strncpy(saveSelected,"", sizeof(saveSelected));
 					sprintf(saveSelected,"sav\\""\%s", saveName);
-					loaded = true;
+					load = true;
 			}
 			if ( (input == 'x' || input == 'X') && setting <= saves.n_string){
 
@@ -355,17 +366,20 @@ int loadGame(array *winners, array *played, players *p, deck * deck, array *run)
 	}
 
 	system("cls");
-	if ( loaded == true){
+	if ( load == true){
+
 		if ( (save = fopen(saveSelected, "rb") ) == NULL ){
 				return 2;
 			}
+
+		fread( saved_turn, sizeof(int), 1, save );
+
 		i = 0;
 		fread( &run->n, sizeof(int), 1, save );
 		while ( i < run->n ){
 			fread( &run->d[i], sizeof(int), 1, save );
 			i++;
 		}
-
 
 		i = 0;
 		fread( &winners->n, sizeof(int), 1, save );
@@ -374,15 +388,12 @@ int loadGame(array *winners, array *played, players *p, deck * deck, array *run)
 			i++;
 		}
 
-
 		i = 0;
 		fread( &played->n, sizeof(int), 1, save );
 		while ( i < played->n ){
 			fread( &played->d[i], sizeof(int), 1, save );
 			i++;
 		}
-
-
 		i = 0;
 		fread( &deck->totals.n, sizeof(int), 1, save );
 		while ( i < deck->totals.n ){
@@ -391,38 +402,39 @@ int loadGame(array *winners, array *played, players *p, deck * deck, array *run)
 		}
 
 		i = 0;
-		fread( &temp.n, sizeof(int), 1, save );
-		while ( i < temp.n ){
-			fread( &temp.d[i], sizeof(int), 1, save );
-			i++;
-		}
-		deck->card_list = arrIntoList(&temp);
-
-		i = 0;
 		fread( &p->n_players, sizeof(int), 1, save );
 		while ( i < p->n_players ){
 			fread( p->player[i].name, sizeof(p->player[i].name), 1, save );
 			fread( &p->player[i].ai , sizeof(bool), 1, save );
 			fread( &p->player[i].score , sizeof(int), 1, save );
+
 			j = 0;
 			while (j < MAX_BETS){
 				fread( &p->player[i].bet_cards.d[j], sizeof(int), 1, save );
+
 				j++;
 			}
+
 			j = 0;
 			while (j < MAX_CARDS){
 				fread( &p->player[i].run_cards.d[j], sizeof(int), 1, save );
+
 				j++;
 			}
 			i++;
 		}
+			i = 0;
+			fread( &temp.n, sizeof(int), 1, save );
+			while ( i < temp.n ){
+				fread( &temp.d[i], sizeof(int), 1, save );
+				i++;
+			}
+			deck->card_list = arrIntoList(&temp);
 
-			fclose(save);
-
-
+		fclose(save);
 	}
 
-	system("pause");
+	system("cls");
 
 	return 0;
 }
@@ -902,7 +914,7 @@ int checkPlayedCards(array *arr)
 
 }
 
-int play(players *players, array *played, deck *deck, array *winners, array *run)
+int play(players *players, array *played, deck *deck, array *winners, array *run, bool loaded, int *saved_turn )
 {
 	int i; // Indice
 	int turn; // Indica il turno del giocatore
@@ -911,7 +923,11 @@ int play(players *players, array *played, deck *deck, array *winners, array *run
 	bool finish; // Controlla che il gioco sia finito
 
 	printRoute();
-	printAnimal(0, 0);
+	i = 0;
+	while ( i < 5){
+		printAnimal(i, run->d[i]);
+		i++;
+	}
 	printStatics();
 	printRef();
 
@@ -922,23 +938,33 @@ int play(players *players, array *played, deck *deck, array *winners, array *run
 	finish = false;
 
 	// Scelta delle seconde carte scommessa
+	if (loaded == true)
+	{
+		turn = *saved_turn;
+	}else if (loaded == false){
+		turn = 0;
+	}
+	while( turn < players->n_players ){
 
-	i = 0;
-	while( i < players->n_players ){
 		// controlla che il giocatore non abbia già una carta scommessa
-		if ( players->player[i].bet_cards.d[1] == 0 ){
+		if ( players->player[turn].bet_cards.d[1] == 0 ){
 
-			player_decision = secondBetCard(players->player[i], deck, played);
+			player_decision = secondBetCard(players->player[turn], deck, played);
 		}
 
 		if ( player_decision == SAVE_GAME){
 			// salva
-			saveGame(winners, played, players, deck, run);
+			*saved_turn = turn;
+			saveGame(winners, played, players, deck, run, saved_turn);
 			printRoute();
-			printAnimal(0, 0);
+			i = 0;
+			while ( i < 5){
+				printAnimal(i, run->d[i]);
+				i++;
+			}
 			printStatics();
 			printRef();
-			i--;
+			turn--;
 			//free(pos.d);
 
 			//return 0;
@@ -948,7 +974,7 @@ int play(players *players, array *played, deck *deck, array *winners, array *run
 			free(pos.d);
 			return 0;
 		}
-		i++;
+		turn++;
 	}
 
 	/* Rimuove la settima carta dallo schermo */
@@ -965,9 +991,14 @@ int play(players *players, array *played, deck *deck, array *winners, array *run
 	while(finish == false){
 
 		// fase di gioco
-		turn = 0;
-		while ( turn < players->n_players ){
+		if (loaded == true){
+			turn = *saved_turn;
 
+		}else if (loaded == false){
+			turn = 0;
+		}
+		while ( turn < players->n_players ){
+			loaded = false;
 			// stampa le carte
 			printPlayed(played);
 			printTurn(players->player[turn].name, players->player[turn].ai);
@@ -984,7 +1015,8 @@ int play(players *players, array *played, deck *deck, array *winners, array *run
 				Sleep(300);
 				if ( player_decision == SAVE_GAME){
 					// salva
-					saveGame(winners, played, players, deck, run);
+					*saved_turn = turn;
+					saveGame(winners, played, players, deck, run, saved_turn);
 					printAnimal(0, 0);
 					printRoute();
 					printStatics();
@@ -1023,10 +1055,10 @@ int play(players *players, array *played, deck *deck, array *winners, array *run
 					}
 					i++;
 				}
-				//Sleep(1000);
+				Sleep(500);
 				printPlayed(played);
 				printHand(&players->player[turn].run_cards);
-				//Sleep(1000);
+				Sleep(500);
 				GotoXY(0,22);
 				printf("                                                                             ");
 			}
@@ -1057,16 +1089,7 @@ int play(players *players, array *played, deck *deck, array *winners, array *run
 	system("cls");
 	scores(players, winners);
 	sortScore(players);
-	/*
-	i = 0;
-	while ( i < players->n_players ){
-		printf("\ngiocatore:%d score:%d", i + 1 , players->player[i].score);
-		i++;
-	}
-	*/
 
-
-	//free(pos.d);
 	return 0;
 }
 

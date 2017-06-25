@@ -27,13 +27,13 @@ typedef struct deck{
 /// Funzioni principali
 int newGame(players *, array *, deck *, array *);
 
-int loadGame(array *winners, array *played, players *p, deck * deck, array *run);
+int loadGame(array *winners, array *played, players *p, deck * deck, array *run, int *saved_turn);
 
 int settings(players *);
 
 int rules(void);
 
-int saveGame(array *winners, array *played, players *p, deck * deck, array *run);
+int saveGame(array *winners, array *played, players *p, deck * deck, array *run, int *saved_turn);
 
 /// Funzioni essenziali del gioco
 deck shuffleDeck(deck *);
@@ -52,7 +52,7 @@ array playerGetCard(player *, array *, int , array *);
 
 int checkPlayedCards(array *);
 
-int play(players *p, array *, deck *, array *, array * );
+int play(players *p, array *, deck *, array *, array * , bool loaded, int *saved_turn);
 
 int playerTurn(players *, array *,deck *, array *, int );
 
