@@ -8,7 +8,6 @@ le carte corsa in base alla propria carta scommessa.
 La partita termina quando 3 animali avranno varcato la linea di arrivo 
 e in base alle carte scommessa dei giocatori verranno assegnati loro 
 diversi punteggi.
-
 SVOLGIMENTO
 Inizialmente le pedine dei 5 animali si trovano tutte sulla linea di partenza.
 A ogni giocatore viene assegnata una carta scommessa. Successivamente ogni 
@@ -22,11 +21,10 @@ Se alla fine del turno sono state giocate 8 carte totali o sono state
 giocate 4 carte dello stesso animale, si attiva la fase di corsa.
 Non e' mai consentito superare il totale di 8 carte o il 
 totale di 4 carte raffiguranti lo stesso animale.
-
 FASE DI CORSA
 Durante questa fase le pedine avanzano in base alle carte che i giocatori 
 hanno giocato durante i propri turni. 
-Ogni pedina si muove in base alla modalit‡ di avanzamento del relativo animale:
+Ogni pedina si muove in base alla modalit√† di avanzamento del relativo animale:
 LEPRE: Se sono state giocate da 1 a 4 carte Lepre, 
 la lepre avanza di 2 caselle. Ma se delle carte lepre sono state giocate 
 quando la lepre e' gia' al primo posto, la lepre non avanza. 
@@ -42,7 +40,6 @@ di carte volpe giocate.
 AGNELLO: L'agnello avanza di un numero di caselle pari al numero 
 di carte agnello giocate piu' 1. Tuttavia, l'agnello deve fermarsi se 
 raggiunge una casella con il ruscello.
-
 
 	COMANDI	ESC  per tornare al menu principale
 			( 1 - 6 ) per giocare le carte
