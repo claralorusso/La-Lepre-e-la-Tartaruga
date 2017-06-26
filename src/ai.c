@@ -1,7 +1,8 @@
+#include "ai.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
-#include "ia.h"
 
 int ia2betcard(array *temp, int betcard)
 {

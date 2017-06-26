@@ -5,11 +5,12 @@
 #include <string.h>
 #include <windows.h>
 #include "game.h"
+
+#include "ai.h"
 #include "linked_lists.h"
 #include "arrays.h"
 #include "gui.h"
 #include "error_msg.h"
-#include "ia.h"
 #include "tools.h"
 
 int newGame(players *players, array *played, deck *deck, array *run)
