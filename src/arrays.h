@@ -2,14 +2,16 @@
 #define ARRAYS_H_
 #include "tools.h"
 
-
+/** /typedef
+ * vettore di interi
+ */
 typedef struct array{
 	int *d;
 	int n;
 }array;
 
 
-
+/// /fn
 array arrInit(array *, int);
 
 array arrLoad(array *, int );
