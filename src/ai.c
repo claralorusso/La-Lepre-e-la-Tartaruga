@@ -1,7 +1,8 @@
+#include "ai.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
-#include "ia.h"
 
 int ia2betcard(array *temp, int betcard)
 {
@@ -56,7 +57,7 @@ int iamain(array *cards, array *played_cards, int betcard1, int betcard2)
 			i++;
 		}
 	}
-	while(arrCountX(played_cards, turn.choice) >= 4){
+	while(arrCountX(played_cards, turn.choice) == 4){
 
 		check(&turn, cards);
 
