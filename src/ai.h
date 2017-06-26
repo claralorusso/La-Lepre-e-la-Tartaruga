@@ -39,7 +39,7 @@ int check(aiturn *, array *);
 
  * funzione controlla che s
  */
-
+int final_check(aiturn *turn, array *played, array *cards, int n_played );
 
 #endif /* IA_H_ */
 
