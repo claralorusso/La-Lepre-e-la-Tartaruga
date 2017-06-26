@@ -64,13 +64,13 @@ bool ListDirectoryContents(const char *directory, char list[])
     HANDLE handle = NULL;
     char paths[2048];
 
-    //Specifica i fle. *.* = tutto
+    ///Specifica i fle. *.* = tutto
     sprintf(paths, "%s\\*.*", directory);
 
     if((handle = FindFirstFile(paths, &file)) == INVALID_HANDLE_VALUE)
     {
 
-        //printf("Percorso non trovato: [%s]\n", directory);
+        ///printf("Percorso non trovato: [%s]\n", directory);
         return false;
     }
 
@@ -79,21 +79,21 @@ bool ListDirectoryContents(const char *directory, char list[])
         if(strcmp(file.cFileName, ".") != 0
                 && strcmp(file.cFileName, "..") != 0){
 
-           // Costruisce la lista utilizzando il nome del file
+           /// Costruisce la lista utilizzando il nome del file
             sprintf(paths, "%s\\%s\n", directory, file.cFileName);
 
-            // L'entità è un file o una cartella?
+            /// L'entità è un file o una cartella?
             if(file.dwFileAttributes &FILE_ATTRIBUTE_DIRECTORY)
-            {    // controlla che non sia una cartella
+            {    /// controlla che non sia una cartella
 
             } else {
-            	// Stampa a video
-            	//printf("File: %s\n", paths);
+            	/// Stampa a video
+            	///printf("File: %s\n", paths);
             	strncat(list, paths, strlen(paths) );
             }
 
         }
-    }while(FindNextFile(handle, &file)); //cerca il prossimo file.
+    }while(FindNextFile(handle, &file)); ///cerca il prossimo file.
 
     FindClose(handle);
 
@@ -114,9 +114,9 @@ int getFileQuantity(char dir[], char extension[4])
 	while ( i < strlen(save_list) ){
 
 		c = save_list[i];
-		// trova la fine riga
+		/// trova la fine riga
 		if ( c == '\n' ){
-			// controlla che il file sia il file cercato
+			/// controlla che il file sia il file cercato
 			if ( save_list[i - 4] == extension[0] && save_list[i - 3] == extension[1] && save_list[i - 2] == extension[2] && save_list[i - 1] == extension[3] ){
 				count++;
 			}
@@ -145,9 +145,9 @@ int getFilePath(char dir[], char extension[4], string_arr *saves  )
 	while ( i < strlen(save_list) ){
 
 		c = save_list[i];
-		// trova la fine riga
+		/// trova la fine riga
 		if ( c == '\n' ){
-			// controlla che il file sia il file cercato
+			/// controlla che il file sia il file cercato
 			if ( save_list[i - 4] == extension[0] && save_list[i - 3] == extension[1] && save_list[i - 2] == extension[2] && save_list[i - 1] == extension[3] ){
 
 				save_len = 0;

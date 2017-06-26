@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>La lepre e la Tartaruga:  File sorgente C:/Users/Rita/git/La-Lepre-e-la-Tartaruga/src/ai.h</title>
+<link href="../../tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../jquery.js"></script>
+<script type="text/javascript" src="../../dynsections.js"></script>
+<link href="../../doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">La lepre e la Tartaruga
+   </div>
+   <div id="projectbrief">La lepre e la tartaruga</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generato da Doxygen 1.8.13 -->
+<script type="text/javascript" src="../../menudata.js"></script>
+<script type="text/javascript" src="../../menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('../../',false,false,'search.php','Cerca');
+});
+</script>
+<div id="main-nav"></div>
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="../../dir_d522931ffa1371640980b621734a4381.html">Users</a></li><li class="navelem"><a class="el" href="../../dir_429a9766417fb974fb9f8c42322c51db.html">Rita</a></li><li class="navelem"><a class="el" href="../../dir_482ee0592607fb623eaabe7b14af288a.html">git</a></li><li class="navelem"><a class="el" href="../../dir_682cab13051a32fa7208f7cd1b74297b.html">La-Lepre-e-la-Tartaruga</a></li><li class="navelem"><a class="el" href="../../dir_f6e820dd6e9f8f10079ffae12241f01d.html">src</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">ai.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="../../d1/df3/ai_8h.html">Vai alla documentazione di questo file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef IA_H_</span></div><div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define IA_H_</span></div><div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;</div><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="../../d4/dfc/arrays_8h.html">arrays.h</a>&quot;</span></div><div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="../../d5/d87/globals_8h.html">globals.h</a>&quot;</span></div><div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;</div><div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;</div><div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="../../df/de7/structaiturn.html">   12</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct </span><a class="code" href="../../df/de7/structaiturn.html">aiturn</a>{</div><div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="../../df/de7/structaiturn.html#af3027c2ec65c96f66cc7f7996e286654">   13</a></span>&#160;    <a class="code" href="../../dc/daf/structarray.html">array</a> <a class="code" href="../../df/de7/structaiturn.html#af3027c2ec65c96f66cc7f7996e286654">pos</a>;</div><div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="../../df/de7/structaiturn.html#a63bd75f20c553f0d65d7bb29b3f35696">   14</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="../../df/de7/structaiturn.html#a63bd75f20c553f0d65d7bb29b3f35696">choice</a>;</div><div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;}<a class="code" href="../../d1/df3/ai_8h.html#a4e8f12b98e5dad81b6e6cc3db2f0f928">aiturn</a>;</div><div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div><div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;</div><div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keywordtype">int</span> <a class="code" href="../../d1/df3/ai_8h.html#a2c1f11a76b4f2357a9cd8deb293eb51e">ia2betcard</a>(<a class="code" href="../../dc/daf/structarray.html">array</a> *temp, <span class="keywordtype">int</span> betcard);</div><div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;</div><div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div><div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keywordtype">int</span> <a class="code" href="../../d1/df3/ai_8h.html#a25e1989948076beb9dad30cb134b55a2">iamain</a>(<a class="code" href="../../dc/daf/structarray.html">array</a> *, <a class="code" href="../../dc/daf/structarray.html">array</a> *, <span class="keywordtype">int</span> , <span class="keywordtype">int</span> );</div><div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div><div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keywordtype">int</span> <a class="code" href="../../d1/df3/ai_8h.html#a74d32cc6aca126f7dbf89f96932d2c52">check</a>(<a class="code" href="../../df/de7/structaiturn.html">aiturn</a> *, <a class="code" href="../../dc/daf/structarray.html">array</a> *);</div><div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div><div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;</div><div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="keywordtype">int</span> <a class="code" href="../../d1/df3/ai_8h.html#a40dbe7a8495d543600a21ff9f6408815">final_check</a>(<a class="code" href="../../df/de7/structaiturn.html">aiturn</a> *turn, <a class="code" href="../../dc/daf/structarray.html">array</a> *played, <a class="code" href="../../dc/daf/structarray.html">array</a> *cards, <span class="keywordtype">int</span> n_played );</div><div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div><div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#endif </span><span class="comment">/* IA_H_ */</span><span class="preprocessor"></span></div><div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;</div><div class="ttc" id="structaiturn_html_a63bd75f20c553f0d65d7bb29b3f35696"><div class="ttname"><a href="../../df/de7/structaiturn.html#a63bd75f20c553f0d65d7bb29b3f35696">aiturn::choice</a></div><div class="ttdeci">int choice</div><div class="ttdef"><b>Definition:</b> <a href="../../d1/df3/ai_8h_source.html#l00014">ai.h:14</a></div></div>
+<div class="ttc" id="ai_8h_html_a25e1989948076beb9dad30cb134b55a2"><div class="ttname"><a href="../../d1/df3/ai_8h.html#a25e1989948076beb9dad30cb134b55a2">iamain</a></div><div class="ttdeci">int iamain(array *, array *, int, int)</div><div class="ttdoc">funzione turno della i.a. </div><div class="ttdef"><b>Definition:</b> <a href="../../d5/d37/ai_8c_source.html#l00020">ai.c:20</a></div></div>
+<div class="ttc" id="structaiturn_html"><div class="ttname"><a href="../../df/de7/structaiturn.html">aiturn</a></div><div class="ttdef"><b>Definition:</b> <a href="../../d1/df3/ai_8h_source.html#l00012">ai.h:12</a></div></div>
+<div class="ttc" id="globals_8h_html"><div class="ttname"><a href="../../d5/d87/globals_8h.html">globals.h</a></div></div>
+<div class="ttc" id="ai_8h_html_a74d32cc6aca126f7dbf89f96932d2c52"><div class="ttname"><a href="../../d1/df3/ai_8h.html#a74d32cc6aca126f7dbf89f96932d2c52">check</a></div><div class="ttdeci">int check(aiturn *, array *)</div><div class="ttdoc">funzione controlla che si giochi almeno una carta </div><div class="ttdef"><b>Definition:</b> <a href="../../d5/d37/ai_8c_source.html#l00071">ai.c:71</a></div></div>
+<div class="ttc" id="arrays_8h_html"><div class="ttname"><a href="../../d4/dfc/arrays_8h.html">arrays.h</a></div></div>
+<div class="ttc" id="ai_8h_html_a40dbe7a8495d543600a21ff9f6408815"><div class="ttname"><a href="../../d1/df3/ai_8h.html#a40dbe7a8495d543600a21ff9f6408815">final_check</a></div><div class="ttdeci">int final_check(aiturn *turn, array *played, array *cards, int n_played)</div><div class="ttdoc">funzione che effettua il controllo finale delle carte da giocare </div><div class="ttdef"><b>Definition:</b> <a href="../../d5/d37/ai_8c_source.html#l00099">ai.c:99</a></div></div>
+<div class="ttc" id="structarray_html"><div class="ttname"><a href="../../dc/daf/structarray.html">array</a></div><div class="ttdef"><b>Definition:</b> <a href="../../d4/dfc/arrays_8h_source.html#l00008">arrays.h:8</a></div></div>
+<div class="ttc" id="ai_8h_html_a2c1f11a76b4f2357a9cd8deb293eb51e"><div class="ttname"><a href="../../d1/df3/ai_8h.html#a2c1f11a76b4f2357a9cd8deb293eb51e">ia2betcard</a></div><div class="ttdeci">int ia2betcard(array *temp, int betcard)</div><div class="ttdoc">funzione di scelta della seconda carta scommessa della i.a. </div><div class="ttdef"><b>Definition:</b> <a href="../../d5/d37/ai_8c_source.html#l00007">ai.c:7</a></div></div>
+<div class="ttc" id="ai_8h_html_a4e8f12b98e5dad81b6e6cc3db2f0f928"><div class="ttname"><a href="../../d1/df3/ai_8h.html#a4e8f12b98e5dad81b6e6cc3db2f0f928">aiturn</a></div><div class="ttdeci">struct aiturn aiturn</div></div>
+<div class="ttc" id="structaiturn_html_af3027c2ec65c96f66cc7f7996e286654"><div class="ttname"><a href="../../df/de7/structaiturn.html#af3027c2ec65c96f66cc7f7996e286654">aiturn::pos</a></div><div class="ttdeci">array pos</div><div class="ttdef"><b>Definition:</b> <a href="../../d1/df3/ai_8h_source.html#l00013">ai.h:13</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Generato da &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="../../doxygen.png" alt="doxygen"/>
+</a> 1.8.13
+</small></address>
+</body>
+</html>

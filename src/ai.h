@@ -37,7 +37,7 @@ int check(aiturn *, array *);
 
 /** \fn int final_check(aiturn *, array *, array *, int )
 
- * funzione controlla che s
+ * funzione che effettua il controllo finale delle carte da giocare
  */
 int final_check(aiturn *turn, array *played, array *cards, int n_played );
 

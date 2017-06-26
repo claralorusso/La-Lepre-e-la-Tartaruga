@@ -1,5 +1,6 @@
-/*! \mainpage La Volpe e La Tartaruga
- * \section intro_sec Introduzione a la volpe e la tartaruga
+/*! \mainpage La Lepre e La Tartaruga
+ * \section intro_sec Introduzione a la Lepre e la tartaruga
+ *
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -11,10 +12,10 @@
 
 int main()
 {
-	// utilizza l'ora + il clock della cpu come seed per la funzione rand()
+	/// utilizza l'ora + il clock della cpu come seed per la funzione rand()
 	srand( time(NULL) );
 
-	// menu -> input dell'utente - err -> variabile per la gestione degli errori
+	/// menu -> input dell'utente - err -> variabile per la gestione degli errori
 	int menu, err;
 	players players;
 	array played;
@@ -23,7 +24,7 @@ int main()
 	deck deck;
 	int saved_turn;
 
-	/* Settaggi iniziali  */
+	///vari settaggi iniziali
 	saved_turn = 0;
 	arrInit(&winners, MAX_PLAYERS);
 	arrLoad(&winners, 0);
@@ -35,7 +36,7 @@ int main()
 	err = 0;
 	err = initConsole();
 
-	/* Setta le impostazioni a parametri di default */
+	/// Setta le impostazioni a parametri di default
 	players.n_players = 4;
 	createPlayers(&players);
 	players.player[0].ai = false;
@@ -52,7 +53,7 @@ int main()
 
 		menu = getch();
 		if (menu == '1'){
-			// Nuova Partita
+			/// Nuova Partita
 			system("cls");
 			err = newGame(&players, &played, &deck, &run);
 			err = play(&players, &played, &deck, &winners, &run, false, &saved_turn);
@@ -67,13 +68,13 @@ int main()
 
 		}
 		if (menu == '2'){
-			// Carica Parita
+			/// Carica Parita
 			system("cls");
 			err = loadGame(&winners, &played, &players, &deck, &run, &saved_turn);
 
 			if ( err == 0){
 				err = play(&players, &played, &deck, &winners, &run, true, &saved_turn);
-				// resetta le impostazioni a default
+				/// resetta le impostazioni a default
 				namePlayers(&players);
 				players.n_players = 4;
 				players.player[0].ai = false;
@@ -96,18 +97,18 @@ int main()
 			}
 		}
 		if (menu == '3'){
-			// Impostazioni
+			/// Impostazioni
 			system("cls");
 			err = settings(&players);
 		}
 		if (menu == '4'){
-			// Regoole e aiuto
+			/// Regoole e aiuto
 			system("cls");
 			err = rules();
 		}
 
 		if (menu == 27 ){
-			// Esci dal Gioco
+			/// Esci dal Gioco
 			return 0;
 
 		} else {
