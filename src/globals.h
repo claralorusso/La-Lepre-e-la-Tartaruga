@@ -20,5 +20,5 @@
 
 #define SAVE_GAME 10
 #define BACK_TO_MENU 20
-
+#define RULES_NOT_FOUND 30
 #endif /* GLOBALS_H_ */
