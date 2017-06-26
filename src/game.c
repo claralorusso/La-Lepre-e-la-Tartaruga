@@ -12,8 +12,6 @@
 #include "ia.h"
 #include "tools.h"
 
-#define SAVE_GAME 10
-#define BACK_TO_MENU 20
 
 
 int newGame(players *players, array *played, deck *deck, array *run)
@@ -83,7 +81,7 @@ int saveGame(array *winners, array *played, players *p, deck * deck, array *run,
 
 	system("cls");
 
-	getFilePath("sav\\", ".sav", &saves);
+	if (getFilePath("sav\\", ".sav", &saves) == FAILURE) return SAVE_UNABLE;
 
 	printStaticsSaveGame();
 
@@ -144,13 +142,13 @@ int saveGame(array *winners, array *played, players *p, deck * deck, array *run,
 			if ( (input == 'x' || input == 'X') && setting <= saves.n_string){
 
 				GotoXY(start.x - 15, start.y + 14);
-				printf("Digitare S per confermare la cacellazione: ");
+				printf("Digitare Spazio per confermare la cacellazione: ");
 				input = getch();
-				if ( input == 's' || input == 'S' ){
+				if ( input == ' ' ){
 					strncpy(saveName, "", sizeof(saveName));
 					sprintf(saveName,"sav\\""\%s", saves.s[setting].string);
 					remove(saveName);
-					getFilePath("sav\\", ".sav", &saves);
+					if (getFilePath("sav\\", ".sav", &saves) == FAILURE) return SAVE_UNABLE;
 					i = 0;
 					while ( i < 5){
 						GotoXY(start.x + 7, start.y + i);
@@ -181,7 +179,7 @@ int saveGame(array *winners, array *played, players *p, deck * deck, array *run,
 	if( saved == true){
 		if ( (save = fopen(saveSelected, "wb") ) == NULL ){
 
-			return 11;
+			return SAVE_UNABLE;
 		}
 
 		fwrite( saved_turn, sizeof(int), 1, save );
@@ -216,10 +214,6 @@ int saveGame(array *winners, array *played, players *p, deck * deck, array *run,
 			fwrite( &deck->totals.d[i], sizeof(int), 1, save );
 			i++;
 		}
-
-
-
-
 
 		i = 0;
 		fwrite( &p->n_players, sizeof(int), 1, save );
@@ -277,7 +271,6 @@ int loadGame(array *winners, array *played, players *p, deck * deck, array *run,
 
 	arrInit(&temp, 81);
 
-
 	start.x = 25;
 	start.y = 6;
 
@@ -289,7 +282,7 @@ int loadGame(array *winners, array *played, players *p, deck * deck, array *run,
 
 	system("cls");
 
-	getFilePath("sav\\", ".sav", &saves);
+	if (getFilePath("sav\\", ".sav", &saves) == FAILURE) return LOAD_UNABLE;
 
 	printStaticsLoadGame();
 
@@ -297,7 +290,7 @@ int loadGame(array *winners, array *played, players *p, deck * deck, array *run,
 
 	input = 0;
 	setting = 0;
-	while ( input != 27 && load == false){
+	while ( input != 27 && load == false && saves.n_string != 0){
 
 		i = 0;
 		while ( i < saves.n_string ){
@@ -316,7 +309,7 @@ int loadGame(array *winners, array *played, players *p, deck * deck, array *run,
 		input = getch();
 
 		if ( setting >= 0 && setting < 5 ){
-			if ( (input == ' ') ){
+			if ( input == ' ' ){
 
 					strncpy(saveName, "", sizeof(saveName));
 					strcpy(saveName, saves.s[setting].string);
@@ -327,13 +320,15 @@ int loadGame(array *winners, array *played, players *p, deck * deck, array *run,
 			if ( (input == 'x' || input == 'X') && setting <= saves.n_string){
 
 				GotoXY(start.x - 15, start.y + 14);
-				printf("Digitare S per confermare la cacellazione: ");
+				printf("Digitare Spazio per confermare la cacellazione: ");
 				input = getch();
-				if ( input == 's' || input == 'S' ){
+				if ( input == ' ' ){
+
 					strncpy(saveName, "", sizeof(saveName));
 					sprintf(saveName,"sav\\""\%s", saves.s[setting].string);
 					remove(saveName);
-					getFilePath("sav\\", ".sav", &saves);
+					if (getFilePath("sav\\", ".sav", &saves) == FAILURE) return LOAD_UNABLE;
+
 					i = 0;
 					while ( i < 5){
 						GotoXY(start.x + 7, start.y + i);
@@ -358,18 +353,23 @@ int loadGame(array *winners, array *played, players *p, deck * deck, array *run,
 			}
 
 		}
-
+	}
+	 if ( saves.n_string == 0 ){
+		printf("\nNon ci sono file da caricare\n");
+		system("pause > nul");
+		return FAILURE;
 	}
 
+
 	if ( input == 27 ){
-		return -1;
+
 	}
 
 	system("cls");
 	if ( load == true){
 
 		if ( (save = fopen(saveSelected, "rb") ) == NULL ){
-				return 2;
+				return LOAD_UNABLE;
 			}
 
 		fread( saved_turn, sizeof(int), 1, save );
@@ -935,6 +935,7 @@ int checkPlayedCards(array *arr)
 
 int play(players *players, array *played, deck *deck, array *winners, array *run, bool loaded, int *saved_turn )
 {
+	int err;
 	int i; // Indice
 	int turn; // Indica il turno del giocatore
 	int player_decision; // Input del giocatore
@@ -974,7 +975,10 @@ int play(players *players, array *played, deck *deck, array *winners, array *run
 		if ( player_decision == SAVE_GAME){
 			// salva
 			*saved_turn = turn;
-			saveGame(winners, played, players, deck, run, saved_turn);
+			err = saveGame(winners, played, players, deck, run, saved_turn);
+			if (err == SAVE_UNABLE){
+				return SAVE_UNABLE;
+			}
 			printRoute();
 			i = 0;
 			while ( i < 5){
@@ -1035,7 +1039,10 @@ int play(players *players, array *played, deck *deck, array *winners, array *run
 				if ( player_decision == SAVE_GAME){
 					// salva
 					*saved_turn = turn;
-					saveGame(winners, played, players, deck, run, saved_turn);
+					err = saveGame(winners, played, players, deck, run, saved_turn);
+					if (err == SAVE_UNABLE){
+						return SAVE_UNABLE;
+					}
 					printAnimal(0, 0);
 					printRoute();
 					printStatics();
@@ -1361,11 +1368,15 @@ void StandPositions(array *run, array * winners)
 
 void errorHandle(int error)
 {
-	if ( error == 2){
+	if ( error == LOAD_UNABLE){
 
 		printErrorLoadUnable();
 
-	} else {
+	}if ( error == SAVE_UNABLE){
+
+		printErrorSaveUnable();
+
+	} else if (error != SAVE_UNABLE && error != LOAD_UNABLE ){
 		printErrorGeneric();
 
 	}

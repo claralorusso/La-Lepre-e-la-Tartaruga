@@ -25,10 +25,10 @@ int main()
 
 	/* Settaggi iniziali  */
 	saved_turn = 0;
-	arrInit(&winners, 5);
+	arrInit(&winners, MAX_PLAYERS);
 	arrLoad(&winners, 0);
-	arrInit(&run, 6);
-	arrInit(&deck.totals, 6);
+	arrInit(&run, MAX_CARDS);
+	arrInit(&deck.totals, MAX_CARDS);
 	arrInit(&played, MAX_PLAYED_CARDS);
 	setPositions();
 	menu = 0;
@@ -56,7 +56,10 @@ int main()
 			system("cls");
 			err = newGame(&players, &played, &deck, &run);
 			err = play(&players, &played, &deck, &winners, &run, false, &saved_turn);
-
+			if (err == SAVE_UNABLE){
+				errorHandle(err);
+				err = 0;
+			}
 			listErase(deck.card_list);
 			namePlayers(&players);
 			arrLoad(&winners, 0);
@@ -67,7 +70,8 @@ int main()
 			// Carica Parita
 			system("cls");
 			err = loadGame(&winners, &played, &players, &deck, &run, &saved_turn);
-			if ( err != -1){
+
+			if ( err == 0){
 				err = play(&players, &played, &deck, &winners, &run, true, &saved_turn);
 				// resetta le impostazioni a default
 				namePlayers(&players);
@@ -81,6 +85,13 @@ int main()
 				arrLoad(&winners, 0);
 				arrLoad(&run, 0);
 
+			} else if ( err == FAILURE){
+				err = 0;
+			} else if ( err == LOAD_UNABLE){
+				errorHandle(err);
+				err = 0;
+			} else if (err == SAVE_UNABLE){
+				errorHandle(err);
 				err = 0;
 			}
 		}
@@ -106,16 +117,6 @@ int main()
 
 	}
 	errorHandle(err);
-
-	/* Elimina tutti gli array in memoria*/
-	listErase(deck.card_list);
-	for (int i = 0; i < players.n_players;i++){
-		free(players.player[i].bet_cards.d);
-		free(players.player[i].run_cards.d);
-		free(players.player[i].name);
-	}
-	free(players.player);
-	free(played.d);
 
 	return 0;
 }

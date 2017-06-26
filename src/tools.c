@@ -5,7 +5,7 @@
 #include <string.h>
 #include <conio.h>
 #include "tools.h"
-
+#include "globals.h"
 
 void  GotoXY(int x, int  y)
 {
@@ -107,9 +107,8 @@ int getFileQuantity(char dir[], char extension[4])
 
 	int i;
 	int count;
-	if ( ListDirectoryContents(dir, save_list) == false ) {
-		return -1;
-	}
+	if ( ListDirectoryContents(dir, save_list) == false ) return FAILURE;
+
 	count = 0;
 	i = 0;
 	while ( i < strlen(save_list) ){
@@ -136,7 +135,7 @@ int getFilePath(char dir[], char extension[4], string_arr *saves  )
 	int i, j, sFound;
 	int save_len;
 
-	ListDirectoryContents(dir, save_list);
+	if (ListDirectoryContents(dir, save_list) == false) return FAILURE;
 
 	saves->n_string = getFileQuantity(dir, extension);
 	saves->s = malloc(saves->n_string * sizeof( string ) );
