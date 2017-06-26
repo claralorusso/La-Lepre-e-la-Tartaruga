@@ -17,4 +17,7 @@ void printErrorLoadUnable(void);
 /// Messaggio di errore salvataggio.
 void printErrorSaveUnable(void);
 
+/// Messaggio di errore regole.
+void printErrorNoRules(void);
+
 #endif /* ERROR_MSG_H_ */

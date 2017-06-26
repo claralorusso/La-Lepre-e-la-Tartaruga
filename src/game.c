@@ -57,6 +57,7 @@ int newGame(players *players, array *played, deck *deck, array *run)
 int saveGame(array *winners, array *played, players *p, deck * deck, array *run, int *saved_turn)
 {
 	char input;
+	coord align;
 	int i, j;
 	int setting;
 	char saveName[200], saveSelected[200];
@@ -67,6 +68,9 @@ int saveGame(array *winners, array *played, players *p, deck * deck, array *run,
 	coord start;
 	string_arr saves;
 	bool saved = false;
+
+	align.x = 3;
+	align.y = 8;
 
 	start.x = 25;
 	start.y = 6;
@@ -83,7 +87,7 @@ int saveGame(array *winners, array *played, players *p, deck * deck, array *run,
 
 	printStaticsSaveGame();
 
-	drawSquare(angle1,angle2);
+	drawSquare(angle1, angle2);
 
 	input = 0;
 	setting = 0;
@@ -91,10 +95,10 @@ int saveGame(array *winners, array *played, players *p, deck * deck, array *run,
 
 		i = 0;
 		while ( i < saves.n_string ){
-
-			GotoXY(start.x + 7,start.y + i);
+			// stampa i nome dei salvataggi, escludendo l'estensione
+			GotoXY(start.x + 7, start.y + i);
 			j = 0;
-			while ( saves.s[i].string[j] != '.' ){
+			while ( saves.s[i].string[j] != '.' && j < strlen( saves.s[i].string )  ){
 				putchar(saves.s[i].string[j] );
 				j++;
 			}
@@ -110,19 +114,21 @@ int saveGame(array *winners, array *played, players *p, deck * deck, array *run,
 
 				if ( setting >= saves.n_string  ){
 
-					GotoXY(start.x - 15, start.y + 14);
+					GotoXY(start.x - align.x, start.y + align.y);
 					printf("Nome Salvataggio:");
-					GotoXY(start.x + 5, start.y + 14);
+					GotoXY(start.x + 14, start.y + align.y);
 					gets(saveName);
 					if (  ( strlen(saveName) ) == 0  ||  ( strlen(saveName) ) > 15 ){
 
-						GotoXY(start.x - 15,start.y + 13);
-						printf("INSERISCI UN NOME VALIDO");
+						GotoXY(start.x - align.x, start.y + align.y + 1);
+						printf(RED"Nome non valido."BLACK);
 						Sleep(500);
-						GotoXY(start.x - 15, start.y + 13);
-						printf("                        ");
-						GotoXY(start.x - 15, start.y + 14);
-						printf("                                                                           ");
+						// cancella "Nome Salvataggio:" e >nome giocatore<
+						GotoXY(start.x - align.x, start.y + align.y);
+						printf("                                                                                  ");
+						// caencella "Nome non valido."
+						GotoXY(start.x - align.x, start.y + align.y + 1);
+						printf("                                                                                  ");
 						strcpy(saveName, "");
 
 					} else if ( ( strlen(saveName) ) > 0  &&  ( strlen(saveName) ) <= 15) {
@@ -139,7 +145,7 @@ int saveGame(array *winners, array *played, players *p, deck * deck, array *run,
 			}
 			if ( (input == 'x' || input == 'X') && setting <= saves.n_string){
 
-				GotoXY(start.x - 15, start.y + 14);
+				GotoXY(start.x - align.x - 5, start.y + align.y);
 				printf("Digitare Spazio per confermare la cacellazione: ");
 				input = getch();
 				if ( input == ' ' ){
@@ -156,15 +162,15 @@ int saveGame(array *winners, array *played, players *p, deck * deck, array *run,
 					}
 					GotoXY(start.x + 7, start.y + setting);
 					printf("               ");
-					GotoXY(start.x - 15, start.y + 15);
+					GotoXY(start.x - align.x, start.y + align.y + 1);
 					printf("Salvataggio Eliminato");
 					Sleep(500);
-					GotoXY(start.x - 15, start.y + 15);
+					GotoXY(start.x - align.x, start.y + align.y + 1);
 					printf("                     ");
 
 				}
 
-				GotoXY(start.x - 15, start.y + 14);
+				GotoXY(start.x - align.x - 5, start.y + align.y);
 				printf("                                                     ");
 				input = '0';
 
@@ -256,6 +262,7 @@ int saveGame(array *winners, array *played, players *p, deck * deck, array *run,
 int loadGame(array *winners, array *played, players *p, deck * deck, array *run, int *saved_turn)
 {
 	char input;
+	coord align;
 	int i, j;
 	int setting;
 	char saveName[200], saveSelected[200];
@@ -268,6 +275,9 @@ int loadGame(array *winners, array *played, players *p, deck * deck, array *run,
 	bool load = false;
 
 	arrInit(&temp, 81);
+
+	align.x = 3;
+	align.y = 8;
 
 	start.x = 25;
 	start.y = 6;
@@ -317,7 +327,7 @@ int loadGame(array *winners, array *played, players *p, deck * deck, array *run,
 			}
 			if ( (input == 'x' || input == 'X') && setting <= saves.n_string){
 
-				GotoXY(start.x - 15, start.y + 14);
+				GotoXY(start.x - align.x - 5, start.y + align.y);
 				printf("Digitare Spazio per confermare la cacellazione: ");
 				input = getch();
 				if ( input == ' ' ){
@@ -336,15 +346,15 @@ int loadGame(array *winners, array *played, players *p, deck * deck, array *run,
 					}
 					GotoXY(start.x + 7, start.y + setting);
 					printf("               ");
-					GotoXY(start.x - 15, start.y + 15);
+					GotoXY(start.x - align.x, start.y + align.y + 1);
 					printf("Salvataggio Eliminato");
 					Sleep(500);
-					GotoXY(start.x - 15, start.y + 15);
+					GotoXY(start.x - align.x, start.y + align.y + 1);
 					printf("                     ");
 
 				}
 
-				GotoXY(start.x - 15, start.y + 14);
+				GotoXY(start.x - align.x - 5, start.y + align.y);
 				printf("                                                     ");
 				input = '0';
 
@@ -353,7 +363,8 @@ int loadGame(array *winners, array *played, players *p, deck * deck, array *run,
 		}
 	}
 	 if ( saves.n_string == 0 ){
-		printf("\nNon ci sono file da caricare\n");
+		GotoXY(start.x - 3, start.y + 8);
+		printf(RED"Non ci sono file da caricare"BLACK);
 		system("pause > nul");
 		return FAILURE;
 	}
@@ -595,7 +606,7 @@ int rules(void)
 	char page1[2048], page2[2048], page3[2048], page4[2048];
 	int i,j;
 	if( (file = fopen("rules.txt","r")) == NULL){
-		printf("Errore nell'apertura del file");
+		return RULES_NOT_FOUND;
 	}
 
 	// rimpie la prima pagina
@@ -1038,7 +1049,7 @@ int play(players *players, array *played, deck *deck, array *winners, array *run
 			}
 			printRoute();
 			i = 0;
-			while ( i < 5){
+			while ( i < 6){
 				printAnimal(i, run->d[i]);
 				i++;
 			}
@@ -1100,7 +1111,10 @@ int play(players *players, array *played, deck *deck, array *winners, array *run
 					if (err == SAVE_UNABLE){
 						return SAVE_UNABLE;
 					}
-					printAnimal(0, 0);
+					while ( i < 6){
+						printAnimal(i, run->d[i]);
+						i++;
+					}
 					printRoute();
 					printStatics();
 					printRef();
@@ -1430,11 +1444,15 @@ void errorHandle(int error)
 
 		printErrorLoadUnable();
 
-	}if ( error == SAVE_UNABLE){
+	} else if ( error == SAVE_UNABLE){
 
 		printErrorSaveUnable();
 
-	} else if (error != SAVE_UNABLE && error != LOAD_UNABLE ){
+	} else if ( error == RULES_NOT_FOUND){
+
+		printErrorNoRules();
+
+	} else {
 		printErrorGeneric();
 
 	}
