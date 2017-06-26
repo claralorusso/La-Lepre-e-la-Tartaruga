@@ -57,6 +57,7 @@ int iamain(array *cards, array *played_cards, int betcard1, int betcard2)
 			i++;
 		}
 	}
+	/// se la carta non è giocabile ne sceglie un'altra
 	while(arrCountX(played_cards, turn.choice) == 4){
 
 		check(&turn, cards);
@@ -78,6 +79,7 @@ int check(aiturn *turn, array *cards)
 		}
 		i++;
 	}
+	arrLoad(&turn->pos, -1);
 	i = 0;
 	j = 0;
 	while ( i < MAX_CARDS && j < MAX_TURN){
