@@ -62,7 +62,7 @@ YELLOW"           :______::______::______::______::____:\n"
 " "RED"D"YELLOW" :______::______::______::___"CYANO"|"YELLOW"__::______::____:\n"BLACK;
 
 /// Comandi
-static char commands[] = "      ("RED"1 - 6"BLACK") Selezione Carta ("RED"Spazio"BLACK") Fine Turno (S"BLACK") Salva          ("RED"ESC"BLACK") Esci";
+static char commands[] = " ("RED"1 - 6"BLACK"/"RED"7"BLACK") Selezione Carta ("RED"Spazio"BLACK") Fine Turno (S"BLACK") Salva           ("RED"ESC"BLACK") Esci";
 
 static char settings_commands[] =
 		" ("RED"W - S"BLACK") Sposta Cursore ("RED"A - D"BLACK") Modifica Selezione ("RED"Spazio"BLACK") Salva Modifiche     "
@@ -92,6 +92,22 @@ void printRef()
 	printf("%s",reference4);
 	GotoXY(60, 6);
 	printf("%s",reference5);
+}
+
+
+void printWinnerPos(array *winners)
+{
+	int i;
+	i = 0;
+	while ( i < winners->n){
+		GotoXY(57, 2+i);
+		if ( winners->d[i] != 0){
+			printf("-%d)", winners->d[i]);
+		}
+
+		i++;
+	}
+
 }
 
 void printStaticsRules()
@@ -214,7 +230,7 @@ void printBet(array *bets)
 	int i;
 
 	GotoXY(52, 18);
-	printf("Carte Scommessa");
+	printf(RED"Carte Scommessa"BLACK);
 
 	GotoXY(52, 19);
 	i = 0;
@@ -259,7 +275,7 @@ void printTurn(char name[], bool ia)
 	GotoXY(15, 16);
 	printf("                                                        ");
 	GotoXY(15, 16);
-	printf(GREEN"Sta giocando: %s", name);
+	printf(BLU"Sta giocando: %s", name);
 	if ( ia == true ){
 		GotoXY(43, 16);
 		printf("(I.A.)");
@@ -387,7 +403,7 @@ void printPointer(int pos, bool flag)
 
 	GotoXY(pointers[pos].x, pointers[pos].y);
 	if ( flag == false){
-		printf(GREEN);
+		printf(RED);
 		putchar('^');
 		printf(BLACK);
 	} else if ( flag == true ){

@@ -1160,6 +1160,7 @@ int play(players *players, array *played, deck *deck, array *winners, array *run
 		||arrCountX(played, FOX) == 4 ) {
 
 			finish = runPhase(players, played, run, winners);
+			printWinnerPos(winners);
 		}
 		arrLoad(played, 0);
 		printPlayed(played);

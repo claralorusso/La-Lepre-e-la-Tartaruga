@@ -35,6 +35,8 @@ void printRoute(void);
 
 void printRef();
 
+void printWinnerPos(array *winners);
+
 void printStatics();
 
 void printStaticsRules();
