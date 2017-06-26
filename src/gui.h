@@ -37,6 +37,8 @@ void printRef();
 
 void printStatics();
 
+void printStaticsRules();
+
 void printStaticsSettings();
 
 void printStaticsSaveGame();

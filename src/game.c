@@ -12,8 +12,6 @@
 #include "ia.h"
 #include "tools.h"
 
-
-
 int newGame(players *players, array *played, deck *deck, array *run)
 {
 	int i, j;
@@ -593,40 +591,99 @@ int rules(void)
 {
 	FILE *file;
 	char c;
-	char page1[2048], page2[2048], page3[2048];
+	char input;
+	char page1[2048], page2[2048], page3[2048], page4[2048];
 	int i,j;
 	if( (file = fopen("rules.txt","r")) == NULL){
 		printf("Errore nell'apertura del file");
 	}
 
-
+	// rimpie la prima pagina
 	i = 0;
 	while ( (c = fgetc(file) ) != EOF && i < 596){
 		page1[i] = c;
 		i++;
 	}
+	page1[i] = '\0'; // fine stringa
+	// rimpie la seconda pagina
 	j=0;
-	while ( (c = fgetc(file) ) != EOF && i < 1339){
+	while ( (c = fgetc(file) ) != EOF && i < 1338){
 		page2[j] = c;
 		i++;
 		j++;
 	}
+	page2[j] = '\0'; // fine stringa
+	// rimpie la terza pagina
 	j=0;
 	while ( (c = fgetc(file) ) != EOF && i < 2451){
 		page3[j] = c;
 		i++;
 		j++;
 	}
+	page3[j] = '\0'; // fine stringa
+	// rimpie la quarta pagina
+	j=0;
+	while ( (c = fgetc(file) ) != EOF ){
+		page4[j] = c;
+		i++;
+		j++;
+	}
+	page4[j] = '\0'; // fine stringa
+
+	printStaticsRules();
+	GotoXY(0, 4);
 	printf(page1);
-	system("pause > nul");
-	system("cls");
-	printf(page2);
-	system("pause > nul");
-	system("cls");
-	printf(page3);
+
+	i = 0;
+	while ( i < 4 && input != 27){
+		input = getch();
+
+		if ( (input == 'd' || input == 'D') && i <= 2 ){
+			i++;
+		} else
+		if ( (input == 'a' || input == 'A') && i >= 0){
+			i--;
+		}
+
+		if ( i == 0){
+			system("cls");
+			printStaticsRules();
+			GotoXY(0, 4);
+			printf(page1);
+
+		}
+		if ( i == 1){
+			system("cls");
+			printStaticsRules();
+			GotoXY(0, 4);
+			printf(page2);
+
+		}
+		if ( i == 2){
+			system("cls");
+			printStaticsRules();
+			GotoXY(0, 4);
+			printf(page3);
+
+		}
+		if ( i == 3){
+			system("cls");
+			printStaticsRules();
+			GotoXY(0, 4);
+			printf(page4);
+
+		}
+
+	}
+
+	//system("pause > nul");
+
+	//system("pause > nul");
+
+	//system("pause > nul");
 
 
-	system("pause > nul");
+	//system("pause > nul");
 	return 0;
 
 }

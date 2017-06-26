@@ -9,18 +9,18 @@ static char error_save[] = "Errore nel salvare la partita :(\nControlla che la c
 
 void printErrorGeneric(void)
 {
-	printf("%s", error_generic);
+	printf( error_generic);
 
 }
 
 void printErrorLoadUnable(void)
 {
-	printf("%s", error_load);
+	printf(error_load);
 
 }
 
 void printErrorSaveUnable(void)
 {
-	printf("%s", error_save);
+	printf(error_save);
 
 }

@@ -62,7 +62,7 @@ YELLOW"           :______::______::______::______::____:\n"
 " "RED"D"YELLOW" :______::______::______::___"CYANO"|"YELLOW"__::______::____:\n"BLACK;
 
 /// Comandi
-static char commands[] = "      (1 - 6) Selezione Carta (Spazio) Fine Turno (S) Salva          (ESC) Esci";
+static char commands[] = "      ("RED"1 - 6"BLACK") Selezione Carta ("RED"Spazio"BLACK") Fine Turno (S"BLACK") Salva          ("RED"ESC"BLACK") Esci";
 
 static char settings_commands[] =
 		" ("RED"W - S"BLACK") Sposta Cursore ("RED"A - D"BLACK") Modifica Selezione ("RED"Spazio"BLACK") Salva Modifiche     "
@@ -70,7 +70,10 @@ static char settings_commands[] =
 
 
 static char saveGame_commands[] =  " ("RED"W - S"BLACK") Sposta Cursore ("RED"Spazio"BLACK") Salva ("RED"X"BLACK") Elimina               ("RED"ESC"BLACK") Esci";
+
 static char loadGame_commands[] =  " ("RED"W - S"BLACK") Sposta Cursore ("RED"Spazio"BLACK") Carica ("RED"X"BLACK") Elimina              ("RED"ESC"BLACK") Esci";
+
+static char rules_commands[] =  " ("RED"A - D"BLACK") Cambia Pagina                                            ("RED"ESC"BLACK") Esci";
 
 static movepos animals_position;
 
@@ -89,6 +92,24 @@ void printRef()
 	printf("%s",reference4);
 	GotoXY(60, 6);
 	printf("%s",reference5);
+}
+
+void printStaticsRules()
+{
+	int i;
+	GotoXY(25, 1);
+	printf("LA LEPRE E LA TARTARUGA");
+	GotoXY(30, 3);
+	printf(BLU"REGOLE:"BLACK);
+	GotoXY(0, 23);
+	i = 0;
+	while (i < 80){
+		printf("-");
+		i++;
+	}
+
+	GotoXY(0, 24);
+	printf("%s",rules_commands);
 }
 
 void printStaticsSettings()

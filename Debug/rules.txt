@@ -40,10 +40,13 @@ di carte volpe giocate.
 AGNELLO: L'agnello avanza di un numero di caselle pari al numero 
 di carte agnello giocate piu' 1. Tuttavia, l'agnello deve fermarsi se 
 raggiunge una casella con il ruscello.
+COMANDI
+(ESC)  per tornare al menu principale
 
-	COMANDI	ESC  per tornare al menu principale
-			( 1 - 6 ) per giocare le carte
-			S  per salvare la partita
-			   w
-			a     s   tasti direzionali per selezionare le impostazioni
-			   d
+( 1 - 6/7 ) per giocare le carte
+
+(S)  per salvare la partita
+
+   W
+A     D   tasti direzionali per selezionare le impostazioni
+   D
