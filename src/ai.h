@@ -4,6 +4,7 @@
 #include "arrays.h"
 #include "globals.h"
 
+
 /** \typedef
  * vettore di pozioni dalle carte scelte
  * carta scelta
@@ -38,7 +39,7 @@ int check(aiturn *, array *);
 
  * funzione controlla che s
  */
-int final_check(aiturn *, array *, array *, int );
+
 
 #endif /* IA_H_ */
 
