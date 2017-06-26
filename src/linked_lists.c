@@ -171,29 +171,7 @@ int listLenght(list l)
 	return lenght;
 }
 
-int listGetRand(list l)
-{
-	int el;
-	int count;
-	int n;
-	node * temp;
 
-	if (listEmpty(l) ){ return -1;}
-
-	n = 0;
-
-	count = rand() % listLenght(l);
-	temp = l;
-	while ( temp->next != NULL ){
-		n++;
-		if ( n == count){
-			el = temp->data;
-		}
-		temp = temp->next;
-	}
-
-	return el;
-}
 
 void listErase(list l){
 

@@ -16,23 +16,23 @@ int newGame(players *players, array *played, deck *deck, array *run)
 {
 	int i, j;
 
-	/* Azzera le posizioni dei giocatori*/
+	/// Azzera le posizioni dei giocatori
 	arrLoad(run, 0);
-	/* Resetta le Carte Giocate */
+	 ///Resetta le Carte Giocate
 	arrLoad(played, 0);
 
-	/* Prepara il mazzo*/
+	/// Prepara il mazzo per essere utilizzato
 	deck->card_list = listInit();
 	shuffleDeck(deck);
 
-	/* Resetta le Carte Scommessa*/
+	/// Resetta le Carte Scommessa
 	i = 0;
 	while( i < players->n_players ){
 		arrLoad(&players->player[i].bet_cards, 0);
 		i++;
 	}
 
-	/* Assegna ai giocatori le prime Carte Scommessa e le Carte Corsa */
+	/// Assegna ai giocatori la prima Carte Scommessa e le Carte Corsa
 	firstBetCard(players);
 	j = 0;
 	while( j < players->n_players ){
@@ -45,7 +45,7 @@ int newGame(players *players, array *played, deck *deck, array *run)
 		j++;
 	}
 
-	/* Stamp l'intefaccia di base*/
+	/// Stampa l'intefaccia di base
 	printRoute();
 	printAnimal(0, 0);
 	printStatics();
@@ -82,7 +82,7 @@ int saveGame(array *winners, array *played, players *p, deck * deck, array *run,
 	angle2.y = start.y + 7;
 
 	system("cls");
-
+///verifica se possibile salvare
 	if (getFilePath("sav\\", ".sav", &saves) == FAILURE) return SAVE_UNABLE;
 
 	printStaticsSaveGame();
@@ -95,7 +95,7 @@ int saveGame(array *winners, array *played, players *p, deck * deck, array *run,
 
 		i = 0;
 		while ( i < saves.n_string ){
-			// stampa i nome dei salvataggi, escludendo l'estensione
+			/// stampa i nome dei salvataggi, escludendo l'estensione
 			GotoXY(start.x + 7, start.y + i);
 			j = 0;
 			while ( saves.s[i].string[j] != '.' && j < strlen( saves.s[i].string )  ){
@@ -123,10 +123,10 @@ int saveGame(array *winners, array *played, players *p, deck * deck, array *run,
 						GotoXY(start.x - align.x, start.y + align.y + 1);
 						printf(RED"Nome non valido."BLACK);
 						Sleep(500);
-						// cancella "Nome Salvataggio:" e >nome giocatore<
+						/// cancella "Nome Salvataggio:" e >nome giocatore<
 						GotoXY(start.x - align.x, start.y + align.y);
 						printf("                                                                                  ");
-						// caencella "Nome non valido."
+						/// caencella "Nome non valido."
 						GotoXY(start.x - align.x, start.y + align.y + 1);
 						printf("                                                                                  ");
 						strcpy(saveName, "");
@@ -466,15 +466,15 @@ int settings(players *p)
 	angle2.x = start.x + 25;
 	angle2.y = start.y + 7;
 
-	// Stampa elementi statici
+	/// Stampa elementi statici
 	GotoXY(start.x, start.y);
 	printf(RED"Numero Giocatori: "BLACK);
 	printStaticsSettings();
 	drawSquare( angle1,  angle2);
 
-	// Alloca lo spazio per il vettore temporaneo
+	/// Alloca lo spazio per il vettore temporaneo
 	createPlayers(&temp);
-	// Copia le variabile necessarie per le successive modifiche
+	/// Copia le variabile necessarie per le successive modifiche
 	temp.n_players = p->n_players;
 	namePlayers(&temp);
 	i = 0;
@@ -484,7 +484,7 @@ int settings(players *p)
 		i++;
 	}
 
-	// Ciclo principale dell'input
+	/// Ciclo principale dell'input
 	input = 0;
 	setting = 0;
 	while ( input != ' ' || input != 27 ){
@@ -510,14 +510,14 @@ int settings(players *p)
 		i = 0;
 		while ( i < temp.n_players  ){
 
-			// Controlla il tipo di giocatore
+			/// Controlla il tipo di giocatore
 			if ( temp.player[i].ai == false ){
-				strcpy(type, "Umano");
+				strcpy(type, "Umano"); ///umano
 			}
 			if ( temp.player[i].ai == true ){
-				strcpy(type, "I.A.");
+				strcpy(type, "I.A."); ///i.a.
 			}
-			// Stampa i giocatori
+			/// Stampa i giocatori
 			GotoXY(start.x, (start.y + 1) + i);
 			printf("%-15s%-4s"RED"%-5s"BLACK, temp.player[i].name, " -> ", type);
 			i++;
@@ -531,7 +531,7 @@ int settings(players *p)
 			} else if ( (input == 'a' || input == 'A') && temp.n_players  > 2){
 				temp.n_players --;
 
-				// cancella da schermo giocatori non esistenti
+				/// cancella da schermo giocatori non esistenti
 				if (temp.n_players  == MAX_PLAYERS - 1){
 
 					GotoXY(0, start.y + MAX_PLAYERS);
@@ -564,13 +564,13 @@ int settings(players *p)
 
 			} else if ( (input == 'c' || input == 'C') ){
 
-				// richiede nuovo nome
+				/// richiede nuovo nome
 				GotoXY(5, start.y + MAX_PLAYERS + 5);
 				printf("Inserire nome Giocatore (MAX 15 CARATTERI) -> ");
 
-				// utilizza una variabile di appoggio per ottenere il nome
+				/// utilizza una variabile di appoggio per ottenere il nome
 				gets(name);
-				// controlla che il nuovo nome sia valido
+				///controlla che il nuovo nome sia valido
 				if ( strlen(name) <= 0 || strlen(name) > 15){
 					strcpy(name, temp.player[setting - 1].name );
 					GotoXY(25, start.y + MAX_PLAYERS + 7);
@@ -579,14 +579,14 @@ int settings(players *p)
 					GotoXY(25, start.y + MAX_PLAYERS + 7);
 					printf("               ");
 				}
-				// se il nuovo nome è valido lo inserisce nella varibile del giocatore
+				/// se il nuovo nome è valido lo inserisce nella varibile del giocatore
 				if ( strlen(name) > 0 && strlen(name) <= 15){
 					strcpy(temp.player[setting - 1].name, name );
 				}
-				// Cancella vecchio nome giocatore
+				/// Cancella vecchio nome giocatore
 				GotoXY(25, (start.y + 1) + setting - 1);
 				printf("                    ");
-				// Cancella frase
+				/// Cancella frase
 				GotoXY(5, start.y + MAX_PLAYERS + 5);
 				printf("                                                                                        ");
 			}
@@ -609,37 +609,37 @@ int rules(void)
 		return RULES_NOT_FOUND;
 	}
 
-	// rimpie la prima pagina
+	/// rimpie la prima pagina
 	i = 0;
 	while ( (c = fgetc(file) ) != EOF && i < 596){
 		page1[i] = c;
 		i++;
 	}
-	page1[i] = '\0'; // fine stringa
-	// rimpie la seconda pagina
+	page1[i] = '\0'; /// fine stringa
+	/// rimpie la seconda pagina
 	j=0;
 	while ( (c = fgetc(file) ) != EOF && i < 1338){
 		page2[j] = c;
 		i++;
 		j++;
 	}
-	page2[j] = '\0'; // fine stringa
-	// rimpie la terza pagina
+	page2[j] = '\0'; /// fine stringa
+	/// rimpie la terza pagina
 	j=0;
 	while ( (c = fgetc(file) ) != EOF && i < 2451){
 		page3[j] = c;
 		i++;
 		j++;
 	}
-	page3[j] = '\0'; // fine stringa
-	// rimpie la quarta pagina
+	page3[j] = '\0'; /// fine stringa
+	/// rimpie la quarta pagina
 	j=0;
 	while ( (c = fgetc(file) ) != EOF ){
 		page4[j] = c;
 		i++;
 		j++;
 	}
-	page4[j] = '\0'; // fine stringa
+	page4[j] = '\0'; /// fine stringa
 
 	printStaticsRules();
 	GotoXY(0, 4);
@@ -687,14 +687,7 @@ int rules(void)
 
 	}
 
-	//system("pause > nul");
 
-	//system("pause > nul");
-
-	//system("pause > nul");
-
-
-	//system("pause > nul");
 	return 0;
 
 }
@@ -707,29 +700,29 @@ deck shuffleDeck( deck *deck )
 
 	while ( deck->totals.d[0] < 81){
 
-		number = rand()% 5 + 1;
+		number = rand()% 5 + 1; //genera casualmente
 
-		if (number == WOLF && deck->totals.d[WOLF] < 16){
+		if (number == WOLF && deck->totals.d[WOLF] < 16){ ///numero carte lupo
 			deck->card_list = listAdd(deck->card_list, WOLF);
 			deck->totals.d[WOLF]++;
 			deck->totals.d[0]++;
 		}
-		if (number == HARE && deck->totals.d[HARE] < 18){
+		if (number == HARE && deck->totals.d[HARE] < 18){ ///numero carte lepre
 			deck->card_list = listAdd(deck->card_list, HARE);
 			deck->totals.d[HARE]++;
 			deck->totals.d[0]++;
 		}
-		if (number == TORTOISE && deck->totals.d[TORTOISE] < 17){
+		if (number == TORTOISE && deck->totals.d[TORTOISE] < 17){ ///numero carte tartaruga
 			deck->card_list = listAdd(deck->card_list, TORTOISE);
 			deck->totals.d[TORTOISE]++;
 			deck->totals.d[0]++;
 		}
-		if (number == LAMB && deck->totals.d[LAMB] < 15){
+		if (number == LAMB && deck->totals.d[LAMB] < 15){ ///numero carte agnello
 			deck->card_list = listAdd(deck->card_list, LAMB);
 			deck->totals.d[LAMB]++;
 			deck->totals.d[0]++;
 		}
-		if (number == FOX && deck->totals.d[FOX] < 15){
+		if (number == FOX && deck->totals.d[FOX] < 15){ ///numero carte volpe
 			deck->card_list = listAdd(deck->card_list, FOX);
 			deck->totals.d[FOX]++;
 			deck->totals.d[0]++;
@@ -747,7 +740,7 @@ players createPlayers(players *p)
 	i = 0;
 	while ( i < MAX_PLAYERS ){
 
-		// crea giocatori di default
+		/// crea giocatori di default
 		p->player[i].ai = false;
 
 		p->player[i].bet_cards = arrInit( &p->player[i].bet_cards, MAX_BETS);
@@ -787,16 +780,16 @@ int GetCard(deck *deck)
 
 	card = 0;
 
-	// se il mazzo è finito lo rimescola
+	/// se il mazzo è finito lo rimescola
 	if ( listEmpty(deck->card_list) ){
 		shuffleDeck(deck);
 	}
 
-	// Prende l'ultima carta del mazzo e la elimina
+	/// Prende l'ultima carta del mazzo e la elimina
 	card = listGetLast(deck->card_list);
 	deck->card_list = listDLast( deck->card_list);
 
-	// Riduce i totali delle carte
+	/// Riduce i totali delle carte
 	deck->totals.d[card]--;
 	deck->totals.d[0]--;
 
@@ -840,7 +833,7 @@ int secondBetCard(player player, deck *deck, array *played)
 	arrInit(&temp, 7);
 	arrLoad(&temp, 0);
 
-	// carica il vettore temporaneo per la settima carta scommessa
+	/// carica il vettore temporaneo per la settima carta scommessa
 	i = 0;
 	while ( i < MAX_CARDS){
 		temp.d[i] = player.run_cards.d[i];
@@ -869,12 +862,12 @@ int secondBetCard(player player, deck *deck, array *played)
 			input = getch();
 			input_value = input -'0';
 
-			if ( input == 's' || input == 'S' ){ // in caso venga premuto il tasto per salvare
-				//salva
+			if ( input == 's' || input == 'S' ){ /// nel caso venga premuto il tasto per salvare
+				///salva
 				return SAVE_GAME;
 			}
-			if ( input == 27 ){ // in caso venga premuto il tasto esci
-				//Torna al menu
+			if ( input == 27 ){ /// nel caso venga premuto il tasto esci
+				///Torna al menu
 				return BACK_TO_MENU;
 			}
 			if ( (input_value >= 1 && input_value <= 7)){
@@ -882,17 +875,17 @@ int secondBetCard(player player, deck *deck, array *played)
 				pos = input_value - 1;
 
 				if( player.bet_cards.d[1] == 0 ){
-					// Seleziona la carta
+					/// Seleziona la carta
 					player.bet_cards.d[1] = temp.d[pos];
 					printPointer(pos, false);
 
 				}else if ( previous == pos ){
-					// Rimuove il puntatore e la carta
+					/// Rimuove il puntatore e la carta
 					printPointer(pos, true);
 					player.bet_cards.d[1] = 0;
 
 				}else if ( player.bet_cards.d[1] != 0 ){
-					// Sposta l'indicatore
+					/// Sposta l'indicatore
 					printPointer(previous, true);
 					player.bet_cards.d[1] = temp.d[pos];
 					printPointer(pos, false);
@@ -908,7 +901,7 @@ int secondBetCard(player player, deck *deck, array *played)
 		}
 	}
 
-	// Riporta i valori nel vettore del giocatore
+	/// Riporta i valori nel vettore del giocatore
 	i = 0;
 	j = 0;
 	while ( i < 7){
@@ -930,11 +923,11 @@ array playerGetCard(player *player, array *played, int input, array *pos)
 	int played_card;
 	int check = 0;
 
-	/* Conta quante carte mancanti ha il giocatore */
+/// Conta quante carte mancanti ha il giocatore
 	count = arrCountNotX(pos, -1);
 	flag = false;
 
-	//Impedisce di giocare carte di animali diversi
+	///Impedisce di giocare carte di animali diversi
 	if(count >= 1)
 	{
 		check = checkPlayedCards(pos);
@@ -973,7 +966,7 @@ array playerGetCard(player *player, array *played, int input, array *pos)
 
 	}else if(flag == false){
 
-		/* Mostra il messaggio di errore al giocatore*/
+		/// Mostra il messaggio di errore al giocatore
 		playerErrors();
 	}
 	flag = false;
@@ -981,7 +974,7 @@ array playerGetCard(player *player, array *played, int input, array *pos)
 	return *pos;
 }
 
-//Carta selezionata, su cui si deve basare la selezione delle successive carte
+///Carta selezionata, su cui si deve basare la selezione delle successive carte
 int checkPlayedCards(array *arr)
 {
 	int i, x;
@@ -1004,11 +997,11 @@ int checkPlayedCards(array *arr)
 int play(players *players, array *played, deck *deck, array *winners, array *run, bool loaded, int *saved_turn )
 {
 	int err;
-	int i; // Indice
-	int turn; // Indica il turno del giocatore
-	int player_decision; // Input del giocatore
-	array pos; // Posizioni delle carte giocate dal giocatore
-	bool finish; // Controlla che il gioco sia finito
+	int i; /// Indice
+	int turn; /// Indica il turno del giocatore
+	int player_decision; /// Input del giocatore
+	array pos; /// Posizioni delle carte giocate dal giocatore
+	bool finish; /// Controlla che il gioco sia finito
 
 	printRoute();
 	i = 0;
@@ -1019,13 +1012,13 @@ int play(players *players, array *played, deck *deck, array *winners, array *run
 	printStatics();
 	printRef();
 
-	// Alloca e carica pos
+	/// Alloca e carica pos
 	pos = arrInit(&pos, 4);
 	pos = arrLoad(&pos, -1);
-	//Setta il flag di fine partita
+	///Setta il flag di fine partita
 	finish = false;
 
-	// Scelta delle seconde carte scommessa
+	/// Scelta delle seconde carte scommessa
 	if (loaded == true)
 	{
 		turn = *saved_turn;
@@ -1034,14 +1027,14 @@ int play(players *players, array *played, deck *deck, array *winners, array *run
 	}
 	while( turn < players->n_players ){
 
-		// controlla che il giocatore non abbia già una carta scommessa
+		/// controlla che il giocatore non abbia già una carta scommessa
 		if ( players->player[turn].bet_cards.d[1] == 0 ){
 
 			player_decision = secondBetCard(players->player[turn], deck, played);
 		}
 
 		if ( player_decision == SAVE_GAME){
-			// salva
+			/// salva
 			*saved_turn = turn;
 			err = saveGame(winners, played, players, deck, run, saved_turn);
 			if (err == SAVE_UNABLE){
@@ -1056,32 +1049,30 @@ int play(players *players, array *played, deck *deck, array *winners, array *run
 			printStatics();
 			printRef();
 			turn--;
-			//free(pos.d);
 
-			//return 0;
 
 		} else if ( player_decision == BACK_TO_MENU){
-			//esci senza salvare
+			///esci senza salvare
 			free(pos.d);
 			return 0;
 		}
 		turn++;
 	}
 
-	/* Rimuove la settima carta dallo schermo */
+	/// Rimuove la settima carta dallo schermo
 	GotoXY(44, 19);
 	printf("     ");
 	GotoXY(44, 20);
 	printf("     ");
 	GotoXY(44, 21);
 	printf("     ");
-	/*--------------------------------------- */
+
 
 	player_decision = 0;
-	// resta nel ciclo finchè non finisce la partita
+	/// resta nel ciclo finchè non finisce la partita
 	while(finish == false){
 
-		// fase di gioco
+		/// fase di gioco
 		if (loaded == true){
 			turn = *saved_turn;
 
@@ -1090,13 +1081,13 @@ int play(players *players, array *played, deck *deck, array *winners, array *run
 		}
 		while ( turn < players->n_players ){
 			loaded = false;
-			// stampa le carte
+			/// stampa le carte
 			printPlayed(played);
 			printTurn(players->player[turn].name, players->player[turn].ai);
 			printBet(&players->player[turn].bet_cards);
 			printHand(&players->player[turn].run_cards);
 
-			// caso in cui il giocatore sia umano
+			/// caso in cui il giocatore sia umano
 			if ( players->player[turn].ai == false ){
 
 				player_decision = playerTurn(players, played, deck, &pos, turn);
@@ -1105,7 +1096,7 @@ int play(players *players, array *played, deck *deck, array *winners, array *run
 				printHand(&players->player[turn].run_cards);
 				Sleep(300);
 				if ( player_decision == SAVE_GAME){
-					// salva
+					/// salva
 					*saved_turn = turn;
 					err = saveGame(winners, played, players, deck, run, saved_turn);
 					if (err == SAVE_UNABLE){
@@ -1126,25 +1117,25 @@ int play(players *players, array *played, deck *deck, array *winners, array *run
 				}
 				if ( player_decision == BACK_TO_MENU){
 					free(pos.d);
-					// esci
+					/// esci
 					return 0;
 				}
 
-			// caso in cui il giocatore sia ia
+			/// caso in cui il giocatore sia ia
 			} else if (players->player[turn].ai == true){
 
-				// turno dell'ia
+				/// turno dell'ia
 				printTurn(players->player[turn].name, players->player[turn].ai);
 				printBet(&players->player[turn].bet_cards);
 				printPlayed(played);
 				printHand(&players->player[turn].run_cards);
 				iamain( &players->player[turn].run_cards, played, players->player[turn].bet_cards.d[0], players->player[turn].bet_cards.d[1] );
 
-				// stampa le carte
+				/// stampa le carte
 				GotoXY(17, 22);
 				printf(">>L'IA STA GIOCANDO<<");
 
-				// Da il numero di carte necessarie all'ia
+				/// Da il numero di carte necessarie all'ia
 				i = 0;
 				while( i < MAX_CARDS ){
 					if( players->player[turn].run_cards.d[i] == 0){
@@ -1161,10 +1152,10 @@ int play(players *players, array *played, deck *deck, array *winners, array *run
 			}
 			turn++;
 
-		} // fase di gioco
+		} /// fase di gioco
 		turn = 0;
 
-		// Condizioni di attivazione fase di corsa
+		/// Condizioni di attivazione fase di corsa
 		if(
 		  arrCountNotX(played, 0) == 8
 		||arrCountX(played, WOLF) == 4
@@ -1182,7 +1173,7 @@ int play(players *players, array *played, deck *deck, array *winners, array *run
 		printBet(&players->player[turn].bet_cards);
 		printHand(&players->player[turn].run_cards);
 
-	} // fine partita
+	} /// fine partita
 
 	system("cls");
 	scores(players, winners);
@@ -1201,10 +1192,13 @@ void scores(players *players, array *winners)
 		j = 0;
 		while( j < 2 ){
 			if ( winners->d[ ( players->player[i].bet_cards.d[j] ) - 1 ] == 1){
+				///se arrivato in prima posizione
 				players->player[i].score = players->player[i].score + 5;
 			} else if ( winners->d[ ( players->player[i].bet_cards.d[j] ) - 1 ] == 2){
+				///se arrivato in seconda posizone
 				players->player[i].score = players->player[i].score + 3;
 			}else if ( winners->d[ ( players->player[i].bet_cards.d[j] ) - 1 ] == 3){
+				///se arrivato in terza posizione
 				players->player[i].score = players->player[i].score + 2;
 			}
 			j++;
@@ -1220,7 +1214,7 @@ int getMaxScore(players *p)
 	max = p->player[0].score;
 
 	i = 0;
-	while ( i < p->n_players ){
+	while ( i < p->n_players ){///ricerca
 		if ( max < p->player[i].score){
 
 			max = p->player[i].score;
@@ -1273,16 +1267,16 @@ int playerTurn(players *players, array *played,deck *deck, array * pos, int turn
 		converted = input -'0';
 
 		if ( input == 's' || input == 'S' ){
-			//salva
+			///salva
 			return SAVE_GAME;
 		}
 		if ( input == 27 ){
-			//Torna al menu
+			///Torna al menu
 			return BACK_TO_MENU;
 		}
-		// fine turno
+		/// fine turno
 		if ( input == ' ' && arrCountNotX(pos, -1) > 0){
-			// gioca le carte selezionate
+			/// gioca le carte selezionate
 			i = 0;
 			while ( i < MAX_TURN){
 				if ( pos->d[i] != -1){
@@ -1291,7 +1285,7 @@ int playerTurn(players *players, array *played,deck *deck, array * pos, int turn
 				}
 				i++;
 			}
-			// Prende le carte mancanti dal mazzo
+			/// Prende le carte mancanti dal mazzo
 			i = 0;
 			while( i < MAX_CARDS ){
 				if( players->player[turn].run_cards.d[i] == 0){
@@ -1299,10 +1293,10 @@ int playerTurn(players *players, array *played,deck *deck, array * pos, int turn
 				}
 				i++;
 			}
-			// resetta le posizioni
+			/// resetta le posizioni
 			arrLoad(pos, -1);
 
-			// rimuove gli indicatori
+			/// rimuove gli indicatori
 			GotoXY(0,22);
 			printf("                                                                             ");
 			return 0;
@@ -1323,7 +1317,7 @@ bool runPhase(players *players, array *played, array *run, array *winners)
 	move = 0;
 	flag = 0;
 
-	//spostamento lepre
+	///spostamento lepre in base alle regole
 	if ( (arrCountX(played, HARE) > 0  && arrCountX(played, HARE) <= 4)
 			&& ( run->d[HARE] <= run->d[WOLF] || run->d[HARE] <= run->d[FOX] || run->d[HARE] <= run->d[TORTOISE] || run->d[HARE] <= run->d[LAMB] )
 			&& run->d[HARE] != 11){
@@ -1336,7 +1330,7 @@ bool runPhase(players *players, array *played, array *run, array *winners)
 			printAnimal(HARE, run->d[HARE]);
 		}
 	}
-	//spostamento lupo
+	//spostamento lupo in base alle regole
 	if ( ( arrCountX( played, WOLF) == 1 || arrCountX(played, WOLF) == 2 )  && run->d[WOLF] != 11){
 		move = 1;
 		arrive = move + run->d[WOLF];
@@ -1359,7 +1353,7 @@ bool runPhase(players *players, array *played, array *run, array *winners)
 		}
 	}
 
-	//spostamento tartaruga
+	//spostamento tartaruga in base alle regole
 	if ( ( arrCountX(played, TORTOISE) >= 0  &&  arrCountX(played, TORTOISE) <= 3 ) && run->d[TORTOISE] != 11 ) {
 		move = 1;
 		arrive = move + run->d[TORTOISE];
@@ -1378,7 +1372,7 @@ bool runPhase(players *players, array *played, array *run, array *winners)
 		}
 	}
 
-	//spostamento agnello
+	//spostamento agnello in base alle regole
 	if ( arrCountX(played, LAMB) > 0 && run->d[LAMB] != 11 ) {
 		move = arrCountX(played, LAMB) + 1;
 		arrive = move + run->d[LAMB];
@@ -1394,7 +1388,7 @@ bool runPhase(players *players, array *played, array *run, array *winners)
 		}
 	}
 
-	//spostamento volpe
+	//spostamento volpe in base alle regole
 	if ( arrCountX(played, FOX) > 0 && run->d[FOX] != 11 ) {
 		move = arrCountX(played, FOX);
 		arrive = move + run->d[FOX];
@@ -1439,7 +1433,7 @@ void StandPositions(array *run, array * winners)
 }
 
 void errorHandle(int error)
-{
+{/// in base all'errore verificatori stampa un messaggio diverso
 	if ( error == LOAD_UNABLE){
 
 		printErrorLoadUnable();

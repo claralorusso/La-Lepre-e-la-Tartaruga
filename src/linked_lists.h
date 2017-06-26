@@ -28,30 +28,82 @@ typedef struct node{
 typedef node *list;
 
 
+/** \fn list listInit(void)
+
+ * funzione che inizializza una lista
+ */
 list listInit(void);
 
+
+/** \fn bool listEmpty(list )
+
+ * funzione che controlla se la lista è vuota
+ */
 bool listEmpty(list );
 
+
+/** \fn list listPush(list , int )
+
+ * funzione che aggiunge elemento alla lista dalla testa
+ */
 list listPush(list , int );
 
+
+/** \fn list listAdd(list , int )
+
+ * funzione che aggiunge elemento alla lista
+
+ */
 list listAdd(list , int );
 
+
+
+/** \fn list listAdd(list , int )
+ * funzione che cancella elemento dalla lista
+ */
 list listDel(list , int );
 
+/** \fn int listPrint(list )
+ * funzione che stampa lista
+ */
 int listPrint(list );
 
+
+/** \fn int listLenght(list )
+ * funzione che restituisce lunghezza lista
+ */
 int listLenght(list );
 
+
+/** \fn int listGetLast(list )
+ * funzione che prende ultimo elemento della lista
+ */
 int listGetLast(list );
 
+
+/** \fn list listDLast(list )
+ * funzione che cancella ultimo elemento della lista
+ */
 list listDLast(list );
 
-int listGetRand(list );
 
+
+
+/** \fn void listErase(list )
+ * funzione che rimuove la lista dalla memoria
+ */
 void listErase(list );
 
+
+/** \fn array listIntoArray(list l)
+ * funzione che aggiunge lista in un array
+ */
 array listIntoArray(list l);
 
+
+/** \fn list arrIntoList(array *arr
+ * funzione aggiunge array nella lista
+ */
 list arrIntoList(array *arr);
 
 #endif /* LINKED_LISTS_H_ */

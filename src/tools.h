@@ -3,20 +3,32 @@
 #ifndef TOOLS_H_
 #define TOOLS_H_
 
+/** \typedef
+ * coordinate per spostamento
+ */
 typedef struct coord{
 	int x;
 	int y;
 }coord;
 
+/** \typedef
+ * coordinate degli elementi sul campo
+ */
 typedef struct positions{
 	coord *xy;
 	int npos;
 }positions;
 
+/** \typedef
+ * array di stringhe
+ */
 typedef struct string{
 	char string[100];
 }string;
 
+/** \typedef
+ * array di stringhe
+ */
 typedef struct string_arr{
 	string *s;
 	int n_string;

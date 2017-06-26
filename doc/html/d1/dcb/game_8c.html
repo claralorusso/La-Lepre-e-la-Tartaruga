@@ -1,0 +1,974 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>La lepre e la Tartaruga: Riferimenti per il file C:/Users/Rita/git/La-Lepre-e-la-Tartaruga/src/game.c</title>
+<link href="../../tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../jquery.js"></script>
+<script type="text/javascript" src="../../dynsections.js"></script>
+<link href="../../doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">La lepre e la Tartaruga
+   </div>
+   <div id="projectbrief">La lepre e la tartaruga</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generato da Doxygen 1.8.13 -->
+<script type="text/javascript" src="../../menudata.js"></script>
+<script type="text/javascript" src="../../menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('../../',false,false,'search.php','Cerca');
+});
+</script>
+<div id="main-nav"></div>
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="../../dir_d522931ffa1371640980b621734a4381.html">Users</a></li><li class="navelem"><a class="el" href="../../dir_429a9766417fb974fb9f8c42322c51db.html">Rita</a></li><li class="navelem"><a class="el" href="../../dir_482ee0592607fb623eaabe7b14af288a.html">git</a></li><li class="navelem"><a class="el" href="../../dir_682cab13051a32fa7208f7cd1b74297b.html">La-Lepre-e-la-Tartaruga</a></li><li class="navelem"><a class="el" href="../../dir_f6e820dd6e9f8f10079ffae12241f01d.html">src</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Funzioni</a>  </div>
+  <div class="headertitle">
+<div class="title">Riferimenti per il file game.c</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><code>#include &lt;stdio.h&gt;</code><br />
+<code>#include &lt;conio.h&gt;</code><br />
+<code>#include &lt;stdlib.h&gt;</code><br />
+<code>#include &lt;time.h&gt;</code><br />
+<code>#include &lt;string.h&gt;</code><br />
+<code>#include &lt;windows.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="../../d2/dd5/game_8h_source.html">game.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="../../d3/deb/linked__lists_8h_source.html">linked_lists.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="../../d4/dfc/arrays_8h_source.html">arrays.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="../../db/db6/gui_8h_source.html">gui.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="../../d9/d86/error__msg_8h_source.html">error_msg.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="../../d2/db1/ia_8h_source.html">ia.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="../../d5/da5/tools_8h_source.html">tools.h</a>&quot;</code><br />
+</div>
+<p><a href="../../d1/dcb/game_8c_source.html">Vai al codice sorgente di questo file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Funzioni</h2></td></tr>
+<tr class="memitem:a03b424bba9025377ac92ed4eb34cf882"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dcb/game_8c.html#a03b424bba9025377ac92ed4eb34cf882">newGame</a> (<a class="el" href="../../da/d9b/structplayers.html">players</a> *<a class="el" href="../../da/d9b/structplayers.html">players</a>, <a class="el" href="../../dc/daf/structarray.html">array</a> *played, <a class="el" href="../../dd/d6e/structdeck.html">deck</a> *<a class="el" href="../../dd/d6e/structdeck.html">deck</a>, <a class="el" href="../../dc/daf/structarray.html">array</a> *run)</td></tr>
+<tr class="memdesc:a03b424bba9025377ac92ed4eb34cf882"><td class="mdescLeft">&#160;</td><td class="mdescRight">Funzioni principali del menù  <a href="#a03b424bba9025377ac92ed4eb34cf882">Continua...</a><br /></td></tr>
+<tr class="separator:a03b424bba9025377ac92ed4eb34cf882"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47d115e33d4129ba6831f39c37c6ebb8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dcb/game_8c.html#a47d115e33d4129ba6831f39c37c6ebb8">saveGame</a> (<a class="el" href="../../dc/daf/structarray.html">array</a> *winners, <a class="el" href="../../dc/daf/structarray.html">array</a> *played, <a class="el" href="../../da/d9b/structplayers.html">players</a> *p, <a class="el" href="../../dd/d6e/structdeck.html">deck</a> *<a class="el" href="../../dd/d6e/structdeck.html">deck</a>, <a class="el" href="../../dc/daf/structarray.html">array</a> *run, int *saved_turn)</td></tr>
+<tr class="separator:a47d115e33d4129ba6831f39c37c6ebb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66b5faee8334aa0a140a9a4d49fc99b8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dcb/game_8c.html#a66b5faee8334aa0a140a9a4d49fc99b8">loadGame</a> (<a class="el" href="../../dc/daf/structarray.html">array</a> *winners, <a class="el" href="../../dc/daf/structarray.html">array</a> *played, <a class="el" href="../../da/d9b/structplayers.html">players</a> *p, <a class="el" href="../../dd/d6e/structdeck.html">deck</a> *<a class="el" href="../../dd/d6e/structdeck.html">deck</a>, <a class="el" href="../../dc/daf/structarray.html">array</a> *run, int *saved_turn)</td></tr>
+<tr class="memdesc:a66b5faee8334aa0a140a9a4d49fc99b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Funzione di carica partita.  <a href="#a66b5faee8334aa0a140a9a4d49fc99b8">Continua...</a><br /></td></tr>
+<tr class="separator:a66b5faee8334aa0a140a9a4d49fc99b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a81466ee524bc78d994595e39b50e0c20"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dcb/game_8c.html#a81466ee524bc78d994595e39b50e0c20">settings</a> (<a class="el" href="../../da/d9b/structplayers.html">players</a> *p)</td></tr>
+<tr class="memdesc:a81466ee524bc78d994595e39b50e0c20"><td class="mdescLeft">&#160;</td><td class="mdescRight">Funzione delle impostazioni.  <a href="#a81466ee524bc78d994595e39b50e0c20">Continua...</a><br /></td></tr>
+<tr class="separator:a81466ee524bc78d994595e39b50e0c20"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a670f8de97458bade81d5e5bf53c8ae02"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dcb/game_8c.html#a670f8de97458bade81d5e5bf53c8ae02">rules</a> (void)</td></tr>
+<tr class="memdesc:a670f8de97458bade81d5e5bf53c8ae02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Funzione delle regole.  <a href="#a670f8de97458bade81d5e5bf53c8ae02">Continua...</a><br /></td></tr>
+<tr class="separator:a670f8de97458bade81d5e5bf53c8ae02"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a321165b516c885ec10f97f985e60cfb9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../dd/d6e/structdeck.html">deck</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dcb/game_8c.html#a321165b516c885ec10f97f985e60cfb9">shuffleDeck</a> (<a class="el" href="../../dd/d6e/structdeck.html">deck</a> *<a class="el" href="../../dd/d6e/structdeck.html">deck</a>)</td></tr>
+<tr class="memdesc:a321165b516c885ec10f97f985e60cfb9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Funzioni essenziali del gioco.  <a href="#a321165b516c885ec10f97f985e60cfb9">Continua...</a><br /></td></tr>
+<tr class="separator:a321165b516c885ec10f97f985e60cfb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab01264003abc0609f605295a6cd1184e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../da/d9b/structplayers.html">players</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dcb/game_8c.html#ab01264003abc0609f605295a6cd1184e">createPlayers</a> (<a class="el" href="../../da/d9b/structplayers.html">players</a> *p)</td></tr>
+<tr class="separator:ab01264003abc0609f605295a6cd1184e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ac71decf469e8231c2f719d4c4fde8a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../da/d9b/structplayers.html">players</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dcb/game_8c.html#a8ac71decf469e8231c2f719d4c4fde8a">namePlayers</a> (<a class="el" href="../../da/d9b/structplayers.html">players</a> *p)</td></tr>
+<tr class="memdesc:a8ac71decf469e8231c2f719d4c4fde8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Funzione che genera nomi di defult.  <a href="#a8ac71decf469e8231c2f719d4c4fde8a">Continua...</a><br /></td></tr>
+<tr class="separator:a8ac71decf469e8231c2f719d4c4fde8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a244237744da71a47aba826ec17e1cb3b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dcb/game_8c.html#a244237744da71a47aba826ec17e1cb3b">GetCard</a> (<a class="el" href="../../dd/d6e/structdeck.html">deck</a> *<a class="el" href="../../dd/d6e/structdeck.html">deck</a>)</td></tr>
+<tr class="memdesc:a244237744da71a47aba826ec17e1cb3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Funzione che prende una carta dal mazzo o chiama la funzione per mescolare.  <a href="#a244237744da71a47aba826ec17e1cb3b">Continua...</a><br /></td></tr>
+<tr class="separator:a244237744da71a47aba826ec17e1cb3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b808bd07e5e8b34acd5257caab2902b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../da/d9b/structplayers.html">players</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dcb/game_8c.html#a2b808bd07e5e8b34acd5257caab2902b">firstBetCard</a> (<a class="el" href="../../da/d9b/structplayers.html">players</a> *players_d)</td></tr>
+<tr class="memdesc:a2b808bd07e5e8b34acd5257caab2902b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Funzione di scelta della prima carta scommessa.  <a href="#a2b808bd07e5e8b34acd5257caab2902b">Continua...</a><br /></td></tr>
+<tr class="separator:a2b808bd07e5e8b34acd5257caab2902b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad588ea6e0593fb5e09da74909e193bdc"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dcb/game_8c.html#ad588ea6e0593fb5e09da74909e193bdc">secondBetCard</a> (<a class="el" href="../../d6/d2a/structplayer.html">player</a> <a class="el" href="../../d6/d2a/structplayer.html">player</a>, <a class="el" href="../../dd/d6e/structdeck.html">deck</a> *<a class="el" href="../../dd/d6e/structdeck.html">deck</a>, <a class="el" href="../../dc/daf/structarray.html">array</a> *played)</td></tr>
+<tr class="memdesc:ad588ea6e0593fb5e09da74909e193bdc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Funzione di scelta della seconda carta scommessa.  <a href="#ad588ea6e0593fb5e09da74909e193bdc">Continua...</a><br /></td></tr>
+<tr class="separator:ad588ea6e0593fb5e09da74909e193bdc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a384f06a62e026751d754017c413aac12"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../dc/daf/structarray.html">array</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dcb/game_8c.html#a384f06a62e026751d754017c413aac12">playerGetCard</a> (<a class="el" href="../../d6/d2a/structplayer.html">player</a> *<a class="el" href="../../d6/d2a/structplayer.html">player</a>, <a class="el" href="../../dc/daf/structarray.html">array</a> *played, int input, <a class="el" href="../../dc/daf/structarray.html">array</a> *pos)</td></tr>
+<tr class="memdesc:a384f06a62e026751d754017c413aac12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Funzione che non fa giocare carte diverse al giocatore.  <a href="#a384f06a62e026751d754017c413aac12">Continua...</a><br /></td></tr>
+<tr class="separator:a384f06a62e026751d754017c413aac12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca94de45c3b4e1674305702c4cd0f31a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dcb/game_8c.html#aca94de45c3b4e1674305702c4cd0f31a">checkPlayedCards</a> (<a class="el" href="../../dc/daf/structarray.html">array</a> *arr)</td></tr>
+<tr class="memdesc:aca94de45c3b4e1674305702c4cd0f31a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Carta selezionata, su cui si deve basare la selezione delle successive carte.  <a href="#aca94de45c3b4e1674305702c4cd0f31a">Continua...</a><br /></td></tr>
+<tr class="separator:aca94de45c3b4e1674305702c4cd0f31a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a348ebe50511772988337128b3ea375b0"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dcb/game_8c.html#a348ebe50511772988337128b3ea375b0">play</a> (<a class="el" href="../../da/d9b/structplayers.html">players</a> *<a class="el" href="../../da/d9b/structplayers.html">players</a>, <a class="el" href="../../dc/daf/structarray.html">array</a> *played, <a class="el" href="../../dd/d6e/structdeck.html">deck</a> *<a class="el" href="../../dd/d6e/structdeck.html">deck</a>, <a class="el" href="../../dc/daf/structarray.html">array</a> *winners, <a class="el" href="../../dc/daf/structarray.html">array</a> *run, <a class="el" href="../../d5/da5/tools_8h.html#af6a258d8f3ee5206d682d799316314b1">bool</a> loaded, int *saved_turn)</td></tr>
+<tr class="memdesc:a348ebe50511772988337128b3ea375b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Funzione del gioco.  <a href="#a348ebe50511772988337128b3ea375b0">Continua...</a><br /></td></tr>
+<tr class="separator:a348ebe50511772988337128b3ea375b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37e81dcff684dd67646b70006d480cdc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dcb/game_8c.html#a37e81dcff684dd67646b70006d480cdc">scores</a> (<a class="el" href="../../da/d9b/structplayers.html">players</a> *<a class="el" href="../../da/d9b/structplayers.html">players</a>, <a class="el" href="../../dc/daf/structarray.html">array</a> *winners)</td></tr>
+<tr class="memdesc:a37e81dcff684dd67646b70006d480cdc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Funzione che assegna punteggi ai giocatori.  <a href="#a37e81dcff684dd67646b70006d480cdc">Continua...</a><br /></td></tr>
+<tr class="separator:a37e81dcff684dd67646b70006d480cdc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aead5ec8e3c37c5ef7de5940a0462eb1c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dcb/game_8c.html#aead5ec8e3c37c5ef7de5940a0462eb1c">getMaxScore</a> (<a class="el" href="../../da/d9b/structplayers.html">players</a> *p)</td></tr>
+<tr class="memdesc:aead5ec8e3c37c5ef7de5940a0462eb1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Funzione restituisce il punteggio massimo.  <a href="#aead5ec8e3c37c5ef7de5940a0462eb1c">Continua...</a><br /></td></tr>
+<tr class="separator:aead5ec8e3c37c5ef7de5940a0462eb1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ca7e73f894be645c4ea7f4a8bd5bc8a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dcb/game_8c.html#a6ca7e73f894be645c4ea7f4a8bd5bc8a">sortScore</a> (<a class="el" href="../../da/d9b/structplayers.html">players</a> *p)</td></tr>
+<tr class="memdesc:a6ca7e73f894be645c4ea7f4a8bd5bc8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Funzione che ordina i punteggi in ordine decrescente.  <a href="#a6ca7e73f894be645c4ea7f4a8bd5bc8a">Continua...</a><br /></td></tr>
+<tr class="separator:a6ca7e73f894be645c4ea7f4a8bd5bc8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae684a0299bc25a086db805b259bc8e56"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dcb/game_8c.html#ae684a0299bc25a086db805b259bc8e56">playerTurn</a> (<a class="el" href="../../da/d9b/structplayers.html">players</a> *<a class="el" href="../../da/d9b/structplayers.html">players</a>, <a class="el" href="../../dc/daf/structarray.html">array</a> *played, <a class="el" href="../../dd/d6e/structdeck.html">deck</a> *<a class="el" href="../../dd/d6e/structdeck.html">deck</a>, <a class="el" href="../../dc/daf/structarray.html">array</a> *pos, int turn)</td></tr>
+<tr class="memdesc:ae684a0299bc25a086db805b259bc8e56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Funzione gestione del turno.  <a href="#ae684a0299bc25a086db805b259bc8e56">Continua...</a><br /></td></tr>
+<tr class="separator:ae684a0299bc25a086db805b259bc8e56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad36f3b0fe76bdca01883e214af437133"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d5/da5/tools_8h.html#af6a258d8f3ee5206d682d799316314b1">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dcb/game_8c.html#ad36f3b0fe76bdca01883e214af437133">runPhase</a> (<a class="el" href="../../da/d9b/structplayers.html">players</a> *<a class="el" href="../../da/d9b/structplayers.html">players</a>, <a class="el" href="../../dc/daf/structarray.html">array</a> *played, <a class="el" href="../../dc/daf/structarray.html">array</a> *run, <a class="el" href="../../dc/daf/structarray.html">array</a> *winners)</td></tr>
+<tr class="memdesc:ad36f3b0fe76bdca01883e214af437133"><td class="mdescLeft">&#160;</td><td class="mdescRight">Funzione che verifica l'attivazione della fase di corsa.  <a href="#ad36f3b0fe76bdca01883e214af437133">Continua...</a><br /></td></tr>
+<tr class="separator:ad36f3b0fe76bdca01883e214af437133"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab840874f22ef92b7f3b252ba42a91611"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dcb/game_8c.html#ab840874f22ef92b7f3b252ba42a91611">StandPositions</a> (<a class="el" href="../../dc/daf/structarray.html">array</a> *run, <a class="el" href="../../dc/daf/structarray.html">array</a> *winners)</td></tr>
+<tr class="memdesc:ab840874f22ef92b7f3b252ba42a91611"><td class="mdescLeft">&#160;</td><td class="mdescRight">Funzione che verifica se sono arrivati alla fine del percorso gli animali.  <a href="#ab840874f22ef92b7f3b252ba42a91611">Continua...</a><br /></td></tr>
+<tr class="separator:ab840874f22ef92b7f3b252ba42a91611"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f8ec4f0d4adbf9a68e82e059cd38f8c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dcb/game_8c.html#a5f8ec4f0d4adbf9a68e82e059cd38f8c">errorHandle</a> (int error)</td></tr>
+<tr class="memdesc:a5f8ec4f0d4adbf9a68e82e059cd38f8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Funzioni di gestione.  <a href="#a5f8ec4f0d4adbf9a68e82e059cd38f8c">Continua...</a><br /></td></tr>
+<tr class="separator:a5f8ec4f0d4adbf9a68e82e059cd38f8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaee2282f78ef59dcb2f61e631bba9c82"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dcb/game_8c.html#aaee2282f78ef59dcb2f61e631bba9c82">initConsole</a> (void)</td></tr>
+<tr class="memdesc:aaee2282f78ef59dcb2f61e631bba9c82"><td class="mdescLeft">&#160;</td><td class="mdescRight">Funzione inizializza la console per il gioco.  <a href="#aaee2282f78ef59dcb2f61e631bba9c82">Continua...</a><br /></td></tr>
+<tr class="separator:aaee2282f78ef59dcb2f61e631bba9c82"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Documentazione delle funzioni</h2>
+<a id="aca94de45c3b4e1674305702c4cd0f31a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aca94de45c3b4e1674305702c4cd0f31a">&#9670;&nbsp;</a></span>checkPlayedCards()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int checkPlayedCards </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../dc/daf/structarray.html">array</a> *&#160;</td>
+          <td class="paramname"><em>arr</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Carta selezionata, su cui si deve basare la selezione delle successive carte. </p>
+<p>Funzione che basa la scelta delle altre carte in relazione alla prima scelta. </p>
+
+<p class="definition">Definizione alla linea <a class="el" href="../../d1/dcb/game_8c_source.html#l00978">978</a> del file <a class="el" href="../../d1/dcb/game_8c_source.html">game.c</a>.</p>
+
+</div>
+</div>
+<a id="ab01264003abc0609f605295a6cd1184e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab01264003abc0609f605295a6cd1184e">&#9670;&nbsp;</a></span>createPlayers()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../da/d9b/structplayers.html">players</a> createPlayers </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../da/d9b/structplayers.html">players</a> *&#160;</td>
+          <td class="paramname"><em>p</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>crea giocatori di default </p>
+
+<p class="definition">Definizione alla linea <a class="el" href="../../d1/dcb/game_8c_source.html#l00735">735</a> del file <a class="el" href="../../d1/dcb/game_8c_source.html">game.c</a>.</p>
+
+</div>
+</div>
+<a id="a5f8ec4f0d4adbf9a68e82e059cd38f8c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5f8ec4f0d4adbf9a68e82e059cd38f8c">&#9670;&nbsp;</a></span>errorHandle()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void errorHandle </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>error</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Funzioni di gestione. </p>
+<p>Funzione di errore </p>
+<p>in base all'errore verificatori stampa un messaggio diverso </p>
+
+<p class="definition">Definizione alla linea <a class="el" href="../../d1/dcb/game_8c_source.html#l01435">1435</a> del file <a class="el" href="../../d1/dcb/game_8c_source.html">game.c</a>.</p>
+
+</div>
+</div>
+<a id="a2b808bd07e5e8b34acd5257caab2902b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2b808bd07e5e8b34acd5257caab2902b">&#9670;&nbsp;</a></span>firstBetCard()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../da/d9b/structplayers.html">players</a> firstBetCard </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../da/d9b/structplayers.html">players</a> *&#160;</td>
+          <td class="paramname"><em>players_d</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Funzione di scelta della prima carta scommessa. </p>
+
+<p class="definition">Definizione alla linea <a class="el" href="../../d1/dcb/game_8c_source.html#l00799">799</a> del file <a class="el" href="../../d1/dcb/game_8c_source.html">game.c</a>.</p>
+
+</div>
+</div>
+<a id="a244237744da71a47aba826ec17e1cb3b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a244237744da71a47aba826ec17e1cb3b">&#9670;&nbsp;</a></span>GetCard()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int GetCard </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../dd/d6e/structdeck.html">deck</a> *&#160;</td>
+          <td class="paramname"><em>deck</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Funzione che prende una carta dal mazzo o chiama la funzione per mescolare. </p>
+<p>se il mazzo è finito lo rimescola</p>
+<p>Prende l'ultima carta del mazzo e la elimina</p>
+<p>Riduce i totali delle carte </p>
+
+<p class="definition">Definizione alla linea <a class="el" href="../../d1/dcb/game_8c_source.html#l00777">777</a> del file <a class="el" href="../../d1/dcb/game_8c_source.html">game.c</a>.</p>
+
+</div>
+</div>
+<a id="aead5ec8e3c37c5ef7de5940a0462eb1c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aead5ec8e3c37c5ef7de5940a0462eb1c">&#9670;&nbsp;</a></span>getMaxScore()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int getMaxScore </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../da/d9b/structplayers.html">players</a> *&#160;</td>
+          <td class="paramname"><em>p</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Funzione restituisce il punteggio massimo. </p>
+<p>ricerca </p>
+
+<p class="definition">Definizione alla linea <a class="el" href="../../d1/dcb/game_8c_source.html#l01209">1209</a> del file <a class="el" href="../../d1/dcb/game_8c_source.html">game.c</a>.</p>
+
+</div>
+</div>
+<a id="aaee2282f78ef59dcb2f61e631bba9c82"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaee2282f78ef59dcb2f61e631bba9c82">&#9670;&nbsp;</a></span>initConsole()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int initConsole </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Funzione inizializza la console per il gioco. </p>
+
+<p class="definition">Definizione alla linea <a class="el" href="../../d1/dcb/game_8c_source.html#l01457">1457</a> del file <a class="el" href="../../d1/dcb/game_8c_source.html">game.c</a>.</p>
+
+</div>
+</div>
+<a id="a66b5faee8334aa0a140a9a4d49fc99b8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a66b5faee8334aa0a140a9a4d49fc99b8">&#9670;&nbsp;</a></span>loadGame()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">loadGame </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../dc/daf/structarray.html">array</a> *&#160;</td>
+          <td class="paramname"><em>winners</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../dc/daf/structarray.html">array</a> *&#160;</td>
+          <td class="paramname"><em>played</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../da/d9b/structplayers.html">players</a> *&#160;</td>
+          <td class="paramname"><em>p</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../dd/d6e/structdeck.html">deck</a> *&#160;</td>
+          <td class="paramname"><em>deck</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../dc/daf/structarray.html">array</a> *&#160;</td>
+          <td class="paramname"><em>run</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int *&#160;</td>
+          <td class="paramname"><em>saved_turn</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Funzione di carica partita. </p>
+<dl class="params"><dt>Parametri</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">winners</td><td>posizione vincitori </td></tr>
+    <tr><td class="paramname">played</td><td>posizione giocatori </td></tr>
+    <tr><td class="paramname">deck</td><td>stato del mazzo </td></tr>
+    <tr><td class="paramname">run</td><td>posizioni nel percorso </td></tr>
+    <tr><td class="paramname">saved_turn</td><td>turno salvato </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definizione alla linea <a class="el" href="../../d1/dcb/game_8c_source.html#l00262">262</a> del file <a class="el" href="../../d1/dcb/game_8c_source.html">game.c</a>.</p>
+
+</div>
+</div>
+<a id="a8ac71decf469e8231c2f719d4c4fde8a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8ac71decf469e8231c2f719d4c4fde8a">&#9670;&nbsp;</a></span>namePlayers()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../da/d9b/structplayers.html">players</a> namePlayers </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../da/d9b/structplayers.html">players</a> *&#160;</td>
+          <td class="paramname"><em>p</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Funzione che genera nomi di defult. </p>
+
+<p class="definition">Definizione alla linea <a class="el" href="../../d1/dcb/game_8c_source.html#l00760">760</a> del file <a class="el" href="../../d1/dcb/game_8c_source.html">game.c</a>.</p>
+
+</div>
+</div>
+<a id="a03b424bba9025377ac92ed4eb34cf882"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a03b424bba9025377ac92ed4eb34cf882">&#9670;&nbsp;</a></span>newGame()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int newGame </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../da/d9b/structplayers.html">players</a> *&#160;</td>
+          <td class="paramname"><em>players</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../dc/daf/structarray.html">array</a> *&#160;</td>
+          <td class="paramname"><em>played</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../dd/d6e/structdeck.html">deck</a> *&#160;</td>
+          <td class="paramname"><em>deck</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../dc/daf/structarray.html">array</a> *&#160;</td>
+          <td class="paramname"><em>run</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Funzioni principali del menù </p>
+<p>Funzione di nuova partita </p>
+<p>Azzera le posizioni dei giocatori</p>
+<p>Resetta le Carte Giocate</p>
+<p>Prepara il mazzo per essere utilizzato</p>
+<p>Resetta le Carte Scommessa</p>
+<p>Assegna ai giocatori la prima Carte Scommessa e le Carte Corsa</p>
+<p>Stampa l'intefaccia di base </p>
+
+<p class="definition">Definizione alla linea <a class="el" href="../../d1/dcb/game_8c_source.html#l00015">15</a> del file <a class="el" href="../../d1/dcb/game_8c_source.html">game.c</a>.</p>
+
+</div>
+</div>
+<a id="a348ebe50511772988337128b3ea375b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a348ebe50511772988337128b3ea375b0">&#9670;&nbsp;</a></span>play()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">play </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../da/d9b/structplayers.html">players</a> *&#160;</td>
+          <td class="paramname"><em>p</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../dc/daf/structarray.html">array</a> *&#160;</td>
+          <td class="paramname"><em>played</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../dd/d6e/structdeck.html">deck</a> *&#160;</td>
+          <td class="paramname"><em>deck</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../dc/daf/structarray.html">array</a> *&#160;</td>
+          <td class="paramname"><em>winners</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../dc/daf/structarray.html">array</a> *&#160;</td>
+          <td class="paramname"><em>run</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../d5/da5/tools_8h.html#af6a258d8f3ee5206d682d799316314b1">bool</a>&#160;</td>
+          <td class="paramname"><em>loaded</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int *&#160;</td>
+          <td class="paramname"><em>saved_turn</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Funzione del gioco. </p>
+<dl class="params"><dt>Parametri</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">loaded</td><td>booleano che verifica il caricamento </td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Indice</p>
+<p>Indica il turno del giocatore</p>
+<p>Input del giocatore</p>
+<p>Posizioni delle carte giocate dal giocatore</p>
+<p>Controlla che il gioco sia finito</p>
+<p>Alloca e carica pos</p>
+<p>Setta il flag di fine partita</p>
+<p>Scelta delle seconde carte scommessa</p>
+<p>controlla che il giocatore non abbia già una carta scommessa</p>
+<p>salva</p>
+<p>esci senza salvare</p>
+<p>Rimuove la settima carta dallo schermo</p>
+<p>resta nel ciclo finchè non finisce la partita</p>
+<p>fase di gioco</p>
+<p>stampa le carte</p>
+<p>caso in cui il giocatore sia umano</p>
+<p>salva</p>
+<p>esci</p>
+<p>caso in cui il giocatore sia ia</p>
+<p>turno dell'ia</p>
+<p>stampa le carte</p>
+<p>Da il numero di carte necessarie all'ia</p>
+<p>fase di gioco</p>
+<p>Condizioni di attivazione fase di corsa</p>
+<p>fine partita </p>
+
+<p class="definition">Definizione alla linea <a class="el" href="../../d1/dcb/game_8c_source.html#l00997">997</a> del file <a class="el" href="../../d1/dcb/game_8c_source.html">game.c</a>.</p>
+
+</div>
+</div>
+<a id="a384f06a62e026751d754017c413aac12"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a384f06a62e026751d754017c413aac12">&#9670;&nbsp;</a></span>playerGetCard()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../dc/daf/structarray.html">array</a> playerGetCard </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../d6/d2a/structplayer.html">player</a> *&#160;</td>
+          <td class="paramname"><em>player</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../dc/daf/structarray.html">array</a> *&#160;</td>
+          <td class="paramname"><em>played</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>input</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../dc/daf/structarray.html">array</a> *&#160;</td>
+          <td class="paramname"><em>pos</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Funzione che non fa giocare carte diverse al giocatore. </p>
+<p>Conta quante carte mancanti ha il giocatore</p>
+<p>Impedisce di giocare carte di animali diversi</p>
+<p>Mostra il messaggio di errore al giocatore </p>
+
+<p class="definition">Definizione alla linea <a class="el" href="../../d1/dcb/game_8c_source.html#l00918">918</a> del file <a class="el" href="../../d1/dcb/game_8c_source.html">game.c</a>.</p>
+
+</div>
+</div>
+<a id="ae684a0299bc25a086db805b259bc8e56"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae684a0299bc25a086db805b259bc8e56">&#9670;&nbsp;</a></span>playerTurn()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int playerTurn </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../da/d9b/structplayers.html">players</a> *&#160;</td>
+          <td class="paramname"><em>players</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../dc/daf/structarray.html">array</a> *&#160;</td>
+          <td class="paramname"><em>played</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../dd/d6e/structdeck.html">deck</a> *&#160;</td>
+          <td class="paramname"><em>deck</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../dc/daf/structarray.html">array</a> *&#160;</td>
+          <td class="paramname"><em>pos</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>turn</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Funzione gestione del turno. </p>
+<p>salva</p>
+<p>Torna al menu</p>
+<p>fine turno</p>
+<p>gioca le carte selezionate</p>
+<p>Prende le carte mancanti dal mazzo</p>
+<p>resetta le posizioni</p>
+<p>rimuove gli indicatori </p>
+
+<p class="definition">Definizione alla linea <a class="el" href="../../d1/dcb/game_8c_source.html#l01259">1259</a> del file <a class="el" href="../../d1/dcb/game_8c_source.html">game.c</a>.</p>
+
+</div>
+</div>
+<a id="a670f8de97458bade81d5e5bf53c8ae02"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a670f8de97458bade81d5e5bf53c8ae02">&#9670;&nbsp;</a></span>rules()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int rules </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Funzione delle regole. </p>
+<p>rimpie la prima pagina</p>
+<p>fine stringa</p>
+<p>rimpie la seconda pagina</p>
+<p>fine stringa</p>
+<p>rimpie la terza pagina</p>
+<p>fine stringa</p>
+<p>rimpie la quarta pagina</p>
+<p>fine stringa </p>
+
+<p class="definition">Definizione alla linea <a class="el" href="../../d1/dcb/game_8c_source.html#l00601">601</a> del file <a class="el" href="../../d1/dcb/game_8c_source.html">game.c</a>.</p>
+
+</div>
+</div>
+<a id="ad36f3b0fe76bdca01883e214af437133"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad36f3b0fe76bdca01883e214af437133">&#9670;&nbsp;</a></span>runPhase()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../d5/da5/tools_8h.html#af6a258d8f3ee5206d682d799316314b1">bool</a> runPhase </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../da/d9b/structplayers.html">players</a> *&#160;</td>
+          <td class="paramname"><em>players</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../dc/daf/structarray.html">array</a> *&#160;</td>
+          <td class="paramname"><em>played</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../dc/daf/structarray.html">array</a> *&#160;</td>
+          <td class="paramname"><em>run</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../dc/daf/structarray.html">array</a> *&#160;</td>
+          <td class="paramname"><em>winners</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Funzione che verifica l'attivazione della fase di corsa. </p>
+<p>spostamento lepre in base alle regole </p>
+
+<p class="definition">Definizione alla linea <a class="el" href="../../d1/dcb/game_8c_source.html#l01313">1313</a> del file <a class="el" href="../../d1/dcb/game_8c_source.html">game.c</a>.</p>
+
+</div>
+</div>
+<a id="a47d115e33d4129ba6831f39c37c6ebb8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a47d115e33d4129ba6831f39c37c6ebb8">&#9670;&nbsp;</a></span>saveGame()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int saveGame </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../dc/daf/structarray.html">array</a> *&#160;</td>
+          <td class="paramname"><em>winners</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../dc/daf/structarray.html">array</a> *&#160;</td>
+          <td class="paramname"><em>played</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../da/d9b/structplayers.html">players</a> *&#160;</td>
+          <td class="paramname"><em>p</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../dd/d6e/structdeck.html">deck</a> *&#160;</td>
+          <td class="paramname"><em>deck</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../dc/daf/structarray.html">array</a> *&#160;</td>
+          <td class="paramname"><em>run</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int *&#160;</td>
+          <td class="paramname"><em>saved_turn</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>verifica se possibile salvare</p>
+<p>stampa i nome dei salvataggi, escludendo l'estensione</p>
+<p>cancella "Nome Salvataggio:" e &gt;nome giocatore&lt;</p>
+<p>caencella "Nome non valido." </p>
+
+<p class="definition">Definizione alla linea <a class="el" href="../../d1/dcb/game_8c_source.html#l00057">57</a> del file <a class="el" href="../../d1/dcb/game_8c_source.html">game.c</a>.</p>
+
+</div>
+</div>
+<a id="a37e81dcff684dd67646b70006d480cdc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a37e81dcff684dd67646b70006d480cdc">&#9670;&nbsp;</a></span>scores()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void scores </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../da/d9b/structplayers.html">players</a> *&#160;</td>
+          <td class="paramname"><em>players</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../dc/daf/structarray.html">array</a> *&#160;</td>
+          <td class="paramname"><em>winners</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Funzione che assegna punteggi ai giocatori. </p>
+<p>se arrivato in prima posizione</p>
+<p>se arrivato in seconda posizone</p>
+<p>se arrivato in terza posizione </p>
+
+<p class="definition">Definizione alla linea <a class="el" href="../../d1/dcb/game_8c_source.html#l01185">1185</a> del file <a class="el" href="../../d1/dcb/game_8c_source.html">game.c</a>.</p>
+
+</div>
+</div>
+<a id="ad588ea6e0593fb5e09da74909e193bdc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad588ea6e0593fb5e09da74909e193bdc">&#9670;&nbsp;</a></span>secondBetCard()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int secondBetCard </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../d6/d2a/structplayer.html">player</a>&#160;</td>
+          <td class="paramname"><em>player</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../dd/d6e/structdeck.html">deck</a> *&#160;</td>
+          <td class="paramname"><em>deck</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../dc/daf/structarray.html">array</a> *&#160;</td>
+          <td class="paramname"><em>played</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Funzione di scelta della seconda carta scommessa. </p>
+<p>carica il vettore temporaneo per la settima carta scommessa</p>
+<p>nel caso venga premuto il tasto per salvare</p>
+<p>salva</p>
+<p>nel caso venga premuto il tasto esci</p>
+<p>Torna al menu</p>
+<p>Seleziona la carta</p>
+<p>Rimuove il puntatore e la carta</p>
+<p>Sposta l'indicatore</p>
+<p>Riporta i valori nel vettore del giocatore </p>
+
+<p class="definition">Definizione alla linea <a class="el" href="../../d1/dcb/game_8c_source.html#l00825">825</a> del file <a class="el" href="../../d1/dcb/game_8c_source.html">game.c</a>.</p>
+
+</div>
+</div>
+<a id="a81466ee524bc78d994595e39b50e0c20"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a81466ee524bc78d994595e39b50e0c20">&#9670;&nbsp;</a></span>settings()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int settings </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../da/d9b/structplayers.html">players</a> *&#160;</td>
+          <td class="paramname"><em>p</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Funzione delle impostazioni. </p>
+<p>Stampa elementi statici</p>
+<p>Alloca lo spazio per il vettore temporaneo</p>
+<p>Copia le variabile necessarie per le successive modifiche</p>
+<p>Ciclo principale dell'input</p>
+<p>Controlla il tipo di giocatore</p>
+<p>umano</p>
+<p>i.a.</p>
+<p>Stampa i giocatori</p>
+<p>cancella da schermo giocatori non esistenti</p>
+<p>richiede nuovo nome</p>
+<p>utilizza una variabile di appoggio per ottenere il nome</p>
+<p>controlla che il nuovo nome sia valido</p>
+<p>se il nuovo nome è valido lo inserisce nella varibile del giocatore</p>
+<p>Cancella vecchio nome giocatore</p>
+<p>Cancella frase </p>
+
+<p class="definition">Definizione alla linea <a class="el" href="../../d1/dcb/game_8c_source.html#l00451">451</a> del file <a class="el" href="../../d1/dcb/game_8c_source.html">game.c</a>.</p>
+
+</div>
+</div>
+<a id="a321165b516c885ec10f97f985e60cfb9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a321165b516c885ec10f97f985e60cfb9">&#9670;&nbsp;</a></span>shuffleDeck()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">shuffleDeck </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../dd/d6e/structdeck.html">deck</a> *&#160;</td>
+          <td class="paramname"><em>deck</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Funzioni essenziali del gioco. </p>
+<p>Funzione che crea il giocatore.</p>
+<p>Funzione che mischia il mazzo in maniera casuale </p>
+<p>numero carte lupo</p>
+<p>numero carte lepre</p>
+<p>numero carte tartaruga</p>
+<p>numero carte agnello</p>
+<p>numero carte volpe </p>
+
+<p class="definition">Definizione alla linea <a class="el" href="../../d1/dcb/game_8c_source.html#l00695">695</a> del file <a class="el" href="../../d1/dcb/game_8c_source.html">game.c</a>.</p>
+
+</div>
+</div>
+<a id="a6ca7e73f894be645c4ea7f4a8bd5bc8a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ca7e73f894be645c4ea7f4a8bd5bc8a">&#9670;&nbsp;</a></span>sortScore()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void sortScore </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../da/d9b/structplayers.html">players</a> *&#160;</td>
+          <td class="paramname"><em>p</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Funzione che ordina i punteggi in ordine decrescente. </p>
+
+<p class="definition">Definizione alla linea <a class="el" href="../../d1/dcb/game_8c_source.html#l01228">1228</a> del file <a class="el" href="../../d1/dcb/game_8c_source.html">game.c</a>.</p>
+
+</div>
+</div>
+<a id="ab840874f22ef92b7f3b252ba42a91611"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab840874f22ef92b7f3b252ba42a91611">&#9670;&nbsp;</a></span>StandPositions()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void StandPositions </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../dc/daf/structarray.html">array</a> *&#160;</td>
+          <td class="paramname"><em>run</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../dc/daf/structarray.html">array</a> *&#160;</td>
+          <td class="paramname"><em>winners</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Funzione che verifica se sono arrivati alla fine del percorso gli animali. </p>
+
+<p class="definition">Definizione alla linea <a class="el" href="../../d1/dcb/game_8c_source.html#l01411">1411</a> del file <a class="el" href="../../d1/dcb/game_8c_source.html">game.c</a>.</p>
+
+</div>
+</div>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Generato da &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="../../doxygen.png" alt="doxygen"/>
+</a> 1.8.13
+</small></address>
+</body>
+</html>

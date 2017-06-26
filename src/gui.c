@@ -416,49 +416,38 @@ void printPointer(int pos, bool flag)
 }
 int printAnimal(int animal, int pos)
 {
-	//if (pos == 0){
-		//GotoXY(animals_position.animals[0].xy[pos].x, animals_position.animals[0].xy[pos].y);
-		//putch('W');
-		//GotoXY(animals_position.animals[1].xy[pos].x, animals_position.animals[1].xy[pos].y);
-		//putch('H');
-		//GotoXY(animals_position.animals[2].xy[pos].x, animals_position.animals[2].xy[pos].y);
-		//putch('T');
-		//GotoXY(animals_position.animals[3].xy[pos].x, animals_position.animals[3].xy[pos].y);
-		//putch('L');
-		//GotoXY(animals_position.animals[4].xy[pos].x, animals_position.animals[4].xy[pos].y);
-		//putch('F');
-	//} else {
-		if (animal == WOLF){
-			GotoXY(animals_position.animals[0].xy[pos].x, animals_position.animals[0].xy[pos].y);
-			putch('W');
-			GotoXY(animals_position.animals[0].xy[pos - 1].x, animals_position.animals[0].xy[pos - 1].y);
-			putch(' ');
-		}
-		if (animal == HARE){
-			GotoXY(animals_position.animals[1].xy[pos].x, animals_position.animals[1].xy[pos].y);
-			putch('H');
-			GotoXY(animals_position.animals[1].xy[pos - 1].x, animals_position.animals[1].xy[pos - 1].y);
-			putch(' ');
-		}
-		if (animal == TORTOISE){
-			GotoXY(animals_position.animals[2].xy[pos].x, animals_position.animals[2].xy[pos].y);
-			putch('T');
-			GotoXY(animals_position.animals[2].xy[pos - 1].x, animals_position.animals[2].xy[pos - 1].y);
-			putch(' ');
-		}
-		if (animal == LAMB){
-			GotoXY(animals_position.animals[3].xy[pos].x, animals_position.animals[3].xy[pos].y);
-			putch('L');
-			GotoXY(animals_position.animals[3].xy[pos -1].x, animals_position.animals[3].xy[pos - 1].y);
-			putch(' ');
-		}
-		if (animal == FOX){
-			GotoXY(animals_position.animals[4].xy[pos].x, animals_position.animals[4].xy[pos].y);
-			putch('F');
-			GotoXY(animals_position.animals[4].xy[pos - 1].x, animals_position.animals[4].xy[pos - 1].y);
-			putch(' ');
-		}
-	//}
+
+	if (animal == WOLF){
+		GotoXY(animals_position.animals[0].xy[pos].x, animals_position.animals[0].xy[pos].y);
+		putch('W');
+		GotoXY(animals_position.animals[0].xy[pos - 1].x, animals_position.animals[0].xy[pos - 1].y);
+		putch(' ');
+	}
+	if (animal == HARE){
+		GotoXY(animals_position.animals[1].xy[pos].x, animals_position.animals[1].xy[pos].y);
+		putch('H');
+		GotoXY(animals_position.animals[1].xy[pos - 1].x, animals_position.animals[1].xy[pos - 1].y);
+		putch(' ');
+	}
+	if (animal == TORTOISE){
+		GotoXY(animals_position.animals[2].xy[pos].x, animals_position.animals[2].xy[pos].y);
+		putch('T');
+		GotoXY(animals_position.animals[2].xy[pos - 1].x, animals_position.animals[2].xy[pos - 1].y);
+		putch(' ');
+	}
+	if (animal == LAMB){
+		GotoXY(animals_position.animals[3].xy[pos].x, animals_position.animals[3].xy[pos].y);
+		putch('L');
+		GotoXY(animals_position.animals[3].xy[pos -1].x, animals_position.animals[3].xy[pos - 1].y);
+		putch(' ');
+	}
+	if (animal == FOX){
+		GotoXY(animals_position.animals[4].xy[pos].x, animals_position.animals[4].xy[pos].y);
+		putch('F');
+		GotoXY(animals_position.animals[4].xy[pos - 1].x, animals_position.animals[4].xy[pos - 1].y);
+		putch(' ');
+	}
+
 
 return 0;
 }
@@ -479,7 +468,7 @@ void setPositions()
 {
 	allocPositions();
 
-	/* Posizioni Lupo*/
+	///Posizioni Lupo
 	//start
 	animals_position.animals[WOLF - 1].xy[0].x = 3;
 	animals_position.animals[WOLF - 1].xy[0].y = 0;
@@ -517,7 +506,7 @@ void setPositions()
 	animals_position.animals[WOLF - 1].xy[11].x = 4;
 	animals_position.animals[WOLF - 1].xy[11].y = 7;
 
-	/* Posizioni Lepre*/
+	/// Posizioni Lepre
 	//start
 	animals_position.animals[HARE - 1].xy[0].x = 3;
 	animals_position.animals[HARE - 1].xy[0].y = 1;
@@ -555,7 +544,7 @@ void setPositions()
 	animals_position.animals[HARE - 1].xy[11].x = 5;
 	animals_position.animals[HARE - 1].xy[11].y = 7;
 
-	/* Posizioni Tartaruga*/
+	/// Posizioni Tartaruga
 	//start
 	animals_position.animals[TORTOISE - 1].xy[0].x = 3;
 	animals_position.animals[TORTOISE - 1].xy[0].y = 2;
@@ -593,7 +582,7 @@ void setPositions()
 	animals_position.animals[TORTOISE - 1].xy[11].x = 6;
 	animals_position.animals[TORTOISE - 1].xy[11].y = 7;
 
-	/* Posizioni Lepre*/
+	/// Posizioni Lepre
 	//start
 	animals_position.animals[LAMB - 1].xy[0].x = 3;
 	animals_position.animals[LAMB - 1].xy[0].y = 3;
@@ -632,7 +621,7 @@ void setPositions()
 	animals_position.animals[LAMB - 1].xy[11].y = 7;
 
 
-	/* Posizioni Volpe*/
+	/// Posizioni Volpe
 	//start
 	animals_position.animals[FOX - 1].xy[0].x = 3;
 	animals_position.animals[FOX - 1].xy[0].y = 4;
@@ -697,14 +686,14 @@ void drawSquare(coord angle1, coord angle2)
 
 	row = angle2.x - angle1.x;
 	columns = angle2.y - angle1.y;
-	// riga superiore
+	/// riga superiore
 	i = 0;
 	while ( i < row ){
 		GotoXY( angle1.x + i, angle1.y );
 		putch('-');
 		i++;
 	}
-	// riga inferiore
+	/// riga inferiore
 	i = 0;
 	while ( i < row ){
 		GotoXY( angle1.x + i, angle2.y );
@@ -712,14 +701,14 @@ void drawSquare(coord angle1, coord angle2)
 		i++;
 	}
 
-	// colonna sinistra
+	/// colonna sinistra
 	i = 0;
 	while ( i <= columns ){
 		GotoXY( angle1.x, angle1.y + i );
 		putch('|');
 		i++;
 	}
-	// colonna destra
+	/// colonna destra
 	i = 0;
 	while ( i <= columns ){
 		GotoXY( angle2.x, angle1.y + i );
@@ -773,12 +762,14 @@ void printScore(players *p, array *order)
 
 	return;
 }
-// Gestisce il movimento di un cursore su una lista di max elementi
-// input = input inserito dall'utente, start = coordinate di partenza,
-// option = variabile che indica l'elemento a cui si punta, max = massimo elementi della lista
+/// Gestisce il movimento di un cursore su una lista di max elementi
+/// input = input inserito dall'utente
+/// start = coordinate di partenza,
+/// option = variabile che indica l'elemento a cui si punta
+/// max = massimo elementi della lista
 int SelectorMovement(char input, coord start, int *option, int max, char confirm)
 {
-	// funzione viene richiamata per la prima volta, stampa la prima freccia nella prima posizione
+	/// funzione viene richiamata per la prima volta, stampa la prima freccia nella prima posizione
 	if ( (*option) == 0 && input == 0){
 		GotoXY(start.x - 1, start.y  );
 		putch('>');
@@ -787,20 +778,20 @@ int SelectorMovement(char input, coord start, int *option, int max, char confirm
 
 	if ( (input == 'w' || input == 'W') && (*option) > 0){
 		(*option)--;
-			//stampa il nuovo indicatore
+			///stampa il nuovo indicatore
 			GotoXY(start.x - 1, start.y + (*option) );
 			putch('>');
-			//rimuove il vecchio indicatore
+			///rimuove il vecchio indicatore
 			GotoXY(start.x - 1, start.y + (*option) + 1);
 			putch(' ');
 
 		}
 	if ( (input == 's' || input == 'S') && (*option) < max){
 			(*option)++;
-			//stampa il nuovo indicatore
+			///stampa il nuovo indicatore
 			GotoXY(start.x - 1, start.y + (*option) );
 			putch('>');
-			//rimuove il vecchio indicatore
+			///rimuove il vecchio indicatore
 			GotoXY(start.x - 1, start.y + (*option) - 1);
 			putch(' ');
 		}

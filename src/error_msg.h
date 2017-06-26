@@ -8,16 +8,28 @@
 #ifndef ERROR_MSG_H_
 #define ERROR_MSG_H_
 
-/// Messaggio di errore generico.
+/** \fn void printErrorGeneric(void)
+ * Messaggio di errore generico
+ */
 void printErrorGeneric(void);
 
-/// Messaggio di errore caricamento.
+
+/** \fn void printErrorLoadUnable(void)
+ * Messaggio di errore caricamento
+ */
 void printErrorLoadUnable(void);
 
-/// Messaggio di errore salvataggio.
+
+/** \fn void printErrorSaveUnable(void)
+ * Messaggio di errore salvataggio
+ */
 void printErrorSaveUnable(void);
 
-/// Messaggio di errore regole.
+
+/** \fn void printErrorNoRules(void)
+ * Messaggio di errore regole
+ */
+
 void printErrorNoRules(void);
 
 #endif /* ERROR_MSG_H_ */
